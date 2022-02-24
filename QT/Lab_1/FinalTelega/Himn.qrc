@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Himn.wav</file>
+    </qresource>
+</RCC>
