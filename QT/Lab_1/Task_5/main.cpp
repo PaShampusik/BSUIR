@@ -57,16 +57,16 @@ private:
 };
 
 
-int main() {
-    Expression* sube = new BinaryOperation(new Number(4.5), '*', new Number(5));
+//int main() {
+//    Expression* sube = new BinaryOperation(new Number(4.5), '*', new Number(5));
 
-    Expression* expr = new BinaryOperation(new Number(3), '+', sube);
+//    Expression* expr = new BinaryOperation(new Number(3), '+', sube);
 
-    std::cout << check_equals(new BinaryOperation(new Number(4.5), '*', new Number(5)), new BinaryOperation(new Number(4.5), '*', new Number(5)));
+//    std::cout << check_equals(new BinaryOperation(new Number(4.5), '*', new Number(5)), new BinaryOperation(new Number(4.5), '*', new Number(5)));
 
-    putchar('\n');
+//    putchar('\n');
 
-    //std::cout << expr->evaluate();
+//    //std::cout << expr->evaluate();
 
-    delete expr;
-}
+//    delete expr;
+//}

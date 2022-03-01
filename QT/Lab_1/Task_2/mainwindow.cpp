@@ -47,6 +47,19 @@ MainWindow::MainWindow(QWidget *parent)
     LE_Y2 = new QLineEdit(TriangleWnd);
     LE_Y3 = new QLineEdit(TriangleWnd);
 
+    LE_X1->setInputMask("#0000");
+    LE_X2->setInputMask("#0000");
+    LE_X3->setInputMask("#0000");
+    LE_Y1->setInputMask("#0000");
+    LE_Y2->setInputMask("#0000");
+    LE_Y3->setInputMask("#0000");
+    LE_Length->setInputMask("0000");
+    LE_Height->setInputMask("0000");
+    LE_Width->setInputMask("0000");
+    LE_SquareWidth->setInputMask("0000");
+    LE_R->setInputMask("0000");
+    LE_Ell->setInputMask("0000");
+
     Verticles_5 = new QRadioButton(StarWnd);
     Verticles_6 = new QRadioButton(StarWnd);
     Verticles_8 = new QRadioButton(StarWnd);

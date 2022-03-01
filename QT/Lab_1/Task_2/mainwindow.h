@@ -65,6 +65,7 @@ private:
     QLabel *InputX1, *InputX2, *InputX3, *InputY1, *InputY2, *InputY3;
     QLineEdit *LE_X1, *LE_X2, *LE_X3, *LE_Y1, *LE_Y2, *LE_Y3;
 
+
     short x1, y1, x2, y2, x3, y3;
 
     QDialog *StarWnd;
