@@ -1,0 +1,17 @@
+C:\Users\shchi\source\repos\Task_1\Task_1\obj\Debug\net6.0\Task_1_153501_Shchirov.csproj.AssemblyReference.cache
+C:\Users\shchi\source\repos\Task_1\Task_1\obj\Debug\net6.0\Task_1_153501_Shchirov.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\shchi\source\repos\Task_1\Task_1\obj\Debug\net6.0\Task_1_153501_Shchirov.AssemblyInfoInputs.cache
+C:\Users\shchi\source\repos\Task_1\Task_1\obj\Debug\net6.0\Task_1_153501_Shchirov.AssemblyInfo.cs
+C:\Users\shchi\source\repos\Task_1\Task_1\obj\Debug\net6.0\Task_1_153501_Shchirov.csproj.CoreCompileInputs.cache
+C:\Users\shchi\source\repos\Task_1\Task_1\bin\Debug\net6.0\Task_1_153501_Shchirov.exe
+C:\Users\shchi\source\repos\Task_1\Task_1\bin\Debug\net6.0\Task_1_153501_Shchirov.deps.json
+C:\Users\shchi\source\repos\Task_1\Task_1\bin\Debug\net6.0\Task_1_153501_Shchirov.runtimeconfig.json
+C:\Users\shchi\source\repos\Task_1\Task_1\bin\Debug\net6.0\Task_1_153501_Shchirov.dll
+C:\Users\shchi\source\repos\Task_1\Task_1\bin\Debug\net6.0\ref\Task_1_153501_Shchirov.dll
+C:\Users\shchi\source\repos\Task_1\Task_1\bin\Debug\net6.0\Task_1_153501_Shchirov.pdb
+C:\Users\shchi\source\repos\Task_1\Task_1\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\shchi\source\repos\Task_1\Task_1\obj\Debug\net6.0\Task_1_153501_Shchirov.csproj.CopyComplete
+C:\Users\shchi\source\repos\Task_1\Task_1\obj\Debug\net6.0\Task_1_153501_Shchirov.dll
+C:\Users\shchi\source\repos\Task_1\Task_1\obj\Debug\net6.0\ref\Task_1_153501_Shchirov.dll
+C:\Users\shchi\source\repos\Task_1\Task_1\obj\Debug\net6.0\Task_1_153501_Shchirov.pdb
+C:\Users\shchi\source\repos\Task_1\Task_1\obj\Debug\net6.0\Task_1_153501_Shchirov.genruntimeconfig.cache
