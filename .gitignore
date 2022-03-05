@@ -1,3 +1,7 @@
 *.txt
 **/bin/
 **/obj/
+**/.vs/
+*.exe
+**/Debug/
+**/Release/
