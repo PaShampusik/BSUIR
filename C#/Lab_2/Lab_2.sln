@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task_1", "Lab_2\Task_1.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task_2", "Task_2\Task_2.csproj", "{F1B750C2-6E15-4798-B34F-AAC0BD2D4333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task_1_Tests", "Task_1_Tests\Task_1_Tests.csproj", "{B31AF848-79A2-448C-93BB-AF6E6A67EAFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task_1_Tests", "Task_1_Tests\Task_1_Tests.csproj", "{B31AF848-79A2-448C-93BB-AF6E6A67EAFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task_2_Tests", "Task_2_Tests\Task_2_Tests.csproj", "{FD4AA060-630A-412D-A6BE-1D2BA2DCF4E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task_2_Tests", "Task_2_Tests\Task_2_Tests.csproj", "{FD4AA060-630A-412D-A6BE-1D2BA2DCF4E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{5DA7D37B-2448-41FF-A8BE-1240C90A8ACB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{FD4AA060-630A-412D-A6BE-1D2BA2DCF4E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD4AA060-630A-412D-A6BE-1D2BA2DCF4E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD4AA060-630A-412D-A6BE-1D2BA2DCF4E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DA7D37B-2448-41FF-A8BE-1240C90A8ACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DA7D37B-2448-41FF-A8BE-1240C90A8ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DA7D37B-2448-41FF-A8BE-1240C90A8ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DA7D37B-2448-41FF-A8BE-1240C90A8ACB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

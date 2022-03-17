@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Shared_Ptr&lt;T&gt;">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAIAEBAAAQgAAAAAAAAAAAwAggAAAACA=</HashCode>
+      <FileName>Shared_Ptr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Weak_Ptr&lt;T&gt;">
+    <Position X="4" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAABEEAAAAAAAAAAAAAAAAAEAAAAAAQAAgAAAACA=</HashCode>
+      <FileName>Shared_Ptr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainWindow" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wAAAAAAAACAAEAJAAABA4IAAAAAAAAIAAABAAQEAAAA=</HashCode>
+      <FileName>MainWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rectangle" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rectangle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="ControlBlock&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAEAAAAAAA=</HashCode>
+      <FileName>Shared_Ptr.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

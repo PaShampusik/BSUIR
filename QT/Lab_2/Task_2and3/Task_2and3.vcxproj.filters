@@ -48,8 +48,13 @@
     <ClInclude Include="Shared_Ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rectangle.h">
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Rectangle.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

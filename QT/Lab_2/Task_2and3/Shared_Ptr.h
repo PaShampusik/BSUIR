@@ -15,8 +15,8 @@ struct ControlBlock {
 	//T* object = nullptr;
 
 	template<class ... Args>
-	ControlBlock(size_t count/* Args&& ... args*/) {
-	//	object = new T(std::forward<Args>(args));
+	ControlBlock(size_t count) {
+	 	//object = new T(std::forward<Args>(args));
 		shared_count = new int(count);
 		weak_count = new int(0);
 	};
@@ -25,7 +25,7 @@ struct ControlBlock {
 
 template<class T>
 class Shared_Ptr {
-	T* ptr = nullptr;
+	T* OPtr = nullptr;
 	int* count = nullptr;
 
 	ControlBlock<T>* cptr = nullptr;
@@ -33,10 +33,10 @@ class Shared_Ptr {
 	template<class U, class ... Args>
 	friend Shared_Ptr<U> Make_Shared(Args&& ... args);
 	
-	Shared_Ptr(ControlBlock<T>* ptr) : cptr(ptr), ptr(ptr->object)
+	/*Shared_Ptr(ControlBlock<T>* ptr) : cptr(ptr)
 	{
 
-	}
+	}*/
 
 public:
 
@@ -45,20 +45,31 @@ public:
 
 	}
 
-	explicit Shared_Ptr(T* ptr) : ptr(ptr), count(new int(1))
+	explicit Shared_Ptr(T* ptr) 
 	{
 		cptr = new ControlBlock<T>(1);
+		OPtr = ptr;
+
 	}
 
-	operator bool() const
+	Shared_Ptr(const Shared_Ptr& ptr) 
 	{
-		return ptr != nullptr;
+		~Shared_Ptr();
+		cptr = ptr.cptr;
+		this->OPtr = ptr.OPtr;
+		(*cptr->shared_count)++;
+
+	}
+
+	explicit operator bool() const
+	{
+		return this->get() != nullptr;
 	}
 
 	void swap(Shared_Ptr<T>& other) 
 	{
 		using std::swap;
-		swap(ptr, other.ptr);
+		swap(OPtr, other.OPtr);
 	}
 
 	int use_count() const  
@@ -68,26 +79,26 @@ public:
 
 	T* get() const  
 	{
-		return ptr;
+		return OPtr;
 	}
 
 	void operator=(Shared_Ptr& other) 
 	{
-		delete ptr;
-		ptr = other.ptr;
-		other.ptr = nullptr;
+		delete OPtr;
+		OPtr = other.OPtr;
+		other.OPtr = nullptr;
 	}
 
 	T& operator*() 
 	{
-		assert(ptr);
-		return *ptr;
+		assert(OPtr);
+		return *OPtr;
 	}
 
 	T* operator->() 
 	{
-		assert(ptr);
-		return ptr;
+		assert(OPtr);
+		return OPtr;
 	}
 
 	~Shared_Ptr() 
@@ -97,7 +108,7 @@ public:
 
 		if (cptr->shared_count == 0)
 		{
-			delete ptr;
+			delete OPtr;
 			if (cptr->weak_count == 0)
 			{
 				delete cptr;
