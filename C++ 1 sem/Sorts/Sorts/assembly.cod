@@ -108,7 +108,7 @@ __F07657B3_ios DB 01H
 __C7C7F838_ostream DB 01H
 __A417CD02_istream DB 01H
 __89E0D050_iostream DB 01H
-__6E01A619_Sorts@cpp DB 01H
+__7D9C9A72_Sorts@cpp DB 01H
 msvcjmc	ENDS
 PUBLIC	?__empty_global_delete@@YAXPEAX@Z		; __empty_global_delete
 PUBLIC	?__empty_global_delete@@YAXPEAX_K@Z		; __empty_global_delete
@@ -128,7 +128,6 @@ PUBLIC	??0sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAA@AEAV12@@Z ; s
 PUBLIC	??1sentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAA@XZ ; std::basic_ostream<char,std::char_traits<char> >::sentry::~sentry
 PUBLIC	??Bsentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEBA_NXZ ; std::basic_ostream<char,std::char_traits<char> >::sentry::operator bool
 PUBLIC	__JustMyCode_Default
-PUBLIC	??_C@_09GMIOFJEO@?$NN?r?n?5?r?e?q?r?4@		; `string'
 EXTRN	?uncaught_exception@std@@YA_NXZ:PROC		; std::uncaught_exception
 EXTRN	__imp_?good@ios_base@std@@QEBA_NXZ:PROC
 EXTRN	__imp_?flags@ios_base@std@@QEBAHXZ:PROC
@@ -140,6 +139,7 @@ EXTRN	__imp_?tie@?$basic_ios@DU?$char_traits@D@std@@@std@@QEBAPEAV?$basic_ostrea
 EXTRN	__imp_?rdbuf@?$basic_ios@DU?$char_traits@D@std@@@std@@QEBAPEAV?$basic_streambuf@DU?$char_traits@D@std@@@2@XZ:PROC
 EXTRN	__imp_?fill@?$basic_ios@DU?$char_traits@D@std@@@std@@QEBADXZ:PROC
 EXTRN	__imp_?_Osfx@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAXXZ:PROC
+EXTRN	__imp_??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@J@Z:PROC
 EXTRN	__imp_?flush@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@XZ:PROC
 EXTRN	_RTC_CheckStackVars:PROC
 EXTRN	_RTC_InitBase:PROC
@@ -213,7 +213,7 @@ pdata	ENDS
 ;	COMDAT pdata
 pdata	SEGMENT
 $pdata$main DD	imagerel $LN3
-	DD	imagerel $LN3+51
+	DD	imagerel $LN3+57
 	DD	imagerel $unwind$main
 pdata	ENDS
 ;	COMDAT pdata
@@ -278,11 +278,6 @@ rtc$TMZ	ENDS
 rtc$IMZ	SEGMENT
 _RTC_InitBase.rtc$IMZ DQ FLAT:_RTC_InitBase
 rtc$IMZ	ENDS
-;	COMDAT ??_C@_09GMIOFJEO@?$NN?r?n?5?r?e?q?r?4@
-CONST	SEGMENT
-??_C@_09GMIOFJEO@?$NN?r?n?5?r?e?q?r?4@ DB 0ddH, 0f2H, 0eeH, ' ', 0f2H, 0e5H
-	DB	0f1H, 0f2H, '.', 00H				; `string'
-CONST	ENDS
 ;	COMDAT xdata
 xdata	SEGMENT
 $unwind$??Bsentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEBA_NXZ DD 025051301H
@@ -1487,7 +1482,7 @@ __catch$??$?6U?$char_traits@D@std@@@std@@YAAEAV?$basic_ostream@DU?$char_traits@D
 ?catch$1@?0???$?6U?$char_traits@D@std@@@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@0@AEAV10@D@Z@4HA ENDP ; `std::operator<<<std::char_traits<char> >'::`1'::catch$1
 text$x	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Users\shchi\source\repos\Sorts\Sorts\Sorts.cpp
+; File C:\Users\shchi\BSUIR\C++ 1 sem\Sorts\Sorts\Sorts.cpp
 ;	COMDAT main
 _TEXT	SEGMENT
 main	PROC						; COMDAT
@@ -1501,30 +1496,31 @@ $LN3:
 	00 00		 sub	 rsp, 232		; 000000e8H
   0000a	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   0000f	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__6E01A619_Sorts@cpp
+	00 00		 lea	 rcx, OFFSET FLAT:__7D9C9A72_Sorts@cpp
   00016	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
-; 16   : 	code("Это тест.");
+; 16   : 	
+; 17   : 		std::cout << __cplusplus;
 
-  0001b	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:??_C@_09GMIOFJEO@?$NN?r?n?5?r?e?q?r?4@
-  00022	e8 00 00 00 00	 call	 ?code@@YAXPEBD@Z	; code
+  0001b	ba 1f 0c 03 00	 mov	 edx, 199711		; 00030c1fH
+  00020	48 8b 0d 00 00
+	00 00		 mov	 rcx, QWORD PTR __imp_?cout@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A
+  00027	ff 15 00 00 00
+	00		 call	 QWORD PTR __imp_??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@J@Z
 
-; 17   : 	return 0;
+; 18   : 	
+; 19   : }
 
-  00027	33 c0		 xor	 eax, eax
-
-; 18   : }
-
-  00029	48 8d a5 c8 00
+  0002d	33 c0		 xor	 eax, eax
+  0002f	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
-  00030	5f		 pop	 rdi
-  00031	5d		 pop	 rbp
-  00032	c3		 ret	 0
+  00036	5f		 pop	 rdi
+  00037	5d		 pop	 rbp
+  00038	c3		 ret	 0
 main	ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Users\shchi\source\repos\Sorts\Sorts\Sorts.cpp
+; File C:\Users\shchi\BSUIR\C++ 1 sem\Sorts\Sorts\Sorts.cpp
 ;	COMDAT ?code@@YAXPEBD@Z
 _TEXT	SEGMENT
 str$ = 224
@@ -1540,7 +1536,7 @@ $LN5:
 	00 00		 sub	 rsp, 232		; 000000e8H
   0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   00013	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__6E01A619_Sorts@cpp
+	00 00		 lea	 rcx, OFFSET FLAT:__7D9C9A72_Sorts@cpp
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 $LN2@code:
 
@@ -1586,7 +1582,7 @@ $LN3@code:
 ?code@@YAXPEBD@Z ENDP					; code
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Users\shchi\source\repos\Sorts\Sorts\Sorts.cpp
+; File C:\Users\shchi\BSUIR\C++ 1 sem\Sorts\Sorts\Sorts.cpp
 ;	COMDAT ?BubleSort@@YAXHQEAH@Z
 _TEXT	SEGMENT
 temp$ = 4
@@ -1607,7 +1603,7 @@ $LN10:
 	00 00		 sub	 rsp, 328		; 00000148H
   00012	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   00017	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__6E01A619_Sorts@cpp
+	00 00		 lea	 rcx, OFFSET FLAT:__7D9C9A72_Sorts@cpp
   0001e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
 ; 32   : 	int temp = 0;
@@ -1721,7 +1717,7 @@ $LN3@BubleSort:
 ?BubleSort@@YAXHQEAH@Z ENDP				; BubleSort
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Users\shchi\source\repos\Sorts\Sorts\Sorts.cpp
+; File C:\Users\shchi\BSUIR\C++ 1 sem\Sorts\Sorts\Sorts.cpp
 ;	COMDAT ?ShellSort@@YAXHQEAH@Z
 _TEXT	SEGMENT
 j$ = 36
@@ -1743,7 +1739,7 @@ $LN13:
 	00 00		 sub	 rsp, 392		; 00000188H
   00012	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   00017	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__6E01A619_Sorts@cpp
+	00 00		 lea	 rcx, OFFSET FLAT:__7D9C9A72_Sorts@cpp
   0001e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
 ; 119  : 	int i, j, temp;
@@ -1884,7 +1880,7 @@ $LN3@ShellSort:
 ?ShellSort@@YAXHQEAH@Z ENDP				; ShellSort
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Users\shchi\source\repos\Sorts\Sorts\Sorts.cpp
+; File C:\Users\shchi\BSUIR\C++ 1 sem\Sorts\Sorts\Sorts.cpp
 ;	COMDAT ?InsertSort@@YAXHQEAH@Z
 _TEXT	SEGMENT
 j$ = 4
@@ -1905,7 +1901,7 @@ $LN10:
 	00 00		 sub	 rsp, 328		; 00000148H
   00012	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   00017	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__6E01A619_Sorts@cpp
+	00 00		 lea	 rcx, OFFSET FLAT:__7D9C9A72_Sorts@cpp
   0001e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
 ; 101  : 	int j, temp;
@@ -2007,7 +2003,7 @@ $LN3@InsertSort:
 ?InsertSort@@YAXHQEAH@Z ENDP				; InsertSort
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Users\shchi\source\repos\Sorts\Sorts\Sorts.cpp
+; File C:\Users\shchi\BSUIR\C++ 1 sem\Sorts\Sorts\Sorts.cpp
 ;	COMDAT ?SelectionSort@@YAXHQEAH@Z
 _TEXT	SEGMENT
 min$ = 4
@@ -2029,7 +2025,7 @@ $LN10:
 	00 00		 sub	 rsp, 360		; 00000168H
   00012	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   00017	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__6E01A619_Sorts@cpp
+	00 00		 lea	 rcx, OFFSET FLAT:__7D9C9A72_Sorts@cpp
   0001e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
 ; 82   : 	int min, temp;
@@ -2140,7 +2136,7 @@ $LN3@SelectionS:
 ?SelectionSort@@YAXHQEAH@Z ENDP				; SelectionSort
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Users\shchi\source\repos\Sorts\Sorts\Sorts.cpp
+; File C:\Users\shchi\BSUIR\C++ 1 sem\Sorts\Sorts\Sorts.cpp
 ;	COMDAT ?ShakerSort@@YAXHQEAH@Z
 _TEXT	SEGMENT
 swap$ = 4
@@ -2164,7 +2160,7 @@ $LN13:
 	00 00		 sub	 rsp, 424		; 000001a8H
   00012	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   00017	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__6E01A619_Sorts@cpp
+	00 00		 lea	 rcx, OFFSET FLAT:__7D9C9A72_Sorts@cpp
   0001e	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
 
 ; 49   : 	bool swap = true;
@@ -2475,7 +2471,7 @@ $LN4@eq_int_typ:
 ?eq_int_type@?$_Narrow_char_traits@DH@std@@SA_NAEBH0@Z ENDP ; std::_Narrow_char_traits<char,int>::eq_int_type
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Users\shchi\source\repos\Sorts\Sorts\Sorts.cpp
+; File C:\Users\shchi\BSUIR\C++ 1 sem\Sorts\Sorts\Sorts.cpp
 ;	COMDAT ?__empty_global_delete@@YAXPEAX_K@Z
 _TEXT	SEGMENT
 __formal$ = 224
@@ -2491,7 +2487,7 @@ $LN3:
 	00 00		 sub	 rsp, 232		; 000000e8H
   00013	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   00018	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__6E01A619_Sorts@cpp
+	00 00		 lea	 rcx, OFFSET FLAT:__7D9C9A72_Sorts@cpp
   0001f	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
   00024	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]
@@ -2501,7 +2497,7 @@ $LN3:
 ?__empty_global_delete@@YAXPEAX_K@Z ENDP		; __empty_global_delete
 _TEXT	ENDS
 ; Function compile flags: /Odtp /RTCsu /ZI
-; File C:\Users\shchi\source\repos\Sorts\Sorts\Sorts.cpp
+; File C:\Users\shchi\BSUIR\C++ 1 sem\Sorts\Sorts\Sorts.cpp
 ;	COMDAT ?__empty_global_delete@@YAXPEAX@Z
 _TEXT	SEGMENT
 __formal$ = 224
@@ -2515,7 +2511,7 @@ $LN3:
 	00 00		 sub	 rsp, 232		; 000000e8H
   0000e	48 8d 6c 24 20	 lea	 rbp, QWORD PTR [rsp+32]
   00013	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:__6E01A619_Sorts@cpp
+	00 00		 lea	 rcx, OFFSET FLAT:__7D9C9A72_Sorts@cpp
   0001a	e8 00 00 00 00	 call	 __CheckForDebuggerJustMyCode
   0001f	48 8d a5 c8 00
 	00 00		 lea	 rsp, QWORD PTR [rbp+200]

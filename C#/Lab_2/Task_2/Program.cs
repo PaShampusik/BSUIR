@@ -22,19 +22,16 @@ public class Task{
         if (a > c && b > a && a < 0 && b < 0)
         {
             Console.Write("Yes.\n");
-            //menu();
             return "Yes.";
         }
         else if ((a == c && b >= c && b <= 0) || (a >= c && a <= 0 && b == 0) || (a >= c && a <= 0 && b == a))
         {
             Console.Write("Point is laying on the Border.\n");
-            //menu();
             return "Point is laying on the Border.";
         }
         else
         {
             Console.Write("No.\n");
-            //menu();
             return "No.";
         }
 
@@ -55,8 +52,8 @@ public class Task{
         else
         {
             Console.Write("Wrong input, try again.");
-            menu();
         }
+        menu();
     }
 }
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindowClass</class>
- <widget class="QMainWindow" name="MainWindowClass">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1276</width>
+    <width>1280</width>
     <height>720</height>
    </rect>
   </property>
@@ -14,21 +14,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGraphicsView" name="graphicsView">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>-10</y>
-      <width>1280</width>
-      <height>720</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>580</y>
+      <x>66</x>
+      <y>570</y>
       <width>271</width>
       <height>51</height>
      </rect>
@@ -37,39 +27,53 @@
      <string>Create object pointed to by the UNIQUE pointer</string>
     </property>
    </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1280</width>
+      <height>720</height>
+     </rect>
+    </property>
+   </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>580</y>
-      <width>271</width>
+      <x>394</x>
+      <y>573</y>
+      <width>221</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>Random exception in the middle of a program</string>
+     <string>&quot;Random Exception&quot;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>714</x>
-      <y>580</y>
-      <width>191</width>
+      <x>660</x>
+      <y>570</y>
+      <width>251</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>Exit</string>
+     <string>&quot;Exit&quot;</string>
     </property>
    </widget>
+   <zorder>graphicsView</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>pushButton_2</zorder>
+   <zorder>pushButton_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1276</width>
+     <width>1280</width>
      <height>22</height>
     </rect>
    </property>
@@ -88,22 +92,5 @@
  <resources>
   <include location="MainWindow.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>pushButton_3</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindowClass</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>787</x>
-     <y>640</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>874</x>
-     <y>741</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

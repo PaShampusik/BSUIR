@@ -13,9 +13,12 @@ void BubleSort(int n, int arr[]);
 void code(const char* str);
 int main()
 {
-	code("Это тест.");
-	return 0;
+	
+		std::cout << __cplusplus;
+	
 }
+
+
 void code(const char* str)
 {
 	while (*str) {
