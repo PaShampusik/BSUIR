@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1015</width>
+    <width>1060</width>
     <height>649</height>
    </rect>
   </property>
@@ -14,13 +14,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="SearchByGroup">
+   <widget class="QPushButton" name="SearchByDate">
     <property name="geometry">
      <rect>
-      <x>890</x>
+      <x>870</x>
       <y>130</y>
-      <width>121</width>
-      <height>51</height>
+      <width>141</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -53,7 +53,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Name:</string>
+        <string>Number</string>
        </property>
       </widget>
      </item>
@@ -62,6 +62,12 @@
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
          <pointsize>11</pointsize>
@@ -69,12 +75,19 @@
         </font>
        </property>
        <property name="text">
-        <string>Group:</string>
+        <string>Fullname</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_4"/>
+      <widget class="QLineEdit" name="lineEdit_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0" colspan="2">
       <widget class="QPushButton" name="pushButton_3">
@@ -107,7 +120,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Show Table</string>
+     <string>Show All Filed Customers</string>
     </property>
    </widget>
    <widget class="QTableWidget" name="tableWidget">
@@ -115,7 +128,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>881</width>
+      <width>831</width>
       <height>381</height>
      </rect>
     </property>
@@ -261,16 +274,16 @@
      </font>
     </property>
     <property name="text">
-     <string>Choose File</string>
+     <string>Save Current Table to File</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="SearchByNameAndGroup">
+   <widget class="QPushButton" name="SearchByName">
     <property name="geometry">
      <rect>
-      <x>890</x>
+      <x>870</x>
       <y>190</y>
-      <width>121</width>
-      <height>51</height>
+      <width>141</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -281,35 +294,35 @@
      </font>
     </property>
     <property name="text">
-     <string>Search by fullname</string>
+     <string>Search by Surname</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>910</x>
-      <y>320</y>
-      <width>101</width>
-      <height>61</height>
+      <x>870</x>
+      <y>250</y>
+      <width>141</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>8</pointsize>
+      <pointsize>5</pointsize>
       <bold>true</bold>
       <underline>true</underline>
      </font>
     </property>
     <property name="text">
-     <string>Delete Item By Name and Group</string>
+     <string>Add Customer to Served List by №</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="SortByPrice">
+   <widget class="QPushButton" name="Sort">
     <property name="geometry">
      <rect>
-      <x>900</x>
+      <x>870</x>
       <y>10</y>
-      <width>111</width>
+      <width>141</width>
       <height>51</height>
      </rect>
     </property>
@@ -327,10 +340,10 @@
    <widget class="QWidget" name="formLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>430</y>
-      <width>371</width>
-      <height>328</height>
+      <x>280</x>
+      <y>410</y>
+      <width>381</width>
+      <height>171</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -343,19 +356,19 @@
         </font>
        </property>
        <property name="text">
-        <string>Name of the Item:</string>
+        <string>Number of customer</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="AddName">
+      <widget class="QLineEdit" name="AddNumber">
        <property name="dragEnabled">
         <bool>false</bool>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="addamount">
+      <widget class="QLabel" name="AddName">
        <property name="font">
         <font>
          <pointsize>11</pointsize>
@@ -363,12 +376,12 @@
         </font>
        </property>
        <property name="text">
-        <string>Amount of Items:</string>
+        <string>Fullname of customer</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="AddAmount"/>
+      <widget class="QLineEdit" name="lineEdit_7"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="addgroup">
@@ -379,12 +392,12 @@
         </font>
        </property>
        <property name="text">
-        <string>Group of Items:</string>
+        <string>Address of customer</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="AddGroup"/>
+      <widget class="QLineEdit" name="AddAddress"/>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="addprice">
@@ -395,17 +408,11 @@
         </font>
        </property>
        <property name="text">
-        <string>Price in $:</string>
+        <string>Date of getting </string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="AddPrice"/>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="AddStock"/>
-     </item>
-     <item row="5" column="0" colspan="2">
+     <item row="4" column="0" colspan="2">
       <widget class="QPushButton" name="AddButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
@@ -427,39 +434,41 @@
         </font>
        </property>
        <property name="text">
-        <string>Add this boy to the chat, please</string>
+        <string>Add new Customer</string>
        </property>
       </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="AddDate"/>
      </item>
     </layout>
     <zorder>addgroup</zorder>
     <zorder>addprice</zorder>
-    <zorder>AddGroup</zorder>
+    <zorder>AddAddress</zorder>
+    <zorder>AddNumber</zorder>
+    <zorder>AddDate</zorder>
     <zorder>AddName</zorder>
-    <zorder>AddPrice</zorder>
-    <zorder>AddStock</zorder>
-    <zorder>addamount</zorder>
     <zorder>addname</zorder>
-    <zorder>AddAmount</zorder>
+    <zorder>lineEdit_7</zorder>
     <zorder>AddButton</zorder>
    </widget>
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>10</y>
       <width>1024</width>
       <height>660</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="SearchByName">
+   <widget class="QPushButton" name="SearchByNumber">
     <property name="geometry">
      <rect>
-      <x>890</x>
+      <x>870</x>
       <y>70</y>
-      <width>121</width>
-      <height>51</height>
+      <width>141</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -473,12 +482,12 @@
      <string>Search By Number</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="AddItem">
+   <widget class="QPushButton" name="AddCustomer">
     <property name="geometry">
      <rect>
-      <x>890</x>
-      <y>250</y>
-      <width>121</width>
+      <x>870</x>
+      <y>320</y>
+      <width>141</width>
       <height>61</height>
      </rect>
     </property>
@@ -494,25 +503,89 @@
      <string>AddNewCustomer</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>872</x>
+      <y>100</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_2">
+    <property name="geometry">
+     <rect>
+      <x>872</x>
+      <y>160</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_5">
+    <property name="geometry">
+     <rect>
+      <x>872</x>
+      <y>220</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_6">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>290</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>4</x>
+      <y>383</y>
+      <width>271</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <italic>true</italic>
+     </font>
+    </property>
+    <property name="text">
+     <string>Show list of served customers</string>
+    </property>
+   </widget>
    <zorder>graphicsView</zorder>
    <zorder>formLayoutWidget_3</zorder>
    <zorder>formLayoutWidget</zorder>
-   <zorder>AddItem</zorder>
+   <zorder>AddCustomer</zorder>
    <zorder>ChooseFile</zorder>
-   <zorder>SearchByGroup</zorder>
+   <zorder>SearchByDate</zorder>
+   <zorder>SearchByNumber</zorder>
    <zorder>SearchByName</zorder>
-   <zorder>SearchByNameAndGroup</zorder>
    <zorder>pushButton_2</zorder>
    <zorder>ShowTable</zorder>
-   <zorder>SortByPrice</zorder>
+   <zorder>Sort</zorder>
    <zorder>tableWidget</zorder>
+   <zorder>lineEdit</zorder>
+   <zorder>lineEdit_2</zorder>
+   <zorder>lineEdit_5</zorder>
+   <zorder>lineEdit_6</zorder>
+   <zorder>pushButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1015</width>
+     <width>1060</width>
      <height>22</height>
     </rect>
    </property>

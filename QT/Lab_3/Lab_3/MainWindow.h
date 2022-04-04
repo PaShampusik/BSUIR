@@ -1,5 +1,5 @@
 #pragma once
-//class MainWindow;
+class MainWindow;
 #include <QtWidgets/QMainWindow>
 #include <QWidget>
 #include <QMainWindow>
@@ -20,8 +20,8 @@
 #include <QTableWidgetItem>
 #include "ui_MainWindow.h"
 #include "Customer.h"
-#include "Two_Linked_List.h"
-#include "MainWindow.cpp"
+#include "DoubleLinkedList.h"
+//#include "MainWindow.cpp"
 //#include "ui_MainWindow.h"
 
 QT_BEGIN_NAMESPACE
@@ -32,21 +32,37 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    int customers = 0;
-    MainWindow(QWidget *parent = Q_NULLPTR);
-    ~MainWindow();
-
-private slots:
-
-    void on_ShowTable_clicked();
+private:
+    int x = 0;
 
 public:
     
-    QString FilePath = QFileDialog::getOpenFileName(this, "Choose text file", "D:/QT/qtProjects/Details(task_4)", "Input (*.txt);");
-    QString FilePath2 = QFileDialog::getOpenFileName(this, "Choose text file", "D:/QT/qtProjects/Details(task_4)", "Output (*.txt);");
+    MainWindow(QWidget *parent = Q_NULLPTR);
+    ~MainWindow();
+    void filltablewithlist(DoubleLinkedList& list);
+private slots:
+
+    void on_ShowTable_clicked();
+	void on_Sort_clicked();
+    void on_SearchByNumber_clicked();
+    void on_SearchByDate_clicked();
+	void on_SearchByName_clicked();
+    void on_pushButton_2_clicked();
+    void on_AddCustomer_clicked();
+    void on_pushButton_clicked();
+	
+
+public:
+	
+	int count = 0;
+
+    DoubleLinkedList list_of_elements, list_of_complete_elements;
+    
+    QString FilePath = "C:/Users/shchi/BSUIR/QT/Lab_3/input.txt";
+    QString FilePath2 = "C:/Users/shchi/BSUIR/QT/Lab_3/output.txt";
     
     QString strNumber, strFullname, strAddress, strDate;
     Ui::MainWindow* ui;
 
+	friend class Customer;
 };

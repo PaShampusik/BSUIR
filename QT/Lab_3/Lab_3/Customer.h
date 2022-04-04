@@ -9,25 +9,34 @@
 #include <QMessageBox>
 #include <QTextStream>
 
-int customers = 0;
-
 class Customer
 {
 private:
 
 public:
-    int number;
+    QString number;
     QString fullname;
     QString address;
     QString date;
-    Customer(int number = customers, QString fullname = "Mafioznik",
-        QString address = "Winner street, house 3, flat 33", QString date = "01.01.0001");
-    
-
-    QString Name();
-    QString Amount();
-    QString Address();
-    QString Date();
+    Customer(QString number = "777", QString fullname = "Mafioznik",
+        QString address = "Winner street, house 3, flat 33", QString date = "01.01.0001") {
+		this->number = number;
+		this->fullname = fullname;
+		this->address = address;
+		this->date = date;
+    }
+    QString getnumber() {
+		return number;
+    }
+    QString getname() {
+		return fullname;
+	}
+    QString getaddress() {
+		return address;
+    }
+    QString getdate() {
+		return date;
+    }
 }; 
 
-#endif
+#endif CUSTOMER_H
