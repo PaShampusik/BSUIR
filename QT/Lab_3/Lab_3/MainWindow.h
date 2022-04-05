@@ -42,7 +42,8 @@ public:
     void filltablewithlist(DoubleLinkedList& list);
 private slots:
 
-    void on_ShowTable_clicked();
+
+    int on_ShowTable_clicked();
 	void on_Sort_clicked();
     void on_SearchByNumber_clicked();
     void on_SearchByDate_clicked();
@@ -50,6 +51,14 @@ private slots:
     void on_pushButton_2_clicked();
     void on_AddCustomer_clicked();
     void on_pushButton_clicked();
+    void on_pushButton_3_clicked();
+    void on_AddCustomer_2_clicked();
+    void on_DeleteCustomer_clicked();
+    void on_ServedList_clicked();
+    void on_List_clicked();
+    void on_Clear_clicked();
+    void on_Save_clicked();
+	
 	
 
 public:

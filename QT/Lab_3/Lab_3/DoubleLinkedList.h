@@ -114,20 +114,29 @@ public:
 	}
 
 	//inserting node at the end
-	void insertAtEnd(Node* n) {
-		Node* element = new Node(*n);
-		if (head)
+	int insertAtEnd(Node* n) {
+		if (n->data->number == "" && n->data->date == "" && n->data->address == "" && n->data->fullname == "")
 		{
-			tail->next = element;
-			element->previous = tail;
-			element->next = nullptr;
-			tail = element;
+			return 1;
 		}
 		else {
-			head = element;
-			head->next = nullptr;
-			head->previous = nullptr;
-			tail = head;
+
+			Node* element = new Node(*n);
+			if (head)
+			{
+				tail->next = element;
+				element->previous = tail;
+				element->next = nullptr;
+				tail = element;
+				return 0;
+			}
+			else {
+				head = element;
+				head->next = nullptr;
+				head->previous = nullptr;
+				tail = head;
+				return 0;
+			}
 		}
 	}
 
@@ -238,8 +247,9 @@ public:
 		}
 	}
 
-	void static searchByNumber(QString number, DoubleLinkedList& list) {
-		Node* temp = list.head;
+	DoubleLinkedList& searchByNumber(QString number) {
+		Node* temp = this->head;
+		DoubleLinkedList Temp;
 
 		//deletes all nodes with the different number
 		while (temp != nullptr) {
@@ -247,7 +257,7 @@ public:
 			Node* temp2 = temp->next;
 
 			if (temp->data->getnumber() != number) {
-				if (temp == list.head && temp != list.tail)
+				/*if (temp == list.head && temp != list.tail)
 				{
 					list.head = temp->next;
 					list.head->previous = nullptr;
@@ -271,15 +281,20 @@ public:
 					temp->next->previous = temp->previous;
 					delete temp;
 					temp = nullptr;
-				}
+				}*/
+			}
+			else {
+				Temp.insertAtEnd(temp);
 			}
 			temp = temp2;
 		}
+		return Temp;
 	}
 
 
-	void searchByDate(QString date) {
+	DoubleLinkedList& searchByDate(QString date) {
 		Node* temp = head;
+		DoubleLinkedList Temp;
 
 		//deletes all nodes with the different name
 		while (temp != nullptr) {
@@ -287,7 +302,7 @@ public:
 			Node* temp2 = temp->next;
 
 			if (temp->data->getdate() != date) {
-				if (temp == head && temp != tail)
+				/*if (temp == head && temp != tail)
 				{
 					head = temp->next;
 					head->previous = nullptr;
@@ -307,16 +322,23 @@ public:
 					temp->previous->next = temp->next;
 					temp->next->previous = temp->previous;
 					delete temp;
-				}
+				}*/
+			}
+			else {
+				DoubleLinkedList Temp;
+				Temp.insertAtEnd(temp);
+				return Temp;
 			}
 			temp = temp2;
 		}
+		return Temp;
 
 	}
 
 
-	void searchByName(QString name) {
+	DoubleLinkedList& searchByName(QString name) {
 		Node* temp = head;
+		DoubleLinkedList Temp;
 
 		//deletes all nodes with the different name
 		while (temp != nullptr) {
@@ -324,7 +346,7 @@ public:
 			Node* temp2 = temp->next;
 
 			if (!(temp->compairingSurnames(name))) {
-				if (temp == head && temp != tail)
+				/*if (temp == head && temp != tail)
 				{
 					head = temp->next;
 					delete temp;
@@ -343,12 +365,28 @@ public:
 					temp->previous->next = temp->next;
 					temp->next->previous = temp->previous;
 					delete temp;
-				}
+				}*/
 			}
+			else {
+				Temp.insertAtEnd(temp);
+			}
+
 			temp = temp2;
 		}
+		return Temp;
 	}
 
+	void clear() {
+		Node* temp = head;
+		while (temp != nullptr) {
+			Node* temp2 = temp->next;
+			delete temp;
+			temp = nullptr;
+			temp = temp2;
+		}
+		head = nullptr;
+		tail = nullptr;
+	}
 
 	void copy(DoubleLinkedList& completelist) {
 		Node* temp = completelist.head;
@@ -363,25 +401,69 @@ public:
 		std::fstream file;
 		if (!file.is_open())
 		{
-			file.open(filepath.toStdString());
+			file.open(filepath.toStdString(), ios::out | ios::trunc);
 			file.clear();
-		}
 
-		Node* temp = list.head;
-		while (temp)
-		{
-			file << temp->data->number.toStdString() << std::endl;
 
-			file << temp->data->fullname.toStdString() << std::endl;
-			file << temp->data->address.toStdString() << std::endl;
-			file << temp->data->date.toStdString() << std::endl;
-			file << std::endl;
-			temp = temp->next;
-		}
 
-		if (file.is_open())
-		{
+			Node* temp = list.head;
+			while (temp)
+			{
+				file << temp->data->number.toStdString() << std::endl;
+
+				file << temp->data->fullname.toStdString() << std::endl;
+				file << temp->data->address.toStdString() << std::endl;
+				file << temp->data->date.toStdString() << std::endl;
+				file << std::endl;
+				temp = temp->next;
+			}
+
 			file.close();
+
+		}
+		
+	}
+
+	void deleteelementfromlist(QString name, QString number) {
+		//deleting dublicates of nodes with the same name and address
+		Node* temp = head;
+		if (name == "" || number == "")
+		{
+
+		}
+		while (temp != nullptr) {
+			if (temp->data->getname() == name && temp->data->getnumber() == number) {
+				Node* temp2 = temp->next;
+				if (temp == head && temp != tail)
+				{
+					head = temp->next;
+					head->previous = nullptr;
+					delete temp;
+					temp = nullptr;
+				}
+				else if (temp == tail && temp != head) {
+					tail = temp->previous;
+					tail->next = nullptr;
+					delete temp;
+					temp = nullptr;
+				}
+				else if (temp == tail && temp == head) {
+					head = nullptr;
+					tail = nullptr;
+					delete temp;
+					temp = nullptr;
+				}
+				else {
+					temp->previous->next = temp->next;
+					temp->next->previous = temp->previous;
+					delete temp;
+					temp = nullptr;
+				}
+				temp = temp2;
+			}
+			else {
+				temp = temp->next;
+			}
 		}
 	}
 };
