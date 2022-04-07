@@ -88,7 +88,7 @@ int MainWindow::on_ShowTable_clicked()
 			strFullname = QString::fromStdString(Name);
 			strAddress = QString::fromStdString(Address);
 			strDate = QString::fromStdString(Date);
-			if (strNumber.length() > 10 || strDate.length() > 10 || strNumber.contains("^\d+$"))
+			if (strNumber.length() > 10 || strDate.length() > 10 || strNumber.contains("^\d+$") || strDate.contains("^\d+$") || strFullname.isEmpty() || strAddress.isEmpty() || strNumber.isEmpty())
 			{
 				QMessageBox::critical(this, "Error", "You choosed the wrong input file!");
 				list_of_elements.clear();

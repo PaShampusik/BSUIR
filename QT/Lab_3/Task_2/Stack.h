@@ -1,44 +1,51 @@
 #pragma once
-template<class T>
+
 class Stack {
 public:
-	Stack() {
-		top = 0;
-	}
-	~Stack() {
-		delete[] stack;
-	}
-
-
-	void push(T) {
-		if (top == maxSize) {
-			cout << "Stack is full" << endl;
-			return;
-		}
-		top++;
-		arr[top] = item;
-	}
-
-	T pop() {
-		if (top == NULL) {
-			return NULL;
-		}
-		T temp = top->data;
-		top = top->next;
-		return temp;
-	}
-
-	T peek() {
-		return stack[top];
-	}
-
-
-	bool isEmpty() {
-		return top == 0;
+	char* data;
+	int size;
+	int top;
+	
+	Stack(int size = 100) {
+		this->size = size;
+		this->top = -1;
+		this->data = new char[size];
 	}
 	
-private:
-	int top;
-	int maxSize;
-	T* stack;
+	~Stack() {
+		delete[] data;
+	}
+	
+	void push(int value) {
+		if (top < size) {
+			data[top++] = value;
+		}
+	}
+	
+	int pop() {
+		if (top == 0) {
+			return -1;
+		}
+		return data[--top];
+	}
+	
+	int peek() {
+		return data[top];
+	}
+	
+	bool isEmpty() {
+		return top == -1;
+	}
+	
+	bool isFull() {
+		return top == size;
+	}
+	
+	int getSize() {
+		return size;
+	}
+	
+	char gettop() {
+		return data[top];
+	}
 };
