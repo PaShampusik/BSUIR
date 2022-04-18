@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,8 +13,14 @@
     <height>540</height>
    </rect>
   </property>
+  <property name="font">
+   <font/>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="maximumSize">
@@ -20,18 +29,67 @@
      <height>485</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <layout class="QGridLayout" name="gridLayout">
+      <item row="3" column="0">
+       <widget class="QPushButton" name="ChooseFile">
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">::hover {
+background-color: green;
+color: #fff;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Choose file for check</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="lineEdit_2">
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
+          <underline>false</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>Here field for choosed file:</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
       <item row="4" column="0">
        <widget class="QPushButton" name="CheckFile">
         <property name="font">
          <font>
           <pointsize>12</pointsize>
-          <italic>true</italic>
+          <italic>false</italic>
           <bold>true</bold>
-          <underline>true</underline>
+          <underline>false</underline>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">::hover {
+background-color: green;
+color: #fff;
+}
+</string>
         </property>
         <property name="text">
          <string>Check file for mistakes</string>
@@ -42,52 +100,15 @@
        <widget class="QPlainTextEdit" name="Handwriting">
         <property name="font">
          <font>
-          <bold>true</bold>
-         </font>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QPlainTextEdit" name="File">
-        <property name="font">
-         <font>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-          <italic>true</italic>
-          <bold>true</bold>
-          <underline>true</underline>
-         </font>
-        </property>
-        <property name="text">
-         <string>Here field for handwriting:</string>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="ChooseFile">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-          <italic>true</italic>
+          <pointsize>11</pointsize>
+          <italic>false</italic>
           <bold>false</bold>
          </font>
         </property>
-        <property name="text">
-         <string>Choose file for check</string>
+        <property name="styleSheet">
+         <string notr="true">
+font: 11pt &quot;Lucida Console&quot;;
+</string>
         </property>
        </widget>
       </item>
@@ -102,31 +123,62 @@
         <property name="font">
          <font>
           <pointsize>13</pointsize>
-          <italic>true</italic>
+          <italic>false</italic>
           <bold>true</bold>
-          <underline>true</underline>
+          <underline>false</underline>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">::hover {
+background-color: green;
+color: #fff;
+}
+</string>
         </property>
         <property name="text">
          <string>Check handwriting for mistakes</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLineEdit" name="lineEdit_2">
+      <item row="2" column="0">
+       <widget class="QPlainTextEdit" name="File">
         <property name="font">
          <font>
-          <pointsize>13</pointsize>
-          <italic>true</italic>
-          <bold>true</bold>
-          <underline>true</underline>
+          <pointsize>11</pointsize>
+          <italic>false</italic>
+          <bold>false</bold>
          </font>
         </property>
-        <property name="text">
-         <string>Here field for choosed file:</string>
+        <property name="styleSheet">
+         <string notr="true">font: 11pt &quot;Lucida Console&quot;;</string>
         </property>
         <property name="readOnly">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
+          <underline>false</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>Here field for handwriting:</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0" colspan="2">
+       <widget class="QPushButton" name="Quit">
+        <property name="text">
+         <string>Quit</string>
         </property>
        </widget>
       </item>

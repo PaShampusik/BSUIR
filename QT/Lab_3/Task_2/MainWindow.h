@@ -31,8 +31,10 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = Q_NULLPTR);
+    ~MainWindow();
 
 private slots:
+    void on_Quit_clicked();
     void on_ChooseFile_clicked();
     void on_CheckFile_clicked();
     void on_CheckHandwriting_clicked();	
