@@ -4,46 +4,69 @@
 
 #include "Vector.h"
 #include <string>
+#include <cmath>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
 
-struct Product {
-    std::string name = "Milk";
-    int count = 2;
-    int price = 100;
-    std::string date = "20.01.2001";
-};
 
-class DoubleList {
+
+class DoubleLinkedListOnArray {
 private:
     struct Node {
-        Product product;
+        Staff product;
         int next = -1;
         int prev = -1;
-        Node() {
+        Node() 
+        {
 
         }
-        Node(Product pr, int n, int p)
+        Node(Staff pr, int n, int p)
             :product(pr), next(n), prev(p)
         {
-        };
+			
+        }
+        bool compairingSurnames(QString name) {
+            bool k = 1;
+            int i = 0;
+            while (product.getname().toStdString()[i] != ' ' && i < min(product.getname().toStdString().length(), name.length())) {
+                if (product.getname().toStdString()[i] == name.toStdString()[i]) {}
+                else
+                {
+                    k = 0;
+                    return k;
+                }
+                ++i;
+            }
+            return 1;
+        }
+        
+        int min(int a, int b) {
+			if (a < b) return a;
+			else return b;
+        }
+        
+        ;
     };
-	
+
     vector<Node> nodes;
     int head;
     int tail;
     int size;
 public:
-    DoubleList() {
+    DoubleLinkedListOnArray() {
         head = -1;
         tail = -1;
         size = 0;
     }
 
 
-    ~DoubleList() {
-        listClear();
+    ~DoubleLinkedListOnArray() {
+        clear();
     }
 
-    void listClear() {
+    void clear() {
         while (size != 0) {
             remove(0);
         }
@@ -52,7 +75,7 @@ public:
         return size;
     }
 
-    void add(Product product) {
+    void add(Staff product) {
         if (size == 0) {
             head = 0;
             tail = 0;
@@ -127,7 +150,7 @@ public:
         }
     }
 
-    void insert(int index, Product product) {
+    void insert(int index, Staff product) {
         if (size == 0) {
             head = 0;
             tail = 0;
@@ -189,7 +212,7 @@ public:
         return tail;
     }
 
-    Product getProduct(int index) {
+    Staff getProduct(int index) {
         return nodes[index].product;
     }
 
@@ -201,39 +224,110 @@ public:
         }
     }
 
-    void _quickSort(vector<Node>& array, int low, int high)
+    void quickSort(vector<Node>& array, int low, int high)
     {
         int i = low;
         int j = high;
         Node pivot = array[(i + j) / 2];
-        Product temp;
+        Staff temp;
 
         while (i < j)
         {
-            while (array[i].product.price < pivot.product.price)
+            while (array[i].product.getnumber().toDouble() < pivot.product.getnumber().toDouble())
                 i++;
-            while (array[j].product.price > pivot.product.price)
+            while (array[j].product.getnumber().toDouble() > pivot.product.getnumber().toDouble())
                 j--;
             if (i <= j)
             {
                 temp = array[i].product;
-
                 array[i].product = array[j].product;
-
-
                 array[j].product = temp;
                 i++;
                 j--;
             }
         }
         if (j > low)
-            _quickSort(array, low, j);
+            quickSort(array, low, j);
         if (i < high)
-            _quickSort(array, i, high);
+            quickSort(array, i, high);
     }
     void quickSort() {
-        _quickSort(nodes, head, tail);
+        quickSort(nodes, head, tail);
     }
-};
 
+    int isEmpty() {
+        if (size == 0) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    DoubleLinkedListOnArray searchByNumber(QString number) {
+        DoubleLinkedListOnArray result;
+		int index = head, i = 0;
+		while (index != -1) {
+			if (nodes[index].product.getnumber().toLongLong() == number.toLongLong()) {
+				result.nodes[i] = nodes[index];
+                i++;
+			}
+			index = nodes[index].next;
+		}
+        return result;
+    }
+
+    DoubleLinkedListOnArray searchByName(QString name) {
+        DoubleLinkedListOnArray result;
+        int index = head, i = 0;
+        while (index != -1) {
+            if (nodes[i].compairingSurnames(name)){
+                result.nodes[i] = nodes[index];
+                i++;
+            }
+            index = nodes[index].next;
+        }
+        return result;
+    }
+
+
+    void deleteelementfromlist(QString Fullname, QString DepartmentNumber) {
+        for (int i = 0; i < nodes.getSize(); i++)
+        {
+            if (nodes[i].product.fullname == Fullname && nodes[i].product.department_number == DepartmentNumber)
+			{
+				remove(i);
+			}
+        }
+        
+    }
+
+    void save(DoubleLinkedListOnArray& list, QString filepath) {
+        //output all data from list to a file with filepath filepath
+        std::fstream file;
+        if (!file.is_open())
+        {
+            file.open(filepath.toStdString(), std::ios::out | std::ios::trunc);
+            file.clear();
+
+
+
+           
+            for (int i = 0; i < list.getTail(); i++)
+            {
+                file << list.getProduct(i).fullname.toStdString() << std::endl;
+                file << list.getProduct(i).department_number.toStdString() << std::endl;				
+                file << list.getProduct(i).position.toStdString() << std::endl;
+                file << list.getProduct(i).date.toStdString() << std::endl;
+                file << std::endl;
+				
+            }
+
+            file.close();
+
+        }
+
+    }
+
+};
 #endif // DOUBLELIST_H

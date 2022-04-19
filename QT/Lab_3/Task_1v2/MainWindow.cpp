@@ -1,6 +1,6 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "Customer.h"
+#include "Staff.h"
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
@@ -13,15 +13,9 @@ MainWindow::MainWindow(QWidget* parent)
 	ui->AddDate->setInputMask("00.00.0000");
 	ui->Sort->hide();
 	ui->lineEdit->hide();
-	ui->lineEdit_2->hide();
 	ui->lineEdit_5->hide();
-	ui->lineEdit_6->hide();
-	ui->SearchByDate->hide();
 	ui->SearchByName->hide();
 	ui->SearchByNumber->hide();
-	ui->pushButton_2->hide();
-	ui->pushButton->hide();
-	ui->ServedList->hide();
 	ui->pushButton_3->hide();
 	ui->label_3->hide();
 	ui->label_4->hide();
@@ -39,7 +33,6 @@ MainWindow::MainWindow(QWidget* parent)
 	ui->addgroup->hide();
 	ui->AddCustomer->hide();
 	ui->AddCustomer_2->hide();
-	ui->Clear->hide();
 	ui->Save->hide();
 }
 
@@ -55,7 +48,7 @@ int MainWindow::on_ShowTable_clicked()
 	FilePath = QFileDialog::getOpenFileName(this, "Choose text file", "", "Input (*.txt);");
 	while (!list_of_elements.isEmpty())
 	{
-		list_of_elements.deleteFromEnd();
+		list_of_elements.pop();
 	}
 
 	ui->tableWidget->clearContents();
@@ -63,7 +56,7 @@ int MainWindow::on_ShowTable_clicked()
 	std::ifstream file, file1;
 	file.open(FilePath.toStdString());
 
-	std::string buffer, Name, Group, Date, Address;
+	std::string buffer, Fullname, DepartmentNumber, Position, Date;
 	int i = 0;
 	if (file.is_open()) {
 		/*for (int i = 0; i < 5 + x; i++)
@@ -80,35 +73,35 @@ int MainWindow::on_ShowTable_clicked()
 				break;
 			}
 
-			strNumber = QString::fromStdString(buffer);
-			getline(file, Name);
-			getline(file, Address);
+			strFullname = QString::fromStdString(buffer);
+			getline(file, DepartmentNumber);
+			getline(file, Position);
 			getline(file, Date);
-			getline(file, buffer);
-			strFullname = QString::fromStdString(Name);
-			strAddress = QString::fromStdString(Address);
+			//getline(file, buffer);
+			strDepartmentNumber = QString::fromStdString(DepartmentNumber);
+			strPosition = QString::fromStdString(Position);
 			strDate = QString::fromStdString(Date);
-			if (strNumber.length() > 10 || strDate.length() > 10 || strNumber.contains("^\d+$") || strDate.contains("^\d+$") || strFullname.isEmpty() || strAddress.isEmpty() || strNumber.isEmpty())
+			if (strDate.length() > 10 || strDepartmentNumber.contains("^\d+$") || strDate.contains("^\d+$") || strFullname.isEmpty() || strDate.isEmpty() || strFullname.isEmpty())
 			{
 				QMessageBox::critical(this, "Error", "You choosed the wrong input file!");
 				list_of_elements.clear();
 				return 1;
 			}
 
-			list_of_elements.insertAtEnd(new Node(new Customer(strNumber, strFullname, strAddress, strDate)));
+			list_of_elements.add(Staff(strFullname, strDepartmentNumber, strPosition, strDate));
 
-			QTableWidgetItem* itm = new QTableWidgetItem(strNumber);
+			QTableWidgetItem* itm = new QTableWidgetItem(strFullname);
 			ui->tableWidget->setItem(i, 0, itm);
-			strNumber.clear();
-
-
-			QTableWidgetItem* itm1 = new QTableWidgetItem(strFullname);
-			ui->tableWidget->setItem(i, 1, itm1);
 			strFullname.clear();
 
-			QTableWidgetItem* itm2 = new QTableWidgetItem(strAddress);
+
+			QTableWidgetItem* itm1 = new QTableWidgetItem(strDepartmentNumber);
+			ui->tableWidget->setItem(i, 1, itm1);
+			strDepartmentNumber.clear();
+
+			QTableWidgetItem* itm2 = new QTableWidgetItem(strPosition);
 			ui->tableWidget->setItem(i, 2, itm2);
-			strAddress.clear();
+			strPosition.clear();
 
 			QTableWidgetItem* itm3 = new QTableWidgetItem(strDate);
 			ui->tableWidget->setItem(i, 3, itm3);
@@ -136,40 +129,33 @@ int MainWindow::on_ShowTable_clicked()
 				break;
 			}
 
-			strNumber = QString::fromStdString(buffer);
-			getline(file1, Name);
-			getline(file1, Address);
+			strFullname = QString::fromStdString(buffer);
+			getline(file1, Fullname);
+			getline(file1, DepartmentNumber);
 			getline(file1, Date);
 			getline(file1, buffer);
-			strFullname = QString::fromStdString(Name);
-			strAddress = QString::fromStdString(Address);
+			strDepartmentNumber = QString::fromStdString(Fullname);
+			strPosition = QString::fromStdString(DepartmentNumber);
 			strDate = QString::fromStdString(Date);
-			if (strNumber.length() > 10 || strDate.length() > 10 || strNumber.contains("^\d+$"))
+			if (strDate.length() > 10 || strDepartmentNumber.contains("^\d+$"))
 			{
 				QMessageBox::critical(this, "Error", "You choosed the wrong input file!");
 				list_of_elements.clear();
 				return 1;
 			}
 
-			list_of_complete_elements.insertAtEnd(new Node(new Customer(strNumber, strFullname, strAddress, strDate)));
+			list_of_complete_elements.add(Staff(strFullname, strDepartmentNumber, strPosition, strDate));
 		}
 	}
 	ui->tableWidget->show();
 	ui->Sort->show();
 	ui->lineEdit->show();
-	ui->lineEdit_2->show();
 	ui->lineEdit_5->show();
-	ui->lineEdit_6->show();
-	ui->SearchByDate->show();
 	ui->SearchByName->show();
 	ui->SearchByNumber->show();
-	ui->pushButton_2->show();
-	ui->pushButton->show();
-	ui->ServedList->show();
 	ui->AddCustomer_2->show();
 	ui->DeleteCustomer->show();
 	ui->List->show();
-	ui->Clear->show();
 	ui->Save->show();
 	return 0;
 }
@@ -177,30 +163,46 @@ int MainWindow::on_ShowTable_clicked()
 void MainWindow::on_Sort_clicked() {
 	ui->tableWidget->clearContents();
 	ui->tableWidget->hide();
-	list_of_elements.sort();
-	list_of_complete_elements.sort();
+	list_of_elements.quickSort();
 	filltablewithlist(list_of_elements);
 	ui->tableWidget->show();
 	QMessageBox::information(this, "Notification", "Your lists are sorted!");
 }
 
-void MainWindow::filltablewithlist(DoubleLinkedList& customerList) {
+void MainWindow::filltablewithlist(DoubleLinkedListOnArray& customerList) {
 	if (customerList.isEmpty())
 	{
 		QMessageBox::warning(this, "Warning", "Be careful, you have no such customers");
 	}
-	else {
-		int i = 0;
-		for (const auto& it : customerList) {
-			QTableWidgetItem* itm = new QTableWidgetItem(it.data->getnumber());
-			ui->tableWidget->setItem(i, 0, itm);
-			QTableWidgetItem* itm1 = new QTableWidgetItem(it.data->getname());
-			ui->tableWidget->setItem(i, 1, itm1);
-			QTableWidgetItem* itm2 = new QTableWidgetItem(it.data->getaddress());
-			ui->tableWidget->setItem(i, 2, itm2);
-			QTableWidgetItem* itm3 = new QTableWidgetItem(it.data->getdate());
-			ui->tableWidget->setItem(i, 3, itm3);
-			i++;
+	else 
+	{
+		QString Fullname, DepartmentNumber, Position, Date;
+		for (int i = 0; i < customerList.getTail(); i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				Fullname = customerList.getProduct(i).fullname;
+				DepartmentNumber = customerList.getProduct(i).department_number;
+				Position = customerList.getProduct(i).position;
+				Date = customerList.getProduct(i).date;
+				
+				
+				QTableWidgetItem* itm = new QTableWidgetItem(Fullname);
+				ui->tableWidget->setItem(i, 0, itm);
+				Fullname.clear();
+
+				QTableWidgetItem* itm1 = new QTableWidgetItem(DepartmentNumber);
+				ui->tableWidget->setItem(i, 1, itm1);
+				DepartmentNumber.clear();
+
+				QTableWidgetItem* itm2 = new QTableWidgetItem(Position);
+				ui->tableWidget->setItem(i, 2, itm2);
+				Position.clear();
+
+				QTableWidgetItem* itm3 = new QTableWidgetItem(Date);
+				ui->tableWidget->setItem(i, 3, itm3);
+				Date.clear();
+			}
 		}
 	}
 }
@@ -208,23 +210,13 @@ void MainWindow::filltablewithlist(DoubleLinkedList& customerList) {
 void MainWindow::on_SearchByNumber_clicked() {
 	ui->tableWidget->clearContents();
 	ui->tableWidget->hide();
-	filltablewithlist(list_of_elements.searchByNumber(ui->lineEdit->text()));
-	ui->tableWidget->show();
-}
-
-void MainWindow::on_SearchByDate_clicked() {
-	if (list_of_elements.searchByDate(ui->lineEdit_2->text()).isEmpty())
+	list_of_elements = list_of_elements.searchByNumber(ui->lineEdit->text());
+	if (list_of_elements.isEmpty())
 	{
 		QMessageBox::warning(this, "Warning", "We have no such customer!");
 	}
-	else {
-
-		ui->tableWidget->clearContents();
-		ui->tableWidget->hide();
-		//list_of_elements.searchByDate(ui->lineEdit_2->text());
-		filltablewithlist(list_of_elements.searchByDate(ui->lineEdit_2->text()));
-		ui->tableWidget->show();
-	}
+	filltablewithlist(list_of_elements);
+	ui->tableWidget->show();
 }
 
 void MainWindow::on_SearchByName_clicked() {
@@ -235,32 +227,11 @@ void MainWindow::on_SearchByName_clicked() {
 	else {
 		ui->tableWidget->clearContents();
 		ui->tableWidget->hide();
-		filltablewithlist(list_of_elements.searchByName(ui->lineEdit_5->text()));
+		list_of_elements = list_of_elements.searchByName(ui->lineEdit_5->text());
+		
+		filltablewithlist(list_of_elements);
 		ui->tableWidget->show();
 
-	}
-}
-
-void MainWindow::on_pushButton_2_clicked() {
-	if (ui->lineEdit_6->text().isEmpty())
-	{
-		QMessageBox::warning(this, "Warning", "You havent entered number of customer!");
-	}
-	else
-	{
-		//searchByNumber(ui->lineEdit_6->text(), list_of_elements);
-		if (list_of_elements.searchByNumber(ui->lineEdit_6->text()).isEmpty())
-		{
-			QMessageBox::warning(this, "Warning", "We have no such customer!");
-		}
-		else {
-
-			ui->tableWidget->clearContents();
-			ui->tableWidget->hide();
-			list_of_complete_elements.copy(list_of_elements.searchByNumber(ui->lineEdit_6->text()));
-			filltablewithlist(list_of_complete_elements);
-			ui->tableWidget->show();
-		}
 	}
 }
 
@@ -275,7 +246,7 @@ void MainWindow::on_AddCustomer_clicked() {
 		QMessageBox::warning(this, "Error", "You havent filled some fields :(");
 	}
 	else {
-		list_of_elements.insertAtEnd(new Node(new Customer(number, name, address, date)));
+		list_of_elements.add(Staff(number, name, address, date));
 		list_of_elements.save(list_of_elements, FilePath);
 		filltablewithlist(list_of_elements);
 		x++;
@@ -309,7 +280,7 @@ void MainWindow::on_pushButton_3_clicked() {
 	}
 	else
 	{
-		list_of_elements.deleteelementfromlist(name, number);
+		list_of_elements.deleteelementfromlist(ui->lineEdit_4->text(), ui->lineEdit_3->text());
 		ui->tableWidget->clearContents();
 		filltablewithlist(list_of_elements);
 	}
@@ -345,20 +316,11 @@ void MainWindow::on_DeleteCustomer_clicked() {
 	ui->DeleteCustomer->setDisabled(1);
 }
 
-void MainWindow::on_ServedList_clicked() {
-	list_of_complete_elements.save(list_of_complete_elements, FilePath2);
-}
-
 void MainWindow::on_List_clicked() {
 	ui->tableWidget->clearContents();
 	ui->tableWidget->hide();
 	filltablewithlist(list_of_elements);
 	ui->tableWidget->show();
-}
-
-void MainWindow::on_Clear_clicked() {
-	list_of_complete_elements.clear();
-	QMessageBox::information(this, "Success", "List of Complete customers is clear!");
 }
 
 void MainWindow::on_Save_clicked() {

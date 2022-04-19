@@ -2,11 +2,11 @@
 
 template<class T>
 class vector {
-private:
+
+public:
 	T* data;
 	int size;
 	int capacity;
-public:
 	vector(){
 		data = nullptr;
 		size = 0;
@@ -48,15 +48,25 @@ public:
 		return size;
 	}
 	void push_back(const T& value){
-		if (size == capacity){
-			capacity *= 2;
-			T* temp = new T[capacity];
+		if (size >= capacity && capacity != 0){
+			T* temp = new T[capacity * 2];
 			for (int i = 0; i < size; i++)
 				temp[i] = data[i];
 			delete[] data;
 			data = temp;
+			capacity *= 2;
+			data[size] = value;
 		}
-		data[size++] = value;
+		else if (capacity == 0 && size == 0)
+		{
+			T* temp = new T[2];
+			capacity = 2;
+			temp[0] = value;
+		}
+		else {
+			data[size] = value;
+		}
+		
 	}
 	void pop_back(){
 		if (size > 0)
@@ -107,7 +117,7 @@ public:
 		}
 		size = newSize;
 	}
-	void resize(int newSize, const T& value){
+	/*void resize(int newSize, const T& value){
 		if (newSize > capacity){
 			capacity = newSize;
 			T* temp = new T[capacity];
@@ -119,17 +129,7 @@ public:
 		for (int i = size; i < newSize; i++)
 			data[i] = value;
 		size = newSize;
-	}
-	void reserve(int newCapacity){
-		if (newCapacity > capacity){
-			capacity = newCapacity;
-			T* temp = new T[capacity];
-			for (int i = 0; i < size; i++)
-				temp[i] = data[i];
-			delete[] data;
-			data = temp;
-		}
-	}
+	}*/
 	void shrink_to_fit(){
 		capacity = size;
 		T* temp = new T[capacity];

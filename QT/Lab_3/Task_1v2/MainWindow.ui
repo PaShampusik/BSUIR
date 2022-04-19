@@ -111,26 +111,6 @@
    <zorder>pushButton_3</zorder>
    <zorder>label_3</zorder>
   </widget>
-  <widget class="QPushButton" name="SearchByDate">
-   <property name="geometry">
-    <rect>
-     <x>870</x>
-     <y>80</y>
-     <width>141</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-     <italic>true</italic>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Search By Date</string>
-   </property>
-  </widget>
   <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
@@ -252,9 +232,9 @@
   <widget class="QPushButton" name="ShowTable">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>590</y>
-     <width>281</width>
+     <x>10</x>
+     <y>490</y>
+     <width>271</width>
      <height>41</height>
     </rect>
    </property>
@@ -265,14 +245,14 @@
     </font>
    </property>
    <property name="text">
-    <string>Get waiting list of customers</string>
+    <string>Get list of Staff</string>
    </property>
   </widget>
   <widget class="QPushButton" name="List">
    <property name="geometry">
     <rect>
-     <x>4</x>
-     <y>440</y>
+     <x>10</x>
+     <y>390</y>
      <width>271</width>
      <height>41</height>
     </rect>
@@ -289,9 +269,9 @@
   <widget class="QLineEdit" name="lineEdit_5">
    <property name="geometry">
     <rect>
-     <x>870</x>
-     <y>180</y>
-     <width>141</width>
+     <x>840</x>
+     <y>100</y>
+     <width>181</width>
      <height>21</height>
     </rect>
    </property>
@@ -299,94 +279,24 @@
     <string>aaaaaaaaaaaaaaa</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="Clear">
-   <property name="geometry">
-    <rect>
-     <x>670</x>
-     <y>553</y>
-     <width>341</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>13</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Clear List of Complete Customers</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="SearchByNumber">
    <property name="geometry">
     <rect>
-     <x>870</x>
+     <x>840</x>
      <y>10</y>
-     <width>141</width>
+     <width>181</width>
      <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <pointsize>9</pointsize>
-     <italic>true</italic>
-     <bold>true</bold>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
    </property>
    <property name="text">
-    <string>Search By Number</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_2">
-   <property name="geometry">
-    <rect>
-     <x>840</x>
-     <y>230</y>
-     <width>181</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>7</pointsize>
-     <bold>true</bold>
-     <underline>true</underline>
-    </font>
-   </property>
-   <property name="text">
-    <string>Add Customer to Served List by №</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit_6">
-   <property name="geometry">
-    <rect>
-     <x>840</x>
-     <y>270</y>
-     <width>181</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="inputMask">
-    <string>0000000000</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>4</x>
-     <y>383</y>
-     <width>271</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>13</pointsize>
-     <italic>true</italic>
-    </font>
-   </property>
-   <property name="text">
-    <string>Show list of served customers</string>
+    <string>Search By DepartmentNumber</string>
    </property>
   </widget>
   <widget class="QPushButton" name="DeleteCustomer">
@@ -402,32 +312,11 @@
     <string>Delete customer from waiting list</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="ServedList">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>490</y>
-     <width>281</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <italic>true</italic>
-     <bold>true</bold>
-     <underline>true</underline>
-    </font>
-   </property>
-   <property name="text">
-    <string>Write list of served customers to file</string>
-   </property>
-  </widget>
   <widget class="QGraphicsView" name="graphicsView">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>-20</y>
      <width>1031</width>
      <height>660</height>
     </rect>
@@ -442,41 +331,41 @@
   <widget class="QPushButton" name="Sort">
    <property name="geometry">
     <rect>
-     <x>870</x>
-     <y>300</y>
-     <width>141</width>
+     <x>840</x>
+     <y>140</y>
+     <width>181</width>
      <height>81</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>18</pointsize>
-     <italic>true</italic>
-     <bold>true</bold>
+     <pointsize>10</pointsize>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
    </property>
    <property name="text">
-    <string>Sort</string>
+    <string>Sort by Department Number</string>
    </property>
   </widget>
   <widget class="QPushButton" name="SearchByName">
    <property name="geometry">
     <rect>
-     <x>870</x>
-     <y>150</y>
-     <width>141</width>
+     <x>840</x>
+     <y>70</y>
+     <width>181</width>
      <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <pointsize>9</pointsize>
-     <italic>true</italic>
-     <bold>true</bold>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
    </property>
    <property name="text">
-    <string>Search by Surname</string>
+    <string>Search by Fullname</string>
    </property>
   </widget>
   <widget class="QTableWidget" name="tableWidget">
@@ -521,84 +410,79 @@
    </attribute>
    <row>
     <property name="text">
-     <string>Customer 1</string>
+     <string>Staff 1</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 2</string>
+     <string>Staff 2</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 3</string>
+     <string>Staff 3</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 4</string>
+     <string>Staff 4</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 5</string>
+     <string>Staff 5</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 6</string>
+     <string>Staff 6</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 7</string>
+     <string>Staff 7</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 8</string>
+     <string>Staff 8</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 9</string>
+     <string>Staff 9</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 10</string>
+     <string>Staff 10</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 11</string>
+     <string>Staff 11</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 12</string>
+     <string>Staff 12</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 13</string>
+     <string>Staff 13</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 14</string>
+     <string>Staff 14</string>
     </property>
    </row>
    <row>
     <property name="text">
-     <string>Customer 15</string>
+     <string>Staff 15</string>
     </property>
    </row>
-   <column>
-    <property name="text">
-     <string>Number</string>
-    </property>
-   </column>
    <column>
     <property name="text">
      <string>Fullname</string>
@@ -606,7 +490,12 @@
    </column>
    <column>
     <property name="text">
-     <string>Address</string>
+     <string>Department Number</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Position</string>
     </property>
    </column>
    <column>
@@ -618,8 +507,8 @@
   <widget class="QPushButton" name="Save">
    <property name="geometry">
     <rect>
-     <x>4</x>
-     <y>543</y>
+     <x>10</x>
+     <y>440</y>
      <width>271</width>
      <height>41</height>
     </rect>
@@ -636,9 +525,9 @@
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
     <rect>
-     <x>870</x>
+     <x>840</x>
      <y>40</y>
-     <width>141</width>
+     <width>181</width>
      <height>21</height>
     </rect>
    </property>
@@ -649,40 +538,20 @@
     <number>10</number>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
-   <property name="geometry">
-    <rect>
-     <x>870</x>
-     <y>110</y>
-     <width>141</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="inputMask">
-    <string>00.00.0000</string>
-   </property>
-  </widget>
+  <zorder>graphicsView</zorder>
   <zorder>formLayoutWidget_3</zorder>
   <zorder>formLayoutWidget</zorder>
-  <zorder>graphicsView</zorder>
   <zorder>tableWidget</zorder>
-  <zorder>lineEdit_2</zorder>
   <zorder>AddCustomer_2</zorder>
-  <zorder>Clear</zorder>
   <zorder>DeleteCustomer</zorder>
   <zorder>List</zorder>
   <zorder>Save</zorder>
-  <zorder>SearchByDate</zorder>
   <zorder>SearchByName</zorder>
   <zorder>SearchByNumber</zorder>
-  <zorder>ServedList</zorder>
   <zorder>ShowTable</zorder>
   <zorder>Sort</zorder>
   <zorder>lineEdit</zorder>
   <zorder>lineEdit_5</zorder>
-  <zorder>lineEdit_6</zorder>
-  <zorder>pushButton</zorder>
-  <zorder>pushButton_2</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
