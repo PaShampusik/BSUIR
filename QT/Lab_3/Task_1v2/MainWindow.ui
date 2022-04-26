@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Add New customer to waiting list</string>
+    <string>Add New Staff to waiting list</string>
    </property>
   </widget>
   <widget class="QWidget" name="formLayoutWidget_3">
@@ -45,14 +45,14 @@
        </font>
       </property>
       <property name="text">
-       <string>Number</string>
+       <string>DepartmentNumber</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
      <widget class="QLineEdit" name="lineEdit_3">
       <property name="inputMask">
-       <string>0000000000</string>
+       <string/>
       </property>
      </widget>
     </item>
@@ -75,6 +75,19 @@
       </property>
      </widget>
     </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Delete Staff from list</string>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="1">
      <widget class="QLineEdit" name="lineEdit_4">
       <property name="sizePolicy">
@@ -87,29 +100,19 @@
        <string/>
       </property>
       <property name="maxLength">
-       <number>30</number>
+       <number>40</number>
       </property>
-     </widget>
-    </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QPushButton" name="pushButton_3">
-      <property name="font">
-       <font>
-        <pointsize>11</pointsize>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Delete Customer from list</string>
+      <property name="dragEnabled">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
    </layout>
    <zorder>lineEdit_3</zorder>
    <zorder>label_4</zorder>
-   <zorder>lineEdit_4</zorder>
    <zorder>pushButton_3</zorder>
    <zorder>label_3</zorder>
+   <zorder>lineEdit_4</zorder>
   </widget>
   <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
@@ -130,14 +133,14 @@
        </font>
       </property>
       <property name="text">
-       <string>Number of customer</string>
+       <string>Fullname of Staff</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
      <widget class="QLineEdit" name="AddNumber">
       <property name="inputMask">
-       <string>0000000000</string>
+       <string>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</string>
       </property>
       <property name="dragEnabled">
        <bool>false</bool>
@@ -153,14 +156,17 @@
        </font>
       </property>
       <property name="text">
-       <string>Fullname of customer</string>
+       <string>Department Number of Staff</string>
       </property>
      </widget>
     </item>
     <item row="1" column="1">
      <widget class="QLineEdit" name="lineEdit_7">
+      <property name="inputMask">
+       <string>000000000000000000000000000</string>
+      </property>
       <property name="maxLength">
-       <number>30</number>
+       <number>27</number>
       </property>
       <property name="dragEnabled">
        <bool>true</bool>
@@ -176,14 +182,17 @@
        </font>
       </property>
       <property name="text">
-       <string>Address of customer</string>
+       <string>Position</string>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
      <widget class="QLineEdit" name="AddAddress">
+      <property name="inputMask">
+       <string>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</string>
+      </property>
       <property name="maxLength">
-       <number>25</number>
+       <number>32</number>
       </property>
      </widget>
     </item>
@@ -196,12 +205,16 @@
        </font>
       </property>
       <property name="text">
-       <string>Date of getting </string>
+       <string>Date of employment</string>
       </property>
      </widget>
     </item>
     <item row="3" column="1">
-     <widget class="QLineEdit" name="AddDate"/>
+     <widget class="QLineEdit" name="AddDate">
+      <property name="inputMask">
+       <string>00.00.0000</string>
+      </property>
+     </widget>
     </item>
     <item row="4" column="0" colspan="2">
      <widget class="QPushButton" name="AddCustomer">
@@ -214,7 +227,7 @@
        </font>
       </property>
       <property name="text">
-       <string>AddNewCustomer</string>
+       <string>AddNewStaff</string>
       </property>
      </widget>
     </item>
@@ -263,7 +276,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Show Waiting list</string>
+    <string>Show List of Staff</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_5">
@@ -276,7 +289,7 @@
     </rect>
    </property>
    <property name="inputMask">
-    <string>aaaaaaaaaaaaaaa</string>
+    <string>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</string>
    </property>
   </widget>
   <widget class="QPushButton" name="SearchByNumber">
@@ -309,7 +322,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Delete customer from waiting list</string>
+    <string>Delete Staff from waiting list</string>
    </property>
   </widget>
   <widget class="QGraphicsView" name="graphicsView">
@@ -365,7 +378,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Search by Fullname</string>
+    <string>Search by Surname</string>
    </property>
   </widget>
   <widget class="QTableWidget" name="tableWidget">
@@ -519,7 +532,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Save Waiting list to a file</string>
+    <string>Save List of Staff to File</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit">
@@ -532,10 +545,40 @@
     </rect>
    </property>
    <property name="inputMask">
-    <string>0000000000</string>
+    <string>0000000000000000000</string>
    </property>
    <property name="maxLength">
-    <number>10</number>
+    <number>19</number>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ExpSort">
+   <property name="geometry">
+    <rect>
+     <x>840</x>
+     <y>240</y>
+     <width>181</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Sort Staff With Bigger Experience
+Then by Date, wroted below
+I
+I
+V</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="Experience">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>350</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="inputMask">
+    <string>00.00.0000</string>
    </property>
   </widget>
   <zorder>graphicsView</zorder>
@@ -552,6 +595,8 @@
   <zorder>Sort</zorder>
   <zorder>lineEdit</zorder>
   <zorder>lineEdit_5</zorder>
+  <zorder>ExpSort</zorder>
+  <zorder>Experience</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

@@ -205,7 +205,7 @@ public:
 		while (temp != nullptr) {
 			Node* temp2 = temp->next;
 			while (temp2 != nullptr) {
-				if (temp->data->getname() == temp2->data->getname() || temp->data->getaddress() == temp2->data->getaddress()) {
+				if (temp->data->getname() == temp2->data->getname() && temp->data->getaddress() == temp2->data->getaddress()) {
 
 					//Node* temp3 = temp2->next;
 					if (temp2 == head && temp2 != tail)

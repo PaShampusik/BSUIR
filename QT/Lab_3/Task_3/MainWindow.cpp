@@ -12,14 +12,7 @@ MainWindow::MainWindow(QWidget* parent)
 	ui.CalculateYourResult->hide();
 	ui.Table2->hide();
 
-	for (int i = 0; i < 15; i++)
-	{
-		ui.Table->item(i, 0)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-	}
-	for (int i = 0; i < 15; i++)
-	{
-		ui.Table->item(i, 6)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-	}
+
 	expressions[0] = QString::QString("a / (b - c) * (d + e)");
 	expressions[1] = QString::QString("(a + b) * (c - d) / e");
 	expressions[2] = QString::QString("a - (b + c * d) / e");
@@ -36,8 +29,8 @@ MainWindow::MainWindow(QWidget* parent)
 	expressions[13] = QString::QString("a * (b - c) / (d + e)");
 	expressions[14] = QString::QString("(a + b * c) / (d - e)");
 
-	variables[0][0] = "8.6"; variables[0][1] = "2.4"; variables[0][2] = "5.1"; variables[0][3] = "0.3"; variables[0][4] = "7.9";
-	variables[1][0] = "7.4"; variables[1][1] = "3.6"; variables[1][2] = "2.8"; variables[1][3] = "9.5"; variables[1][4] = "0.9";
+	variables[0][0] = "8.6"; variables[0][1] = "2.4"; variables[0][2] = "5.1"; variables[0][3] = "0.3"; variables[0][4] = "0.0";
+	variables[1][0] = "7.4"; variables[1][1] = "3.6"; variables[1][2] = "2.8"; variables[1][3] = "9.5"; variables[1][4] = "0.0";
 	variables[2][0] = "3.1"; variables[2][1] = "5.4"; variables[2][2] = "0.2"; variables[2][3] = "9.6"; variables[2][4] = "7.8";
 	variables[3][0] = "1.2"; variables[3][1] = "0.7"; variables[3][2] = "9.3"; variables[3][3] = "6.5"; variables[3][4] = "8.4";
 	variables[4][0] = "9.7"; variables[4][1] = "8.2"; variables[4][2] = "3.6"; variables[4][3] = "4.1"; variables[4][4] = "0.5";
@@ -85,6 +78,21 @@ void MainWindow::on_ShowVariables_clicked() {
 }
 
 void MainWindow::on_CalculateResults_clicked() {
+	ui.CalculateResults->setDisabled(1);
+	for (int i = 0; i < 15; i++)
+	{
+		for (int j = 1; j < 6; j++)
+		{
+			QTableWidgetItem* itm = new QTableWidgetItem(variables[i][j - 1]);
+			ui.Table->setItem(i, j, itm);
+		}
+	}
+
+	for (int i = 0; i < 15; i++)
+	{
+		QTableWidgetItem* itm = new QTableWidgetItem(expressions[i]);
+		ui.Table->setItem(i, 0, itm);
+	}
 	//ui.CalculateResults->setDisabled(1);
 	QString buffer;
 	for (int i = 0; i < 15; i++)
@@ -271,32 +279,29 @@ int MainWindow::CompareValues(std::string char1, std::string char2) {
 }
 
 void MainWindow::on_CalculateYourResult_clicked() {
-	if (!ui.Table2->item(0, 0)->text().contains("[a-z]"))
+
+	
+	if (Check(ui.Table2->item(0, 0)->text()))
 	{
-		QMessageBox::critical(this, tr("Error"), tr("You havent entered an expression!"));
-	}
-	else {
-		if (Check(ui.Table2->item(0, 0)->text()))
+		QString variable[5];
+		double result = 0;
+		QString oof = "";
+		for (int i = 0; i < 5; i++)
 		{
-			QString variable[5];
-			double result = 0;
-			QString oof = "";
-			for (int i = 0; i < 5; i++)
+			if (ui.Table2->item(0, i + 1)->text() == "")
 			{
-				if (ui.Table2->item(0, i + 1)->text() == "")
-				{
-					variable[i] = "0";
-				}
-				else {
-					variable[i] = ui.Table2->item(0, i + 1)->text();
-				}
+				variable[i] = "0";
 			}
-			oof = ui.Table2->item(0, 0)->text();
-			result = calculate(oof, variable);
-			QTableWidgetItem* itm = new QTableWidgetItem(QString::number(result));
-			ui.Table2->setItem(0, 6, itm);
+			else {
+				variable[i] = ui.Table2->item(0, i + 1)->text();
+			}
 		}
+		oof = ui.Table2->item(0, 0)->text();
+		result = calculate(oof, variable);
+		QTableWidgetItem* itm = new QTableWidgetItem(QString::number(result));
+		ui.Table2->setItem(0, 6, itm);
 	}
+
 }
 
 
@@ -307,9 +312,11 @@ int MainWindow::Check(QString expression) {
 	QString text;
 	QStringList list_of_strings;
 	std::string temp = expression.toStdString();
+	QRegularExpression re("[a-e]");
+	QRegularExpression re1("[0-9]");
 	int y = 1, x = 0;
 
-	if (expression[0] == '-' || expression[0] == '+' || expression[0] == '*' || expression[0] == '/' || expression[0] == '=')
+	if (expression.isEmpty() || expression[0] == '-' || expression[0] == '+' || expression[0] == '*' || expression[0] == '/' || expression[0] == '=')
 	{
 		QMessageBox::critical(this, tr("Error"), tr("Mistake in input!"));
 		return 0;
@@ -319,6 +326,11 @@ int MainWindow::Check(QString expression) {
 		QMessageBox::critical(this, tr("Error"), tr("Mistake in input!"));
 		return 0;
 	}
+	else if (!expression.contains(re) || expression == " " || expression.length() == 0 || expression.contains(re1) || expression.isEmpty()){
+		QMessageBox::critical(this, tr("Error"), tr("Mistake in input!"));
+			return 0;
+	}
+	
 
 	for (int i = 0; i < expression.length(); i++)
 	{
@@ -326,7 +338,7 @@ int MainWindow::Check(QString expression) {
 		{
 			//add element to stack
 			y = 1;
-			Stack.push(QString::QString(temp[i]));
+				Stack.push(QString::QString(temp[i]));
 		}
 		//if we meet it first time, it is mistake
 		else if (temp[i] == ')')

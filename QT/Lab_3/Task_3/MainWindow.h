@@ -12,10 +12,12 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <string>
+#include<qregularexpression.h>
 #include <QtWidgets/QMainWindow>
 #include "ui_MainWindow.h"
 #include "Stack.h"
 #include "Queue.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

@@ -9,8 +9,6 @@ MainWindow::MainWindow(QWidget* parent)
 	ui->tableWidget->hide();
 
 	ui->List->hide();
-	ui->AddNumber->setInputMask("00000000000");
-	ui->AddDate->setInputMask("00.00.0000");
 	ui->Sort->hide();
 	ui->lineEdit->hide();
 	ui->lineEdit_5->hide();
@@ -34,6 +32,8 @@ MainWindow::MainWindow(QWidget* parent)
 	ui->AddCustomer->hide();
 	ui->AddCustomer_2->hide();
 	ui->Save->hide();
+	ui->Experience->hide();
+	ui->ExpSort->hide();
 }
 
 
@@ -48,7 +48,7 @@ int MainWindow::on_ShowTable_clicked()
 	FilePath = QFileDialog::getOpenFileName(this, "Choose text file", "", "Input (*.txt);");
 	while (!list_of_elements.isEmpty())
 	{
-		list_of_elements.pop();
+		list_of_elements.nodes.pop_back();
 	}
 
 	ui->tableWidget->clearContents();
@@ -113,40 +113,9 @@ int MainWindow::on_ShowTable_clicked()
 		file.close();
 	}
 
+	temp_list.nodes = list_of_elements.nodes;
 
-	file1.open(FilePath2.toStdString());
-	i = 0;
-	if (file1.is_open()) {
 
-		while (!file1.eof()) {
-			getline(file1, buffer);
-			while (buffer == "" && !file1.eof())
-			{
-				getline(file1, buffer);
-			}
-			if (file1.eof())
-			{
-				break;
-			}
-
-			strFullname = QString::fromStdString(buffer);
-			getline(file1, Fullname);
-			getline(file1, DepartmentNumber);
-			getline(file1, Date);
-			getline(file1, buffer);
-			strDepartmentNumber = QString::fromStdString(Fullname);
-			strPosition = QString::fromStdString(DepartmentNumber);
-			strDate = QString::fromStdString(Date);
-			if (strDate.length() > 10 || strDepartmentNumber.contains("^\d+$"))
-			{
-				QMessageBox::critical(this, "Error", "You choosed the wrong input file!");
-				list_of_elements.clear();
-				return 1;
-			}
-
-			list_of_complete_elements.add(Staff(strFullname, strDepartmentNumber, strPosition, strDate));
-		}
-	}
 	ui->tableWidget->show();
 	ui->Sort->show();
 	ui->lineEdit->show();
@@ -157,13 +126,15 @@ int MainWindow::on_ShowTable_clicked()
 	ui->DeleteCustomer->show();
 	ui->List->show();
 	ui->Save->show();
+	ui->Experience->show();
+	ui->ExpSort->show();
 	return 0;
 }
 
 void MainWindow::on_Sort_clicked() {
 	ui->tableWidget->clearContents();
 	ui->tableWidget->hide();
-	list_of_elements.quickSort();
+	list_of_elements.SortByNumber();
 	filltablewithlist(list_of_elements);
 	ui->tableWidget->show();
 	QMessageBox::information(this, "Notification", "Your lists are sorted!");
@@ -174,19 +145,19 @@ void MainWindow::filltablewithlist(DoubleLinkedListOnArray& customerList) {
 	{
 		QMessageBox::warning(this, "Warning", "Be careful, you have no such customers");
 	}
-	else 
+	else
 	{
 		QString Fullname, DepartmentNumber, Position, Date;
-		for (int i = 0; i < customerList.getTail(); i++)
+		for (int i = 0; i < customerList.nodes.size; i++)
 		{
 			for (int j = 0; j < 4; j++)
 			{
-				Fullname = customerList.getProduct(i).fullname;
-				DepartmentNumber = customerList.getProduct(i).department_number;
-				Position = customerList.getProduct(i).position;
-				Date = customerList.getProduct(i).date;
-				
-				
+				Fullname = customerList.nodes[i].product.fullname;
+				DepartmentNumber = customerList.nodes[i].product.department_number;
+				Position = customerList.nodes[i].product.position;
+				Date = customerList.nodes[i].product.date;
+
+
 				QTableWidgetItem* itm = new QTableWidgetItem(Fullname);
 				ui->tableWidget->setItem(i, 0, itm);
 				Fullname.clear();
@@ -205,34 +176,31 @@ void MainWindow::filltablewithlist(DoubleLinkedListOnArray& customerList) {
 			}
 		}
 	}
+	
 }
 
 void MainWindow::on_SearchByNumber_clicked() {
 	ui->tableWidget->clearContents();
 	ui->tableWidget->hide();
-	list_of_elements = list_of_elements.searchByNumber(ui->lineEdit->text());
-	if (list_of_elements.isEmpty())
+	list_of_elements.searchByNumber(ui->lineEdit->text(), list_of_elements);
+	/*if (list_of_elements.isEmpty())
 	{
 		QMessageBox::warning(this, "Warning", "We have no such customer!");
-	}
+	}*/
 	filltablewithlist(list_of_elements);
 	ui->tableWidget->show();
 }
 
 void MainWindow::on_SearchByName_clicked() {
-	if (list_of_elements.searchByName(ui->lineEdit_5->text()).isEmpty())
+	ui->tableWidget->clearContents();
+	ui->tableWidget->hide();
+	list_of_elements.searchByName(ui->lineEdit_5->text(), list_of_elements);
+	/*if (list_of_elements.isEmpty())
 	{
 		QMessageBox::warning(this, "Warning", "We have no such customer!");
-	}
-	else {
-		ui->tableWidget->clearContents();
-		ui->tableWidget->hide();
-		list_of_elements = list_of_elements.searchByName(ui->lineEdit_5->text());
-		
-		filltablewithlist(list_of_elements);
-		ui->tableWidget->show();
-
-	}
+	}*/
+	filltablewithlist(list_of_elements);
+	ui->tableWidget->show();
 }
 
 void MainWindow::on_AddCustomer_clicked() {
@@ -247,7 +215,8 @@ void MainWindow::on_AddCustomer_clicked() {
 	}
 	else {
 		list_of_elements.add(Staff(number, name, address, date));
-		list_of_elements.save(list_of_elements, FilePath);
+		temp_list.nodes = list_of_elements.nodes;
+		/*list_of_elements.save(list_of_elements, FilePath);*/
 		filltablewithlist(list_of_elements);
 		x++;
 	}
@@ -263,13 +232,6 @@ void MainWindow::on_AddCustomer_clicked() {
 	ui->AddCustomer->hide();
 }
 
-void MainWindow::on_pushButton_clicked() {
-	ui->tableWidget->clearContents();
-	ui->tableWidget->hide();
-	filltablewithlist(list_of_complete_elements);
-	ui->tableWidget->show();
-}
-
 void MainWindow::on_pushButton_3_clicked() {
 	QString number, name;
 	number = ui->lineEdit_3->text();
@@ -280,8 +242,9 @@ void MainWindow::on_pushButton_3_clicked() {
 	}
 	else
 	{
-		list_of_elements.deleteelementfromlist(ui->lineEdit_4->text(), ui->lineEdit_3->text());
 		ui->tableWidget->clearContents();
+		list_of_elements.deleteelementfromlist(ui->lineEdit_4->text(), ui->lineEdit_3->text());
+		temp_list.nodes = list_of_elements.nodes;
 		filltablewithlist(list_of_elements);
 	}
 	ui->DeleteCustomer->setDisabled(0);
@@ -319,10 +282,18 @@ void MainWindow::on_DeleteCustomer_clicked() {
 void MainWindow::on_List_clicked() {
 	ui->tableWidget->clearContents();
 	ui->tableWidget->hide();
+	list_of_elements.nodes = temp_list.nodes;
 	filltablewithlist(list_of_elements);
 	ui->tableWidget->show();
 }
 
 void MainWindow::on_Save_clicked() {
 	list_of_elements.save(list_of_elements, FilePath);
+}
+
+void MainWindow::on_ExpSort_clicked() {
+	ui->tableWidget->clearContents();
+	list_of_elements.ExperienceSort(ui->Experience->text(), list_of_elements);
+	filltablewithlist(list_of_elements);
+	
 }

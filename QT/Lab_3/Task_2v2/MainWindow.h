@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QFile>
+#include <QDateTime>
+#include <QDate>
 #include <QMessageBox>
 #include <QTextStream>
 #include <QTextEdit>
@@ -12,6 +14,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <iostream>
 #include <iomanip>
 #include <QtWidgets/QMainWindow>
 #include "ui_MainWindow.h"
@@ -27,14 +30,14 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = Q_NULLPTR);
+    MainWindow(QWidget* parent = Q_NULLPTR);
     ~MainWindow();
 
 private slots:
     void on_Quit_clicked();
     void on_ChooseFile_clicked();
     void on_CheckFile_clicked();
-    void on_CheckHandwriting_clicked();	
+    void on_CheckHandwriting_clicked();
 
 private:
     Ui::MainWindow* ui;

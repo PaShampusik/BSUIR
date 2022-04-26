@@ -108,6 +108,7 @@ public:
 
 		if (cptr->shared_count == 0)
 		{
+			OPtr->~T();
 			delete OPtr;
 			if (cptr->weak_count == 0)
 			{

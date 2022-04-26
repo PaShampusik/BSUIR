@@ -48,7 +48,7 @@ private slots:
     void on_SearchByName_clicked();
     //void on_pushButton_2_clicked();
     void on_AddCustomer_clicked();
-    void on_pushButton_clicked();
+    //void on_pushButton_clicked();
     void on_pushButton_3_clicked();
     void on_AddCustomer_2_clicked();
     void on_DeleteCustomer_clicked();
@@ -56,6 +56,7 @@ private slots:
     void on_List_clicked();
     //void on_Clear_clicked();
     void on_Save_clicked();
+    void on_ExpSort_clicked();
 
 
 
@@ -63,7 +64,7 @@ public:
 
     int count = 0;
 
-    DoubleLinkedListOnArray list_of_elements, list_of_complete_elements;
+    DoubleLinkedListOnArray list_of_elements, temp_list;
 
     QString FilePath = "C:/Users/shchi/BSUIR/QT/Lab_3/Task_1v2/input.txt";
     QString FilePath2 = "C:/Users/shchi/BSUIR/QT/Lab_3/Task_1v2/output.txt";

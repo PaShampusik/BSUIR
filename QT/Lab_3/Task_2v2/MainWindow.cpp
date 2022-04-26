@@ -1,14 +1,14 @@
 #include "MainWindow.h"
 
 MainWindow::MainWindow(QWidget* parent)
-	: QMainWindow(parent),ui(new Ui::MainWindow)
+	: QMainWindow(parent)
 {
 	ui->setupUi(this);
 	this->setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
 }
 
 MainWindow::~MainWindow() {
-	
+
 }
 
 
@@ -92,13 +92,13 @@ void MainWindow::on_CheckFile_clicked() {
 		}
 		count++;
 	}
-	
-	if(!Stack.isEmpty() && y)
+
+	if (!Stack.isEmpty() && y)
 	{
 		QMessageBox::critical(this, tr("Error"), tr("Mistake in line ") + QString::number(Stack.gettopline() + 1) + tr(" in symbol ") + QString::number(Stack.gettopcolumn() + 1));
 		x = 1;
-	}	
-	
+	}
+
 	if (!x)
 	{
 		QMessageBox::information(this, tr("Success!"), tr("Text has been successfully validated!"));
@@ -107,13 +107,13 @@ void MainWindow::on_CheckFile_clicked() {
 	{
 		file.close();
 	}
-	
+
 }
 
 void MainWindow::on_CheckHandwriting_clicked() {
-	
+
 	Stack.clear();
-	
+
 	QString text;
 	QStringList list_of_strings;
 	QString line;
@@ -194,6 +194,6 @@ void MainWindow::on_CheckHandwriting_clicked() {
 
 
 void MainWindow::on_Quit_clicked() {
-	
+
 	QApplication::quit();
 }
