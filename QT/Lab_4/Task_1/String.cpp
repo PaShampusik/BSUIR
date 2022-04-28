@@ -162,19 +162,47 @@ int strncmp(const char* s1, const char* s2, size_t n) {
 }
 
 size_t strxfrm(char* s1, const char* s2, size_t n) {
-	///////////////
+	return std::strxfrm(s1, s2, n);
 }
 
-char* strtok(char* s1, const char* s2) {
-	///////////
+char* strtok(char* s1, char d) {
+	static char* input = nullptr;
+	if (s1 != nullptr) {
+		input = s1;
+	}
+	if (input == nullptr)
+	{
+		return nullptr;
+	}
+	char* result = new char[strlen(input) + 1];
+	int i = 0;
+	for (; input[i] != '\0'; i++)
+	{
+		if (input[i] != d)
+		{
+			result[i] = input[i];
+		}
+		else {
+			result[i] = '\0';
+			input = input + i + 1;
+			return result;
+		}
+	}	
+	result[i] = '\0';
+	input = nullptr;
+	return result;	
 }
 
 void* memset(void* s, int c, size_t n) {
-	/////////////////
+	char* p = (char*)s;
+	for (size_t i = 0; i < n; i++) {
+		p[i] = c;
+	}
+	return s;
 }
 
 char* strerror(int errnum) {
-	////////////////////
+	return std::strerror(errnum);
 }
 
 size_t strlen(const char* s) {
