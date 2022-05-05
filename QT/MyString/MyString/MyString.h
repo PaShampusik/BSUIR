@@ -1,18 +1,21 @@
 #pragma once
 
-#include "Vector.h"
 
-class string {
+#ifdef MYSTRING_EXPORTS
+#define MYSTRING_API __declspec(dllexport)
+#else
+#define MYSTRING_API __declspec(dllimport)
+#endif
+
+class MYSTRING_API MyString {
 private:
 	char* str;
-	int length;
-
+	int length = 0;
 public:
-	string();
-	string(const char*);
-	string(const string&);
-	string(const char*, int);
-	~string();
+	MyString();
+	MyString(const char* s);
+	MyString(const char* s, int n);
+	~MyString();
 	void* memcpy(void* s1, const void* s2, size_t n);
 	void* memmove(void* s1, const void* s2, size_t n);
 	char* strcpy(char* s1, const char* s2);
@@ -24,8 +27,7 @@ public:
 	int strcoll(const char* s1, const char* s2);
 	int strncmp(const char* s1, const char* s2, size_t n);
 	size_t strxfrm(char* s1, const char* s2, size_t n);
-	char* strtok(char* s1, const char* s2);
+	char* strtok(char* s1, char d);
 	void* memset(void* s, int c, size_t n);
-	char* strerror(int errnum);
 	size_t strlen(const char* s);
 };

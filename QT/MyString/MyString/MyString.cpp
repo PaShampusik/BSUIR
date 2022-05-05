@@ -1,35 +1,39 @@
-#include "string.h"
+#include "pch.h" 
+#include <utility>
+#include <limits.h>
+#include "mystring.h"
 
-string::string() {
+MyString::MyString() {
+	length = 0;
 	str = new char[1];
 	str[0] = '\0';
 }
 
-string::string(const char* s) {
+MyString::MyString(const char* s) {
 	str = new char[strlen(s) + 1];
 	strcpy(str, s);
 }
 
-string::string(const char* s, int n) {
+MyString::MyString(const char* s, int n) {
 	str = new char[n + 1];
 	strncpy(str, s, n);
 	str[n] = '\0';
 }
 
-string::~string() {
+MyString::~MyString() {
 	delete[] str;
 }
 
-void* memcpy(void* s1, const void* s2, size_t n) {
+void* MyString::memcpy(void* s1, const void* s2, size_t n) {
 	char* p1 = (char*)s1;
 	const char* p2 = (const char*)s2;
 	for (size_t i = 0; i < n; i++) {
 		p1[i] = p2[i];
 	}
-	return s1;	
+	return s1;
 }
 
-void* memmove(void* s1, const void* s2, size_t n) {
+void* MyString::memmove(void* s1, const void* s2, size_t n) {
 	char* p1 = (char*)s1;
 	const char* p2 = (const char*)s2;
 	if (p1 < p2) {
@@ -45,7 +49,7 @@ void* memmove(void* s1, const void* s2, size_t n) {
 	return s1;
 }
 
-char* strcpy(char* s1, const char* s2) {
+char* MyString::strcpy(char* s1, const char* s2) {
 	char* p1 = s1;
 	const char* p2 = s2;
 	while (*p2 != '\0') {
@@ -57,7 +61,7 @@ char* strcpy(char* s1, const char* s2) {
 	return s1;
 }
 
-char* strncpy(char* s1, const char* s2, size_t n) {
+char* MyString:: strncpy(char* s1, const char* s2, size_t n) {
 	char* p1 = s1;
 	const char* p2 = s2;
 	for (size_t i = 0; i < n; i++) {
@@ -70,7 +74,7 @@ char* strncpy(char* s1, const char* s2, size_t n) {
 }
 
 ///////////stronge things
-char* strcat(char* s1, const char* s2) {
+char* MyString::strcat(char* s1, const char* s2) {
 	char* p1 = s1;
 	const char* p2 = s2;
 	while (*p1 != '\0') {
@@ -85,7 +89,7 @@ char* strcat(char* s1, const char* s2) {
 	return s1;
 }
 
-char* strncat(char* s1, const char* s2, size_t n){
+char* MyString::strncat(char* s1, const char* s2, size_t n) {
 	char* p1 = s1;
 	const char* p2 = s2;
 	while (*p1 != '\0') {
@@ -100,7 +104,7 @@ char* strncat(char* s1, const char* s2, size_t n){
 	return s1;
 }
 
-int memcmp(const void* s1, const void* s2, size_t n) {
+int MyString::memcmp(const void* s1, const void* s2, size_t n) {
 	const char* p1 = (const char*)s1;
 	const char* p2 = (const char*)s2;
 	for (size_t i = 0; i < n; i++) {
@@ -114,7 +118,7 @@ int memcmp(const void* s1, const void* s2, size_t n) {
 	return 0;
 }
 
-int strcmp(const char* s1, const char* s2) {
+int MyString::strcmp(const char* s1, const char* s2) {
 	const char* p1 = s1;
 	const char* p2 = s2;
 	while (*p1 != '\0' && *p2 != '\0') {
@@ -138,11 +142,11 @@ int strcmp(const char* s1, const char* s2) {
 	}
 }
 
-int strcoll(const char* s1, const char* s2) {
+int MyString::strcoll(const char* s1, const char* s2) {
 	return strcmp(s1, s2);
 }
 
-int strncmp(const char* s1, const char* s2, size_t n) {
+int MyString::strncmp(const char* s1, const char* s2, size_t n) {
 	const char* p1 = s1;
 	const char* p2 = s2;
 	for (size_t i = 0; i < n; i++) {
@@ -161,7 +165,7 @@ int strncmp(const char* s1, const char* s2, size_t n) {
 	}
 }
 
-size_t strxfrm(char* s1, const char* s2, size_t n) {
+size_t MyString::strxfrm(char* s1, const char* s2, size_t n) {
 	char* p1 = s1;
 	const char* p2 = s2;
 	for (size_t i = 0; i < n; i++) {
@@ -173,7 +177,7 @@ size_t strxfrm(char* s1, const char* s2, size_t n) {
 	return n;
 }
 
-char* strtok(char* s1, char d) {
+char* MyString::strtok(char* s1, char d) {
 	static char* input = nullptr;
 	if (s1 != nullptr) {
 		input = s1;
@@ -195,13 +199,13 @@ char* strtok(char* s1, char d) {
 			input = input + i + 1;
 			return result;
 		}
-	}	
+	}
 	result[i] = '\0';
 	input = nullptr;
-	return result;	
+	return result;
 }
 
-void* memset(void* s, int c, size_t n) {
+void* MyString::memset(void* s, int c, size_t n) {
 	char* p = (char*)s;
 	for (size_t i = 0; i < n; i++) {
 		p[i] = c;
@@ -209,15 +213,15 @@ void* memset(void* s, int c, size_t n) {
 	return s;
 }
 
-size_t strlen(const char* s) {
+
+size_t MyString::strlen(const char* s) {
 	size_t size = 0;
-	int i;
 	while (s[size] != '\0') {
 		size++;
-		i++;
 	}
 	return size;
 }
+
 
 
 

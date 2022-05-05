@@ -123,28 +123,28 @@
             {
                 return;
             }
-            if (a == 1)
+            else if (a == 1)
             {
                 this.ShowTarifs();
                 Console.WriteLine("Press any button to continue");
                 Console.ReadKey();
                 this.menu();
             }
-            if (a == 2)
+            else if (a == 2)
             {
                 this.ShowClients();
                 Console.WriteLine("Press any button to continue");
                 Console.ReadKey();
                 this.menu();
             }
-            if (a == 3)
+            else if (a == 3)
             {
                 this.ShowBought();
                 Console.WriteLine("Press any button to continue");
                 Console.ReadKey();
                 this.menu();
             }
-            if (a == 4)
+            else if (a == 4)
             {
                 Console.WriteLine("Enter name of a client");
                 string name = Console.ReadLine();
@@ -161,7 +161,7 @@
                 Console.ReadKey();
                 this.menu();
             }
-            if (a == 5)
+            else if (a == 5)
             {
                 Console.WriteLine("Enter name of a client");
                 string name = Console.ReadLine();
@@ -172,7 +172,7 @@
                 Console.ReadKey();
                 this.menu();
             }
-            if (a == 6)
+            else if (a == 6)
             {
                 Console.WriteLine("Enter name of a tarif");
                 string nameTarif = Console.ReadLine();
@@ -184,7 +184,7 @@
                 Console.ReadKey();
                 this.menu();
             }
-            if (a == 7)
+            else if (a == 7)
             {
                 Console.WriteLine("Enter name of a client");
                 string name = Console.ReadLine();
@@ -192,6 +192,13 @@
                 string number = Console.ReadLine();
 
                 this.CalculateSumOfBoughtTicketsForClient(name, number);
+                Console.WriteLine("Press any button to continue");
+                Console.ReadKey();
+                this.menu();
+            }
+            else
+            {
+                Console.WriteLine("Error");
                 Console.WriteLine("Press any button to continue");
                 Console.ReadKey();
                 this.menu();
