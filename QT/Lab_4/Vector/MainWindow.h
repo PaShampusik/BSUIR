@@ -1,4 +1,5 @@
 #pragma once
+#pragma comment(lib, "MyVector.lib")
 
 #include <QtWidgets/QMainWindow>
 #include "ui_MainWindow.h"
@@ -13,4 +14,6 @@ public:
 
 private:
     Ui::MainWindowClass ui;
+	MyVector<int> vector;
+	
 };

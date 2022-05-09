@@ -2,6 +2,7 @@
 #include "framework.h"
 #include "MyVector.h"
 
+
 template <typename T>
 MyVector<T>::MyVector() {
 	data = nullptr;
@@ -143,6 +144,7 @@ void MyVector<T>::shrink_to_fit() {
 	delete[] data;
 	data = temp;
 }
+
 template <typename T>
 void MyVector<T>::swap(MyVector<T>& other) {
 	T* temp = data;
@@ -155,3 +157,117 @@ void MyVector<T>::swap(MyVector<T>& other) {
 	capacity = other.capacity;
 	other.capacity = tempCapacity;
 }
+
+template <typename T>
+void MyVector<T>::assign(int count, const T& value) {
+	if (count > capacity) {
+		capacity = count;
+		T* temp = new T[capacity];
+	}
+}
+
+template <typename T>
+T& MyVector<T>::at(int index) {
+	if (index < 0 || index >= size)
+		throw std::out_of_range("Index out of range");
+	return data[index];
+}
+
+template <typename T>
+T& MyVector<T>::back() {
+	if (size == 0)
+		throw std::out_of_range("Index out of range");
+	return data[size - 1];
+}
+
+template<typename T>
+T& MyVector<T>::front() {
+	if (size == 0)
+		throw std::out_of_range("Vector is empty");
+	return data[0];
+}
+
+template<typename T>
+void MyVector<T>::emplace_back(const T& value) {
+
+	if (size == capacity) {
+		T* temp = new T[capacity * 2];
+		for (int i = 0; i < size; i++)
+			temp[i] = data[i];
+		delete[] data;
+		data = temp;
+		capacity *= 2;
+	}
+	if (size == 0)
+	{
+		capacity = 2;
+		data = new T[capacity];
+	}
+	data[size] = value;
+	size++;
+}
+
+template<typename T>
+void MyVector<T>::emplace(int index, const T& value) {
+	if (size == capacity) {
+		capacity *= 2;
+		T* temp = new T[capacity];
+		for (int i = 0; i < size; i++)
+			temp[i] = data[i];
+		delete[] data;
+		data = temp;		
+	}
+	for (int i = size; i > index; i--)
+		data[i] = data[i - 1];
+	data[index] = value;
+	size++;
+	}
+
+template<typename T>
+bool MyVector<T>::empty() {
+	return size == 0;
+}
+
+template<typename T>
+T* MyVector<T>::get_data() {
+	return data;
+}
+
+template<typename T> 
+int MyVector<T>::max_size() {
+	return capacity;
+}
+
+template<typename T> 
+int MyVector<T>::get_capacity() {
+	return capacity;
+}
+
+template<typename T>
+inline typename MyVector<T>::random_access_iterator MyVector<T>::begin() {
+	return MyVector<T>::random_access_iterator(std::addressof(data[0]));
+}
+
+template<typename T>
+inline typename MyVector<T>::random_access_iterator MyVector<T>::end() {
+	if (size == 0){
+		return begin();
+	}
+	return MyVector<T>::random_access_iterator(std::addressof(data[size]));
+}
+
+template<typename T>
+inline typename const MyVector<T>::random_access_iterator MyVector<T>::cend() const{
+	if (size == 0) {
+		return cbegin();
+	}
+	return MyVector<T>::random_access_iterator(std::addressof(data[size]));
+}
+
+template<typename T>
+inline typename const MyVector<T>::random_access_iterator MyVector<T>::cbegin() const{
+	return MyVector<T>::random_access_iterator(std::addressof(data[0]));
+}
+
+
+	

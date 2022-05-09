@@ -21,7 +21,7 @@ MyString::MyString(const char* s, int n) {
 }
 
 MyString::~MyString() {
-	delete[] str;
+	
 }
 
 void* MyString::memcpy(void* s1, const void* s2, size_t n) {
