@@ -222,7 +222,6 @@ void Parser::on_pushButton_clicked()
 			case '}':
 			{
 				if (!stack.isEmpty()) {
-
 					stack.pop();
 				}
 			}
