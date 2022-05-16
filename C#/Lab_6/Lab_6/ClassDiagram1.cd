@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Lab_6.Sup">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACQASAAAAEAAAAAQAAKAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Sup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab_6.Bulka">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAACQASAAAAEAAAAAQAACAEACAgAAAgAAAABAA=</HashCode>
+      <FileName>Bulka.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab_6.Buffet">
+    <Position X="4.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAABBAAQBAAIIIgAAAgAAgAEAAEQAAAAAAI=</HashCode>
+      <FileName>Buffet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab_6.Bludo" Collapsed="true">
+    <Position X="11.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAASAAAAEAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Bludo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

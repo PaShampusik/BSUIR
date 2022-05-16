@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab_6
+namespace Lab_8
 {
-    internal class Pirog
+    internal interface IPrice
     {
+        int GetPrice();
     }
 }

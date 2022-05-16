@@ -6,9 +6,20 @@ using System.Threading.Tasks;
 
 namespace Lab_6
 {
-    abstract class Bludo
+    abstract class Bludo 
     {
-        private int price;
+        public abstract string GetName();
 
+
+        public abstract double GetPrice();
+
+        public abstract double GetWeight();
+
+        public abstract string Sustain();
+        public virtual double WeightToPrice()
+        {
+            return 0;
+        } 
+        
     }
 }

@@ -4,6 +4,10 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
+	/*while (Dequeue.size() < 2) {
+		Dequeue.push_back(1);
+		Dequeue.pop_front();
+	}*/
 }
 
 void MainWindow::on_PushBack_clicked() {
@@ -24,7 +28,7 @@ void MainWindow::on_PushFront_clicked() {
 	{
 		ui.Dequeue->addItem(QString::number(*i));
 	}
-	ui.Size->setText(QString::number(Dequeue.size()));
+	ui.Size->setText(QString::QString("Size: ") + QString::number(Dequeue.size()));
 
 }
 
@@ -39,7 +43,7 @@ void MainWindow::on_PopBack_clicked() {
 	{
 		ui.Dequeue->addItem(QString::number(*i));
 	}
-	ui.Size->setText(QString::number(Dequeue.size()));
+	ui.Size->setText(QString::QString("Size: ") + QString::number(Dequeue.size()));
 
 }
 
@@ -55,7 +59,7 @@ void MainWindow::on_PopFront_clicked() {
 	{
 		ui.Dequeue->addItem(QString::number(*i));
 	}
-	ui.Size->setText(QString::number(Dequeue.size()));
+	ui.Size->setText(QString::QString("Size: ") + QString::number(Dequeue.size()));
 
 }
 
@@ -63,5 +67,5 @@ void MainWindow::on_PopFront_clicked() {
 void MainWindow::on_Clear_clicked() {
 	Dequeue.clear();
 	ui.Dequeue->clear();
-	ui.Size->setText(QString::number(Dequeue.size()));
+	ui.Size->setText(QString::QString("Size: ") + QString::number(Dequeue.size()));
 }

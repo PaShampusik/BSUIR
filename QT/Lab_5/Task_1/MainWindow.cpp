@@ -45,15 +45,21 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 void MainWindow::on_List_itemDoubleClicked(QListWidgetItem* itm) {
-	for (int i = 0; i < ui.List->count(); i++)
+	if (ui.List->count() == 2)
 	{
-		if (ui.List->item(i) == itm)
-		{
-			ui.List->takeItem(i);
-		}
+
 	}
-	list.deleteNode(itm->text());
-	buffer.push_back(itm->text());
+	else {
+		for (int i = 0; i < ui.List->count(); i++)
+		{
+			if (ui.List->item(i) == itm)
+			{
+				ui.List->takeItem(i);
+			}
+		}
+		list.deleteNode(itm->text());
+		buffer.push_back(itm->text());
+	}
 }
 
 void MainWindow::on_List_itemClicked(QListWidgetItem* itm) {

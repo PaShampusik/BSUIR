@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Lab_8.RailwayStation">
+    <Position X="3.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEgAAAEAAAQAEhAAAAAgAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>RailwayStation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab_8.NoDiscPrice">
+    <Position X="11" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAQAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NoDiscPrice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab_8.DiscPrice">
+    <Position X="9.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAQAAAAAAEAAAAAAAAAAAAAAAAgAAAAIAAAA=</HashCode>
+      <FileName>DiscPrice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lab_8.Tarif">
+    <Position X="6.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAQAAAAAAEAAAAAAAAAAAAAAAAAABAAAAAQA=</HashCode>
+      <FileName>Tarif.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Lab_8.IPrice">
+    <Position X="10" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IPrice.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
