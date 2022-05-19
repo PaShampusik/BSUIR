@@ -11,7 +11,7 @@ namespace Lab_6
         private double price;
         private bool fresh;
         private double weight;
-        private string name;
+        private new string? name;
         public bool Fresh
         {
             get
@@ -41,7 +41,7 @@ namespace Lab_6
                 }
             }
         }
-        public String Name
+        public String? Name
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Lab_6
             }
         }
 
-        public override string GetName()
+        public new string? GetName()
         {
             return name;
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab_6
 {
-    internal class Sup : Bludo
+    internal sealed class Sup : Bludo
     {
        
         public bool Hot {

@@ -150,7 +150,7 @@ namespace Lab_6
         public void menu()
         {
             Console.WriteLine("Выберите действие: ");
-            Console.WriteLine("1.Покаазать все булки и супы");
+            Console.WriteLine("1. Показать все булки и супы");
             Console.WriteLine("2. Добавить булку");
             Console.WriteLine("3. Добавить суп");
             Console.WriteLine("4. Удалить булку по названию");
