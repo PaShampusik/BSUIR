@@ -14,8 +14,6 @@ void code(const char* str);
 int main()
 {
 	
-		std::cout << __cplusplus;
-	
 }
 
 

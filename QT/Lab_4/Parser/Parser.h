@@ -18,8 +18,8 @@ public:
     Parser(QWidget *parent = Q_NULLPTR);
 
 private slots:
-    void on_OpenFile_clicked();
-    void on_pushButton_clicked();
+    void on_File_clicked();
+    void on_Button_clicked();
 	
 	
 

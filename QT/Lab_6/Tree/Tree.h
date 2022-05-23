@@ -16,8 +16,6 @@ class Tree {
 	Node<T>* root;
 	int size;
 
-
-
 	Node<T>* rotateright(Node<T>* p) // правый поворот вокруг p
 	{
 		Node<T>* q = p->left;

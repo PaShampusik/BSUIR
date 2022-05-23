@@ -117,22 +117,50 @@ namespace Lab_7
 
         public static bool operator ==(Rational r1, Rational r2)
         {
-            return r1.numerator * r2.denominator == r2.numerator * r1.denominator;
+            if (r1.numerator == r2.numerator && r1.denominator == r2.denominator)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static bool operator !=(Rational r1, Rational r2)
         {
-            return r1.numerator * r2.denominator != r2.numerator * r1.denominator;
+            if (r1.numerator != r2.numerator || r1.denominator != r2.denominator)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static bool operator >(Rational r1, Rational r2)
         {
-            return r1.numerator * r2.denominator > r2.numerator * r1.denominator;
+            if (r1.numerator / r1.denominator > r2.numerator / r2.denominator)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static bool operator <(Rational r1, Rational r2)
         {
-            return r1.numerator * r2.denominator < r2.numerator * r1.denominator;
+            if (r1.numerator / r1.denominator < r2.numerator / r2.denominator)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static bool operator >=(Rational r1, Rational r2)

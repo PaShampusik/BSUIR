@@ -16,11 +16,6 @@ namespace Lab_6
         {
             return name;
         }
-
-        
-
-        
-
         public abstract double GetPrice();
 
         public abstract double GetWeight();

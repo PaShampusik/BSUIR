@@ -7,7 +7,7 @@ Parser::Parser(QWidget* parent)
 
 }
 
-void Parser::on_OpenFile_clicked()
+void Parser::on_File_clicked()
 {
 	ui.plainTextEdit->clear();
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open a cpp file"), "D:/BSUIR/QT/Lab 4/Parser", tr("Text File (*.cpp)"));
@@ -36,7 +36,7 @@ void Parser::on_OpenFile_clicked()
 
 }
 
-void Parser::on_pushButton_clicked()
+void Parser::on_Button_clicked()
 {
 	ui.plainTextEdit_2->clear();
 	QString plText = ui.plainTextEdit->toPlainText();
@@ -45,34 +45,28 @@ void Parser::on_pushButton_clicked()
 		QMessageBox::warning(this, "Error!", "File is Empty");
 		return;
 	}
-	QStringList strList;
-	strList = ui.plainTextEdit->toPlainText().split("\n");
+	QStringList List;
+	List = ui.plainTextEdit->toPlainText().split("\n");
 
 	int Count = 0;
 	std::string str = "";
 	std::string s = "";
-	for (int i = 0; i < strList.size(); i++) {
-		std::string str = strList[i].toStdString();
+	for (int i = 0; i < List.size(); i++) {
+		std::string str = List[i].toStdString();
 		std::cmatch result;
 		std::cmatch resultInit;
 
-		std::regex regularForVar(
-			"(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)"
-			"(( )*\\**( )*([\\w-]+)((,)|(;)))+"
-		);
+		std::regex Var("(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)""(( )*\\**( )*([\\w-]+)((,)|(;)))+");
 
-		std::regex regularForVarInit(
-			"(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)"
-			"(( )*\\**( )*([\\w-]+)((\\s*=\\s*&*[\\w]+)|(\\(\\s*[0-9]+\\s*\\)))(\\[\\w\\])*(,)*)+"
-		);
+		std::regex VarInit("(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)""(( )*\\**( )*([\\w-]+)((\\s*=\\s*&*[\\w]+)|(\\(\\s*[0-9]+\\s*\\)))(\\[\\w\\])*(,)*)+");
 
 
-		if (std::regex_search(str.c_str(), result, regularForVar)) {
+		if (std::regex_search(str.c_str(), result, Var)) {
 			Count++;
 			s += result[0];
 			s += "\n";
 		}
-		if (std::regex_search(str.c_str(), resultInit, regularForVarInit)) {
+		if (std::regex_search(str.c_str(), resultInit, VarInit)) {
 			Count++;
 			s += resultInit[0];
 			s += "\n";
@@ -82,39 +76,31 @@ void Parser::on_pushButton_clicked()
 	}
 	ui.plainTextEdit_2->appendPlainText("Variables: \n" + QString::fromStdString(s) + "\nCount of variables: " + QString::number(Count));
 
-	int classesCount = 0;
-	int objCount = 0;
-	std::vector<std::string> classesVect;
-	for (int i = 0; i < strList.size(); i++) {
-		std::string str = strList[i].toStdString();
+	int classes = 0;
+	int objects = 0;
+	std::vector<std::string> classvector;
+	for (int i = 0; i < List.size(); i++) {
+		std::string str = List[i].toStdString();
 		std::cmatch resultClass;
-		std::regex regularForClass(
-			"(class)"
-			"(\\s)"
-			"([\\w-]+)"
-		);
-		if (std::regex_search(str.c_str(), resultClass, regularForClass)) {
-			classesVect.push_back(resultClass[3]);
-			classesCount++;
+		std::regex classs("(class)""(\\s)""([\\w-]+)");
+		if (std::regex_search(str.c_str(), resultClass, classs)) {
+			classvector.push_back(resultClass[3]);
+			classes++;
 		}
 	}
 
-	ui.plainTextEdit_2->appendPlainText("Classes Count: " + QString::number(classesCount));
+	ui.plainTextEdit_2->appendPlainText("Classes Count: " + QString::number(classes));
 
 
 	int structsCount = 0;
 	int objStructsCount = 0;
-	std::vector<std::string> structsVect;
-	for (int i = 0; i < strList.size(); i++) {
-		std::string str = strList[i].toStdString();
+	std::vector<std::string> structsvector;
+	for (int i = 0; i < List.size(); i++) {
+		std::string str = List[i].toStdString();
 		std::cmatch resultStruct;
-		std::regex regularForStruct(
-			"(struct)"
-			"(\\s)"
-			"([\\w-]+)"
-		);
+		std::regex regularForStruct("(struct)""(\\s)""([\\w-]+)");
 		if (std::regex_search(str.c_str(), resultStruct, regularForStruct)) {
-			structsVect.push_back(resultStruct[3]);
+			structsvector.push_back(resultStruct[3]);
 			structsCount++;
 		}
 	}
@@ -123,15 +109,10 @@ void Parser::on_pushButton_clicked()
 
 
 	int arrsCount = 0;
-	for (int i = 0; i < strList.size(); i++) {
-		std::string str = strList[i].toStdString();
+	for (int i = 0; i < List.size(); i++) {
+		std::string str = List[i].toStdString();
 
-		std::regex regularForStruct(
-			"(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long)"
-			"(\\s)+"
-			"([\\w-]+)"
-			"(\\s*)"
-			"\\[\\s*\\d*\\s*\\]"
+		std::regex regularForStruct("(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long)""(\\s)+""([\\w-]+)""(\\s*)""\\[\\s*\\d*\\s*\\]"
 		);
 		if (std::regex_search(str.c_str(), regularForStruct)) {
 			arrsCount++;
@@ -141,18 +122,10 @@ void Parser::on_pushButton_clicked()
 
 	s = "";
 	str = "";
-	for (int i = 0; i < strList.size(); i++) {
-		std::string str = strList[i].toStdString();
+	for (int i = 0; i < List.size(); i++) {
+		std::string str = List[i].toStdString();
 		std::cmatch resultPrototypeFunction;
-		std::regex regularForPrototype(
-			"(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)"
-			"(\\s*\\**\\s*)"
-			"([\\w-]+)"
-			"(( )*)"
-			"(\\()"
-			"(( )*(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)(( )*\\**( )*([\\w-])*)*(,)*)*"
-			"(\\))"
-		);
+		std::regex regularForPrototype("(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)""(\\s*\\**\\s*)""([\\w-]+)""(( )*)""(\\()""(( )*(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)(( )*\\**( )*([\\w-])*)*(,)*)*""(\\))");
 		if (std::regex_search(str.c_str(), resultPrototypeFunction, regularForPrototype)) {
 			s += resultPrototypeFunction[0];
 			s += ";\n";
@@ -164,13 +137,10 @@ void Parser::on_pushButton_clicked()
 
 	s = "";
 	MyString string;
-	for (int i = 0; i < strList.size(); i++) {
-		std::string str = strList[i].toStdString();
+	for (int i = 0; i < List.size(); i++) {
+		std::string str = List[i].toStdString();
 
-		std::regex regularVarChanged(
-			"(\\**([\\w-]+)(\\[(\\w)*\\])*)"
-			"(\\s*=\\s*&*[\\w]+)"
-		);
+		std::regex regularVarChanged("(\\**([\\w-]+)(\\[(\\w)*\\])*)""(\\s*=\\s*&*[\\w]+)");
 		if (std::regex_search(str.c_str(), regularVarChanged)) {
 
 			s += "Row: " + std::to_string(i);
@@ -187,23 +157,17 @@ void Parser::on_pushButton_clicked()
 	s = "";
 	Stack stack;
 
-	for (int i = 0; i < strList.size(); i++) {
-		std::string str = strList[i].toStdString();
+	for (int i = 0; i < List.size(); i++) {
+		std::string str = List[i].toStdString();
 		for (char c : str) {
 			switch (c) {
 			case '{':
 			{
 				stack.push('{');
 				if (!stack.isEmpty()) {
-					std::regex regularForVar(
-						"(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)"
-						"(( )*\\**( )*([\\w-]+)((,)|(;)))+"
-					);
-					
-					std::regex regularForVarInit(
-						"(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)"
-						"(( )*\\**( )*([\\w-]+)((\\s*=\\s*&*[\\w]+)|(\\(\\s*[0-9]+\\s*\\)))(\\[\\w\\])*(,)*)+"
-					);
+					std::regex regularForVar("(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)""(( )*\\**( )*([\\w-]+)((,)|(;)))+");
+
+					std::regex regularForVarInit("(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)""(( )*\\**( )*([\\w-]+)((\\s*=\\s*&*[\\w]+)|(\\(\\s*[0-9]+\\s*\\)))(\\[\\w\\])*(,)*)+");
 
 
 					if (std::regex_search(str.c_str(), regularForVar)) {
@@ -233,15 +197,9 @@ void Parser::on_pushButton_clicked()
 		if (!stack.isEmpty()) {
 			std::cmatch result;
 			std::cmatch resultInit;
-			std::regex regularForVar(
-				"(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)"
-				"(( )*\\**( )*([\\w-]+)((,)|(;)))+"
-			);
+			std::regex regularForVar("(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)""(( )*\\**( )*([\\w-]+)((,)|(;)))+");
 
-			std::regex regularForVarInit(
-				"(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)"
-				"(( )*\\**( )*([\\w-]+)((\\s*=\\s*&*[\\w]+)|(\\(\\s*[0-9]+\\s*\\)))(\\[\\w\\])*(,)*)+"
-			);
+			std::regex regularForVarInit("(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)""(( )*\\**( )*([\\w-]+)((\\s*=\\s*&*[\\w]+)|(\\(\\s*[0-9]+\\s*\\)))(\\[\\w\\])*(,)*)+");
 
 
 			if (std::regex_search(str.c_str(), result, regularForVar)) {
@@ -255,35 +213,22 @@ void Parser::on_pushButton_clicked()
 				s += "\n";
 			}
 		}
-
-
-
 	}
 	y = s.c_str();
 	string = y;
 	ui.plainTextEdit_2->appendPlainText("Local variables: \n" + QString::fromStdString(s) + "\nNumber of local variables: " + QString::number(localVarsCount));
-	//}
 
-	//if (ui.comboBox->currentText() == "Overrided functions") {
 	s = "";
 	string = "";
 	std::vector<std::string> fList;
 	std::vector<std::string> nameFuncList;
 	std::vector<int> rowFuncList;
 
-	for (int i = 0; i < strList.size(); i++) {
-		std::string str = strList[i].toStdString();
+	for (int i = 0; i < List.size(); i++) {
+		std::string str = List[i].toStdString();
 		std::cmatch resultPrototypeFunction;
-		std::regex regularForPrototype(
-			"(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)"
-			"(\\s*\\**\\s*)"
-			"([\\w-]+)"
-			"(( )*)"
-			"(\\()"
-			"(( )*(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)(( )*\\**( )*([\\w-])*)*(,)*)*"
-			"(\\))"
-		);
-		if (std::regex_search(str.c_str(), resultPrototypeFunction, regularForPrototype)) {
+		std::regex Prototypes("(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)""(\\s*\\**\\s*)""([\\w-]+)""(( )*)""(\\()""(( )*(int|double|long|size_t|std::string|float|bool|char|char\\*|short|long long|void)(( )*\\**( )*([\\w-])*)*(,)*)*""(\\))");
+		if (std::regex_search(str.c_str(), resultPrototypeFunction, Prototypes)) {
 			fList.push_back(resultPrototypeFunction[0]);
 			nameFuncList.push_back(resultPrototypeFunction[3]);
 			rowFuncList.push_back(i);
@@ -359,17 +304,15 @@ void Parser::on_pushButton_clicked()
 	ui.plainTextEdit_2->appendPlainText("If Else depths: " + spare + "\n");
 
 
-	
-	s = "";
-	for (int i = 0; i < strList.size(); i++) {
-		std::string str = strList[i].toStdString();
 
-		std::regex regularForLogicalMistakes(
-			"(\\s*while\\s*\\(\\s*false\\s*\\))|(\\s*if\\s*\\(\\s*false\\s*\\))|(\\s*if\\s*\\(\\s*true\\s*\\))|(\\s*while\\(\\s*true\\s*\\)\\s*\\{\\s*\\})|(\\s*if\\(\\s*\\))"
-		);
+	s = "";
+	for (int i = 0; i < List.size(); i++) {
+		std::string str = List[i].toStdString();
+
+		std::regex LogicalMistakes("(\\s*while\\s*\\(\\s*false\\s*\\))|(\\s*if\\s*\\(\\s*false\\s*\\))|(\\s*if\\s*\\(\\s*true\\s*\\))|(\\s*while\\(\\s*true\\s*\\)\\s*\\{\\s*\\})|(\\s*if\\(\\s*\\))");
 		std::regex regularForWhileTrueEmpty();
 		std::cmatch result;
-		if (std::regex_search(str.c_str(), result, regularForLogicalMistakes)) {
+		if (std::regex_search(str.c_str(), result, LogicalMistakes)) {
 			s += result[0];
 			s += "\nRow: " + std::to_string(i);
 			s += "\n\n";
