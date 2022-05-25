@@ -7,13 +7,31 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::on_All_clicked() {
-	
+    if (bitset.all())
+    {
+        QMessageBox::information(this, "Info", "All bites are 1");
+    }
+    else {
+		QMessageBox::warning(this, "Info", "Not All bites are 1");
+    }
 }
 void MainWindow::on_Any_clicked() {
-
+    if (bitset.any())
+    {
+        QMessageBox::information(this, "Info", "Bitset includes at least one 1");
+    }
+    else {
+        QMessageBox::warning(this, "Info", "Not All bites are 0");
+    }
 }
 void MainWindow::on_None_clicked() {
-
+    if (bitset.none())
+    {
+        QMessageBox::information(this, "Info", "All bites are 0");
+    }
+    else {
+        QMessageBox::warning(this, "Info", "Not All bites are 0");
+    }
 }
 void MainWindow::on_Flip_clicked() {
     bitset.flip();
@@ -21,7 +39,7 @@ void MainWindow::on_Flip_clicked() {
 }
 void MainWindow::on_FlipPosition_clicked() {
     int pos = ui.FlipPositionLine->text().toInt();
-    bitset.flip(pos);
+    bitset.flip(pos - 1);
     ui.BitSet->setText(QString::fromStdString(bitset.to_string()));
 }
 void MainWindow::on_Set_clicked() {
@@ -30,7 +48,7 @@ void MainWindow::on_Set_clicked() {
 }
 void MainWindow::on_SetPosition_clicked() {
     int pos = ui.SetPositionLine->text().toInt();
-    bitset.set(pos);
+    bitset.set(pos - 1);
     ui.BitSet->setText(QString::fromStdString(bitset.to_string()));
 }
 void MainWindow::on_Reset_clicked() {
@@ -39,7 +57,7 @@ void MainWindow::on_Reset_clicked() {
 }
 void MainWindow::on_ResetPosition_clicked() {
     int pos = ui.ResetPositionLine->text().toInt();
-	bitset.reset(pos);
+	bitset.reset(pos - 1);
 	ui.BitSet->setText(QString::fromStdString(bitset.to_string()));
 }
 void MainWindow::on_GetSize_clicked() {

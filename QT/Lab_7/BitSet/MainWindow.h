@@ -3,6 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_MainWindow.h"
 #include "BitSet.h"
+#include<qmessagebox.h>
 
 
 class MainWindow : public QMainWindow

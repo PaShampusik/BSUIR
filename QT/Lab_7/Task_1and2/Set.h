@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 template<typename Key>
 class Set {
@@ -177,7 +177,7 @@ public:
 		}
 	};
 
-	Node* rotateright(Node* p) // правый поворот вокруг p
+	Node* rotateright(Node* p) // РїСЂР°РІС‹Р№ РїРѕРІРѕСЂРѕС‚ РІРѕРєСЂСѓРі p
 	{
 		Node* q = p->left;
 		p->left = q->right;
@@ -193,7 +193,7 @@ public:
 		return q;
 	}
 
-	Node* rotateleft(Node* q) // левый поворот вокруг q
+	Node* rotateleft(Node* q) // Р»РµРІС‹Р№ РїРѕРІРѕСЂРѕС‚ РІРѕРєСЂСѓРі q
 	{
 		Node* p = q->right;
 		q->right = p->left;
@@ -225,7 +225,7 @@ public:
 		p->height = (hl > hr ? hl : hr) + 1;
 	}
 
-	Node* balance(Node* p) // балансировка узла p
+	Node* balance(Node* p) // Р±Р°Р»Р°РЅСЃРёСЂРѕРІРєР° СѓР·Р»Р° p
 	{
 		fixheight(p);
 		if (bfactor(p) == 2)
@@ -240,7 +240,7 @@ public:
 				p->left = rotateleft(p->left);
 			return rotateright(p);
 		}
-		return p; // балансировка не нужна
+		return p; // Р±Р°Р»Р°РЅСЃРёСЂРѕРІРєР° РЅРµ РЅСѓР¶РЅР°
 	}
 
 	void TraverseInorder(Node* root) {
@@ -276,8 +276,12 @@ public:
 		return root;
 	}
 
-	Node* insert(Node* p, Key k) //вставка ключа k и данных в дерево с корнем p
+	Node* insert(Node* p, Key k) //РІСЃС‚Р°РІРєР° РєР»СЋС‡Р° k Рё РґР°РЅРЅС‹С… РІ РґРµСЂРµРІРѕ СЃ РєРѕСЂРЅРµРј p
 	{
+		if (this->find(root, k) != nullptr)
+		{
+			return nullptr;
+		}
 		if (!p) {
 			size++;
 			return new Node(k);
@@ -295,12 +299,12 @@ public:
 		return balance(p);
 	}
 
-	Node* findmin(Node* p) // поиск узла с минимальным ключом в дереве p 
+	Node* findmin(Node* p) // РїРѕРёСЃРє СѓР·Р»Р° СЃ РјРёРЅРёРјР°Р»СЊРЅС‹Рј РєР»СЋС‡РѕРј РІ РґРµСЂРµРІРµ p 
 	{
 		return p->left ? findmin(p->left) : p;
 	}
 
-	Node* removemin(Node* p) // удаление узла с минимальным ключом из дерева p
+	Node* removemin(Node* p) // СѓРґР°Р»РµРЅРёРµ СѓР·Р»Р° СЃ РјРёРЅРёРјР°Р»СЊРЅС‹Рј РєР»СЋС‡РѕРј РёР· РґРµСЂРµРІР° p
 	{
 		if (p->left == 0)
 			return p->right;
@@ -316,7 +320,7 @@ public:
 		return p->right ? findmax(p->right) : p;
 	}
 
-	Node* remove(Node* p, Key k) // удаление ключа k из дерева p
+	Node* remove(Node* p, Key k) // СѓРґР°Р»РµРЅРёРµ РєР»СЋС‡Р° k РёР· РґРµСЂРµРІР° p
 	{
 		if (!p) return 0;
 		if (k < p->data) {
@@ -377,7 +381,7 @@ public:
 		return balance(p);
 	}
 
-	Node* find(Node* p, Key k) // поиск ключа k в дереве p
+	Node* find(Node* p, Key k) // РїРѕРёСЃРє РєР»СЋС‡Р° k РІ РґРµСЂРµРІРµ p
 	{
 		if (!p) return nullptr;
 

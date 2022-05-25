@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 
 template<typename Key, typename Value>
@@ -226,7 +226,7 @@ public:
 		}
 	};
 
-	Node* rotateright(Node* p) // правый поворот вокруг p
+	Node* rotateright(Node* p) // РїСЂР°РІС‹Р№ РїРѕРІРѕСЂРѕС‚ РІРѕРєСЂСѓРі p
 	{
 		Node* q = p->left;
 		p->left = q->right;
@@ -242,7 +242,7 @@ public:
 		return q;
 	}
 
-	Node* rotateleft(Node* q) // левый поворот вокруг q
+	Node* rotateleft(Node* q) // Р»РµРІС‹Р№ РїРѕРІРѕСЂРѕС‚ РІРѕРєСЂСѓРі q
 	{
 		Node* p = q->right;
 		q->right = p->left;
@@ -284,7 +284,7 @@ public:
 		return p;
 	}
 
-	Node* balance(Node* p) // балансировка узла p
+	Node* balance(Node* p) // Р±Р°Р»Р°РЅСЃРёСЂРѕРІРєР° СѓР·Р»Р° p
 	{
 		fixheight(p);
 		if (bfactor(p) == 2)
@@ -299,7 +299,7 @@ public:
 				p->left = rotateleft(p->left);
 			return rotateright(p);
 		}
-		return p; // балансировка не нужна
+		return p; // Р±Р°Р»Р°РЅСЃРёСЂРѕРІРєР° РЅРµ РЅСѓР¶РЅР°
 	}
 
 	void TraverseInorder(Node* root) {
@@ -335,8 +335,12 @@ public:
 		return root;
 	}
 
-	Node* insert(Node* p, Key k, Value data) //вставка ключа k и данных data в дерево с корнем p
+	Node* insert(Node* p, Key k, Value data) //РІСЃС‚Р°РІРєР° РєР»СЋС‡Р° k Рё РґР°РЅРЅС‹С… data РІ РґРµСЂРµРІРѕ СЃ РєРѕСЂРЅРµРј p
 	{
+		if (this->find(root, k) != nullptr)
+		{
+			return nullptr;
+		}
 		if (!p) {
 			size++;
 			return new Node(k, data);
@@ -354,12 +358,12 @@ public:
 		return balance(p);
 	}
 
-	Node* findmin(Node* p) // поиск узла с минимальным ключом в дереве p 
+	Node* findmin(Node* p) // РїРѕРёСЃРє СѓР·Р»Р° СЃ РјРёРЅРёРјР°Р»СЊРЅС‹Рј РєР»СЋС‡РѕРј РІ РґРµСЂРµРІРµ p 
 	{
 		return p->left ? findmin(p->left) : p;
 	}
 
-	Node* removemin(Node* p) // удаление узла с минимальным ключом из дерева p
+	Node* removemin(Node* p) // СѓРґР°Р»РµРЅРёРµ СѓР·Р»Р° СЃ РјРёРЅРёРјР°Р»СЊРЅС‹Рј РєР»СЋС‡РѕРј РёР· РґРµСЂРµРІР° p
 	{
 		if (p->left == 0)
 			return p->right;
@@ -371,18 +375,18 @@ public:
 		return balance(p);
 	}
 
-	Node* remove(Node* p, Key k, Value value) // удаление ключа k из дерева p
+	Node* remove(Node* p, Key k) // СѓРґР°Р»РµРЅРёРµ РєР»СЋС‡Р° k РёР· РґРµСЂРµРІР° p
 	{
 		if (!p) return 0;
-		if (k < p->data.second) {
-			p->left = remove(p->left, k, value);
+		if (k < p->data.first) {
+			p->left = remove(p->left, k);
 			if (p->left != nullptr)
 			{
 				p->left->parent = p;
 			}
 		}
-		else if (k > p->data.second) {
-			p->right = remove(p->right, k, value);
+		else if (k > p->data.first) {
+			p->right = remove(p->right, k);
 			if (p->right != nullptr)
 			{
 				p->right->parent = p;
@@ -432,17 +436,17 @@ public:
 		return balance(p);
 	}
 
-	Node* find(Node* p, Key k) // поиск ключа k в дереве p
+	Node* find(Node* p, Key k) // РїРѕРёСЃРє РєР»СЋС‡Р° k РІ РґРµСЂРµРІРµ p
 	{
 		if (!p) return nullptr;
 
-		if (k < p->data.first)
+		if (k < p->data.second)
 		{
 			if (p->left == nullptr)
 				return nullptr;
 			return find(p->left, k);
 		}
-		else if (k > p->data.first)
+		else if (k > p->data.second)
 		{
 			if (p->right == nullptr)
 				return nullptr;

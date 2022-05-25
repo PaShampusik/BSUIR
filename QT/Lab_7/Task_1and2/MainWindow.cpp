@@ -28,8 +28,9 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 void MainWindow::on_AddMapElement_clicked() {
-	int a = rand() % 200;
-	map.getroot() = map.insert(map.getroot(), a, a);
+	int a = rand() % 2000;
+	int b = rand() % 2000;
+	map.getroot() = map.insert(map.getroot(), b, a);
 	ui.Map->clear();
 	ui.Map->headerItem()->setText(0, "Map");
 	ui.Map->insertTopLevelItem(0, new QTreeWidgetItem);
@@ -59,7 +60,7 @@ void MainWindow::on_AddUnorderedMapElement_clicked() {
 		temp += QString::number(i + 1) + ") ";
 		for (auto j = unordered_map.table[i].begin(); j != unordered_map.table[i].end(); j++)
 		{
-			temp += QString::number(j->second) + " ";
+			temp += QString::number(j->second) + "  ";
 		}
 		ui.UnorderedMap->addItem(temp);
 		temp = "";
@@ -111,15 +112,15 @@ void MainWindow::on_RemoveMapElement_clicked() {
 		ui.RemoveMapElementLine->clear();
 		if (temp)
 		{
-			if (temp == map.getroot()->data.second)
+			if (temp == map.getroot()->data.first)
 			{
-				QMessageBox::information(this, "Success", "Element " + QString::number(temp) + " removed");
-				map.setRoot(map.remove(map.getroot(), temp, temp));
+				QMessageBox::information(this, "Success", "Element with key " + QString::number(temp) + " removed");
+				map.setRoot(map.remove(map.getroot(), temp));
 			}
 			else
 			{
-				QMessageBox::information(this, "Success", "Element " + QString::number(temp) + " removed");
-				map.remove(map.getroot(), temp, temp);
+				QMessageBox::information(this, "Success", "Element with key " + QString::number(temp) + " removed");
+				map.remove(map.getroot(), temp);
 			}
 			if (map.getroot() == nullptr)
 			{
@@ -140,23 +141,39 @@ void MainWindow::on_RemoveMapElement_clicked() {
 }
 
 void MainWindow::on_RemoveSetElement_clicked() {
-	if (!(set.getroot() == nullptr))
-	{
-		QString temp = ui.RemoveSetElementLine->text();
-		int a = temp.toInt();
+	if (set.getsize() == 0) {
+		QMessageBox::warning(this, "Warning!", "Our Set is empty!");
+	}
+	else {
+		int temp = ui.RemoveSetElementLine->text().toInt();
 		ui.RemoveSetElementLine->clear();
-		if (set.remove(set.getroot(), a)) {
-			QMessageBox::information(this, "Success", "Element " + QString::number(a) + " removed");
+		if (temp)
+		{
+			if (temp == set.getroot()->data)
+			{
+				QMessageBox::information(this, "Success", "Element " + QString::number(temp) + " removed");
+				set.setRoot(set.remove(set.getroot(), temp));
+			}
+			else
+			{
+				QMessageBox::information(this, "Success", "Element " + QString::number(temp) + " removed");
+				set.remove(set.getroot(), temp);
+			}
+			if (set.getroot() == nullptr)
+			{
+				ui.Set->clear();
+				return;
+			}
+			ui.Set->clear();
+			ui.Set->headerItem()->setText(0, "Sap");
+			ui.Set->insertTopLevelItem(0, new QTreeWidgetItem);
+			ui.Set->topLevelItem(0)->setText(0, "Root");
+			AddSetWidget(ui.Set->topLevelItem(0), set.getroot());
+			ui.Set->expandAll();
 		}
 		else {
-			QMessageBox::information(this, "Error", "Element " + QString::number(a) + " not found");
+			QMessageBox::warning(this, "Warning!", "Wrong Input, try again!");
 		}
-		ui.Set->clear();
-		ui.Set->headerItem()->setText(0, "Set");
-		ui.Set->insertTopLevelItem(0, new QTreeWidgetItem);
-		ui.Set->topLevelItem(0)->setText(0, "Root");
-		AddSetWidget(ui.Set->topLevelItem(0), set.getroot());
-		ui.Set->expandAll();
 	}
 }
 
@@ -190,7 +207,7 @@ void MainWindow::AddMapWidget(QTreeWidgetItem* oof, Map<int, int>::Node* root) {
 	if (oof->childCount() != 3)
 	{
 		oof->addChild(new QTreeWidgetItem);
-		oof->child(0)->setText(0, "data: " + QString::number(root->data.second));
+		oof->child(0)->setText(0, "key: " + QString::number(root->data.first) + " data: " + QString::number(root->data.second));
 
 		oof->addChild(new QTreeWidgetItem);
 		oof->child(1)->setText(0, "Left");
@@ -214,7 +231,7 @@ void MainWindow::AddSetWidget(QTreeWidgetItem* oof, Set<int>::Node* root) {
 	if (oof->childCount() != 3)
 	{
 		oof->addChild(new QTreeWidgetItem);
-		oof->child(0)->setText(0, "data: " + QString::number(root->data));
+		oof->child(0)->setText(0, "data: " + QString::number(root->data));	
 
 		oof->addChild(new QTreeWidgetItem);
 		oof->child(1)->setText(0, "Left");
