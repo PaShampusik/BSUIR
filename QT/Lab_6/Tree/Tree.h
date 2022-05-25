@@ -231,5 +231,4 @@ public:
 			return p;
 		}
 	}
-
 };

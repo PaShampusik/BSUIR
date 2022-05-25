@@ -42,19 +42,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Unordered_map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Set.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AWL_Tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DoubleLinkedList.h">
+    <ClInclude Include="BitSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
