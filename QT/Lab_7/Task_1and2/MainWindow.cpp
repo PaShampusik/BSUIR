@@ -182,7 +182,7 @@ void MainWindow::on_RemoveUnorderedMapElement_clicked() {
 	int i = temp.toInt();
 	if (unordered_map.find(i, i))
 	{
-		unordered_map.remove(i, i);
+		unordered_map.remove(i);
 		ui.UnorderedMap->clear();
 		for (size_t i = 0; i < unordered_map.getsize(); i++)
 		{

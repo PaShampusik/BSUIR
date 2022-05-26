@@ -71,27 +71,22 @@ public:
 		return false;
 	}
 
-	void remove(Key key, T data) {
+	void remove(Key key) {
 		int index = hash(key);
-		table[index].remove(std::pair<const Key, T>(key, data));
-		iteratorlist.remove(std::pair<const Key, T>(key, data));
-	}
-
-	/*int FindMin() {
-		int min = 1000, ind = -1;     
-		for (int i = 0; i < size; i++)
+		for (auto i : this->table[index])
 		{
-			Node<std::pair<const Key, T>>* temp = table[i].getHead();
-			while (temp != nullptr) {
-				if (temp->data.second < min) {
-					min = temp->data.second;
-					ind = i;
-				}c
-				temp = temp->next;
+			if (i.first == key)
+			{
+				this->table[index].remove(i);
+				iteratorlist.remove(i);
+				count--;
+				break;
+				
 			}
 		}
-		return ind + 1;
-	}*/
+	}
+
+	
 
 	int getsize() {
 		return size;
