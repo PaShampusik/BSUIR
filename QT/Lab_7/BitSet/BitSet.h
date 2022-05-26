@@ -91,7 +91,6 @@ public:
 		trim();
 	}
 
-
 	bool test(size_t num) {
 		if (num >= SIZE)
 		{
