@@ -1,0 +1,7 @@
+  ADDR B1 B2 B3 B4 D:\BSUIR\Assembler\Lab1.asm                      PAGE       1
+
+                    org $8000
+  8000 4F           clra
+  8001 5F           clrb
+  8002 86 0A        ldaa #10
+  8004 16           tab

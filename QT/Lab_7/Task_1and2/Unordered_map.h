@@ -81,7 +81,6 @@ public:
 				iteratorlist.remove(i);
 				count--;
 				break;
-				
 			}
 		}
 	}
