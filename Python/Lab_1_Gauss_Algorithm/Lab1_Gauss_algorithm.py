@@ -24,6 +24,10 @@ def input():
         ]
     )
     A = 15 * C + D
+    # A = numpy.array([
+    #     [0.0, 3.0]
+    #     [3.0,2.0]
+    # ])
     return (A, b)
 
 
@@ -134,7 +138,7 @@ def output(A, x, b):
     print("Check: b = ")
     print(b.T)
     print(A.dot(x).T)
-    print("----------")
+    print("--------")
 
 
 def test(method):

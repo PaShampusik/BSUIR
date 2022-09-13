@@ -1,5 +1,7 @@
 import numpy
 
+numpy.set_printoptions(suppress=True, precision=4, floatmode="fixed")
+
 print("Iterative method \n")
 
 numpy.seterr(over="ignore")
@@ -85,6 +87,7 @@ def simple(A, b):
             print("ERROR: Sequence {x} is divergent")
             return nan(n)
         count += 1
+        print(count, ":    ", x, end="\n")
 
     print("Iteration count in simple method:")
     print(count)
@@ -122,6 +125,7 @@ def seidel(A, b):
             print("ERROR: Sequence {x} is divergent")
             return nan(n)
         count += 1
+        print(count, ":    ", x, end="\n")
 
     print("Iteration count in Seidel's method:")
     print(count)
@@ -151,4 +155,4 @@ def test(method):
 
 
 test(simple)
-test(seidel)
+# test(seidel)

@@ -2,4 +2,6 @@
  clra
  clrb
  ldaa #10
- tab
+ psha
+ pulb
+ 
