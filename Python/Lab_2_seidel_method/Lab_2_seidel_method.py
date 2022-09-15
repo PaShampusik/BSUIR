@@ -11,7 +11,7 @@ def input():
     b = numpy.array([[1.2], [2.2], [4.0], [0.0], [-1.2]])
     C = numpy.array(
         [
-            [0.01, 0, -0.02, 0, 0],
+            [0.02, 0, -0.02, 0, 0],
             [0.01, 0.01, -0.02, 0, 0],
             [0, 0.01, 0.01, 0, -0.02],
             [0, 0, 0.01, 0.01, 0],
@@ -28,6 +28,7 @@ def input():
         ]
     )
     A = 15 * C + D
+    # A = numpy.array([[2.5, 3.0], [2.0, -2.5]])
     return (A, b)
 
 
@@ -55,6 +56,7 @@ def Norms(A):
     f = max(numpy.absolute(A[i]).sum() for i in range(n))
     s = max(numpy.absolute(A.T[j]).sum() for j in range(n))
     t = ((A**2).sum()) ** (1 / 2)
+    print(f, s, t)
     return (f, s, t)
 
 
@@ -87,7 +89,7 @@ def simple(A, b):
             print("ERROR: Sequence {x} is divergent")
             return nan(n)
         count += 1
-        print(count, ":    ", x, end="\n")
+        # print(count, ":    ", x, end="\n")
 
     print("Iteration count in simple method:")
     print(count)
@@ -125,7 +127,7 @@ def seidel(A, b):
             print("ERROR: Sequence {x} is divergent")
             return nan(n)
         count += 1
-        print(count, ":    ", x, end="\n")
+        # print(count, ":    ", x, end="\n")
 
     print("Iteration count in Seidel's method:")
     print(count)
@@ -155,4 +157,4 @@ def test(method):
 
 
 test(simple)
-# test(seidel)
+test(seidel)

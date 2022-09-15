@@ -1,0 +1,31 @@
+  ADDR B1 B2 B3 B4 D:\BSUIR\Assembler\Lab_2\Lab_2.asm               PAGE       1
+
+                    org $8000
+  8000 86 10        ldaa #$10
+  8002 C6 20        ldab #$20
+  8004 CE 23 45     ldx #$2345
+  8007 18 CE 12 34  ldy #$1234
+  800B 18 3C        pshy
+  800D 1B           aba
+  800E 36           psha
+  800F 8F           xgdx
+  8010 1B           aba
+  8011 16           tab
+  8012 32           pula
+  8013 1B           aba
+  8014 36           psha
+  8015 18 8F        xgdy
+  8017 1B           aba
+  8018 16           tab
+  8019 32           pula
+  801A 1B           aba
+
+
+
+
+
+
+
+
+
+
