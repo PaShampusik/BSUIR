@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _153503_Щиров_Lab1.Interfaces
 {
-    internal interface ICustomCollection<T>
+    internal interface ICustomCollection<T> 
     {
         public T this[int index]
         {

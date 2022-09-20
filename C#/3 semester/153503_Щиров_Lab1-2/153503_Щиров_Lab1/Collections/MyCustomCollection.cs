@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -25,7 +26,7 @@ namespace _153503_Щиров_Lab1.Collections
             get;
             set;
         }
-        
+
         private Node<T>? Head
         {
             get;
@@ -52,14 +53,27 @@ namespace _153503_Щиров_Lab1.Collections
             return buf.Data;
         }
 
-
+        public bool is_exist(T data)
+        {
+            Node<T>? buf = new Node<T>();
+            buf = Head;
+            while(buf != null)
+            {
+                if (buf.Data.Equals(data))
+                {
+                    return true;
+                }               
+                buf = buf.Next;
+            }
+            return false;
+        }
 
         public void Add(T item)
         {
             if (Head.Data == null)
             {
                 Head.Data = item;
-                
+
             }
             else
             {
@@ -73,20 +87,20 @@ namespace _153503_Щиров_Lab1.Collections
                 buf.Next.Prev = buf;
             }
 
-            
+
         }
 
         public Node<T> get_next()
         {
-            
-                Node<T> buf = new Node<T>();
-                buf = Head;
-                for (int i = 0; i < Cursor; i++)
-                {
-                    buf = buf.Next;
-                }
-                return buf;
-            
+
+            Node<T> buf = new Node<T>();
+            buf = Head;
+            for (int i = 0; i < Cursor; i++)
+            {
+                buf = buf.Next;
+            }
+            return buf;
+
         }
 
         public void Remove(T item)
@@ -94,13 +108,17 @@ namespace _153503_Щиров_Lab1.Collections
             Node<T> buf = new Node<T>();
             buf = Head;
 
-            while (buf.Data!.Equals(item))
+            while (!buf!.Data!.Equals(item))
             {
                 buf = buf.Next;
+                if (buf == null)
+                {
+                    throw new WrongItemException();
+                }
             }
             if (buf == Head)
             {
-                Head = null;
+                Head = Head.Next;
             }
             else if (buf.Next == null)
             {
@@ -143,11 +161,13 @@ namespace _153503_Щиров_Lab1.Collections
             }
         }
 
+
+
         public T this[int index]
         {
             get
             {
-                if(index < 0 || index > Count)
+                if (index < 0 || index > Count)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -158,11 +178,11 @@ namespace _153503_Щиров_Lab1.Collections
                     if (buf.Next != null)
                     {
                         buf = buf.Next;
-                    }                    
-                   
+                    }
+
                 }
                 return buf.Data;
-                
+
             }
             set
             {
@@ -175,7 +195,58 @@ namespace _153503_Щиров_Lab1.Collections
                 buf.Data = value;
             }
         }
+
+        public IEnumerator<T>? GetEnumerator()
+        {
+            Node<T>? buf = new Node<T>();
+            buf = Head;
+            while(buf != null)
+            {
+                yield return buf.Data;
+                buf = buf.Next;               
+            }
+            
+        }
+        
+        public sealed class WrongItemException : SystemException
+        {
+            
+            public WrongItemException()
+            {
+                Console.WriteLine("That item doesnt exist");
+            }
+        
     }
+    }
+    
+    
+
+    /*class CollectionEnumerator<T> : IEnumerator<T>
+    {
+        public T Current
+        {
+            
+        }
+
+        object IEnumerator.Current => throw new NotImplementedException();
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MoveNext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
+    }
+*/
+
 
     class Node<T>
     {
@@ -183,6 +254,23 @@ namespace _153503_Щиров_Lab1.Collections
         public Node<T>? Next { get; set; }
 
         public Node<T>? Prev { get; set; }
+
+        public T get_price()
+        {
+            return this.Next.Next.Data;
+        }
+
+        public T get_name()
+        {
+            return this.Next.Data;
+        }
+
+        public T? GetData()
+        {
+            
+                return Data;
+            
+        }
 
         public Node()
         {
@@ -198,7 +286,9 @@ namespace _153503_Щиров_Lab1.Collections
             Prev = null;
         }
     }
-    
-   
-    
+
+ 
+
+
+
 }
