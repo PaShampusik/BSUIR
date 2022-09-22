@@ -8,6 +8,12 @@ class Program
     static void Main(string[] args)
     {
         shop shop = new shop();
+
+
+
+
+
+        
         shop.menu();
         
     }

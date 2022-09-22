@@ -6,9 +6,9 @@ class Program
 {
     public static void  Main()
     {
-        Shop Momo = new Shop();
+        var shop = new Menu();
+        shop.menu();
         
-        Momo.menu();
     }
     
 }
