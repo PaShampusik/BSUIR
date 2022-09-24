@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <BaseOutputPath>D:\BSUIR\C#\3 semester\153503_Shchirov_Lab_6\153503_Shchirov_Lab_6\153503_Shchirov_Lab_6</BaseOutputPath>
+  </PropertyGroup>
+
+</Project>
