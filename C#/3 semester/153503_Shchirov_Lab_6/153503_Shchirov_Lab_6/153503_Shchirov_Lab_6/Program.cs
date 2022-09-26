@@ -20,8 +20,8 @@ class Program {
         {
             MethodInfo? save = type.GetMethod("SaveData");
             save = save.MakeGenericMethod(typeof(Employee));
-            MethodInfo? read = type.GetMethod("ReadFile");
-            read = read.MakeGenericMethod(typeof(Employee));
+            MethodInfo? read = type.GetMethod("ReadFile")
+                .MakeGenericMethod(typeof(Employee));
             if (save is not null && read is not null)
             {
                 save.Invoke(Activator.CreateInstance(type), new object[] { employees, "employees.json" });

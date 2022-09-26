@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -16,11 +17,16 @@ namespace Lab_3.Entities
         delegate void AccountHandler(string message);
         event AccountHandler Notify;
 
+        public void Displaymessage(string message)
+        {           
+                Console.WriteLine(message);           
+        }
+
         public Shop()
         {
+            Notify += Displaymessage;
             list_of_clients.Add(new Client("Sasha"));
             list_of_clients.Add(new Client("Pasha"));
-            list_of_clients.Add(new Client("Sasha"));
             list_of_clients.Add(new Client("Vadzim"));
             list_of_clients.Add(new Client("Sergey"));
             list_of_clients.Add(new Client("Kirill"));
@@ -157,10 +163,9 @@ namespace Lab_3.Entities
         {
             Console.WriteLine("Enter minimal sum: ");
             var sum = Convert.ToInt32(Console.ReadLine());
-            var clients = (from client in list_of_clients
-                           where client.get_bought_products().Sum(x => x.Price) > sum
-                           select client).Count();
-            Notify?.Invoke($"Number of buyers with sum of bought products more than {sum}: {clients}");
+            
+            var clients = list_of_clients.Aggregate(0, (number_of_clients, client) => number_of_clients + (client.Get_total_cost() > sum ? 1 : 0));
+            Notify?.Invoke($"Number of buyers with sum of bought products more than {sum}: {clients}");            
         }
 
         public void get_sum_payed_for_each_product_in_shop_by_name()
@@ -168,12 +173,15 @@ namespace Lab_3.Entities
             Console.WriteLine("Enter name of a client: ");
             string? name = Convert.ToString(Console.ReadLine());
 
-            foreach (var product in list_of_products)
-            {
-                var sum = (from client in list_of_clients
-                           where client.Name == name
-                           select client.get_bought_products().Where(x => x.Name == product.Key).Sum(x => x.Price)).Sum();
-                Notify?.Invoke($"Sum payed for {product.Key} by {name}: {Convert.ToInt32(sum)}");
+            var list_of_products = (from client in list_of_clients
+                                    where client.Name == name
+                                    select client.bought_products)
+                                    .Single()
+                                    .GroupBy(product => product.Name)
+                                    .Select(group => (group.Key, group.Sum(product => product.Price)))
+                                    .ToList();
+            foreach (var product in list_of_products){
+                Notify?.Invoke("Name of product: " + product.Key + "    Sum payed: " + product.Item2);
             }
         }
     }

@@ -64,10 +64,9 @@ class Program
 
         }
 
-        //List<SuperHeroes> new_heroes = new List<SuperHeroes>();
-
         var new_heroes = fileService.ReadFile("SuperHeroes.txt");
         var comparer = new MyCustomComparer<SuperHeroes>();
+        
         var buf = new_heroes.OrderBy(x => x, comparer);
 
 

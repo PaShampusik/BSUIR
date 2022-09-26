@@ -6,7 +6,8 @@ class Program
     {
         List<string> results = new List<string>();
         Integral_Calculation integral_Calculation = new Integral_Calculation(ThreadPriority.Highest, 1);
-        Integral_Calculation integral_Calculation2 = new Integral_Calculation(ThreadPriority.Lowest, 2);                
+        Integral_Calculation integral_Calculation2 = new Integral_Calculation(ThreadPriority.Lowest, 2);
+        Thread.Sleep(200);
         Integral_Calculation integral_Calculation_3 = new Integral_Calculation(ThreadPriority.Normal, 3);
         Integral_Calculation integral_Calculation_4 = new Integral_Calculation(ThreadPriority.Normal, 4);
         Integral_Calculation integral_Calculation_5 = new Integral_Calculation(ThreadPriority.Normal, 5);
