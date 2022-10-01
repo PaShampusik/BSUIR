@@ -7,4 +7,8 @@
     <BaseOutputPath>D:\BSUIR\C#\3 semester\153503_Shchirov_Lab_6\153503_Shchirov_Lab_6\153503_Shchirov_Lab_6</BaseOutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\153503_Shchirov_Lab_6\153503_Shchirov_Lab_6.csproj" />
+  </ItemGroup>
+
 </Project>
