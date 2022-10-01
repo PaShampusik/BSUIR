@@ -1,24 +1,25 @@
-  ADDR B1 B2 B3 B4 D:\BSUIR\Assembler\Lab_2\Lab_2.asm               PAGE       1
+  ADDR B1 B2 B3 B4 thrass11.tmp                                     PAGE       1
 
                     org $8000
-  8000 86 10        ldaa #$10
-  8002 C6 20        ldab #$20
-  8004 CE 23 45     ldx #$2345
-  8007 18 CE 12 34  ldy #$1234
-  800B 18 3C        pshy
-  800D 1B           aba
-  800E 36           psha
-  800F 8F           xgdx
-  8010 1B           aba
-  8011 16           tab
-  8012 32           pula
-  8013 1B           aba
-  8014 36           psha
-  8015 18 8F        xgdy
-  8017 1B           aba
-  8018 16           tab
-  8019 32           pula
-  801A 1B           aba
+  8000 CE 00 64     ldx #100
+  8003 18 CE 00 64  ldy #100
+  8007 CC 00 64     ldd #100
+  800A 3C           pshx
+  800B CE 00 00     ldx #0
+  800E 3A           abx
+  800F 16           tab
+  8010 3A           abx
+  8011 32           pula
+  8012 33           pulb
+  8013 3A           abx
+  8014 16           tab
+  8015 3A           abx
+  8016 18 8F        xgdy
+  8018 3A           abx
+  8019 16           tab
+  801A 3A           abx
+
+
 
 
 

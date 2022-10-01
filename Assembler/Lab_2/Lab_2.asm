@@ -1,22 +1,23 @@
  org $8000
- ldaa #$10
- ldab #$20
- ldx #$2345
- ldy #$1234
- pshy
- aba
- psha
- xgdx
- aba
+ ldx #100
+ ldy #100
+ ldd #100
+ pshx
+ ldx #0
+ abx
  tab
+ abx
  pula
- aba
- psha
- xgdy
- aba
+ pulb
+ abx
  tab
- pula 
- aba
+ abx
+ xgdy
+ abx
+ tab
+ abx
+
+ 
  
  
  

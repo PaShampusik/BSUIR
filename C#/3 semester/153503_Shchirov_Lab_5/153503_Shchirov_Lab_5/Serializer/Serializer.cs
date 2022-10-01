@@ -69,6 +69,7 @@ namespace Serializer
                              new XElement("Name", library.Name),
                              new XElement("Count", library.Count));
             var xml = new XElement("Libraries", xml_output);
+            xml.Save(fileName);
         }
         
 
