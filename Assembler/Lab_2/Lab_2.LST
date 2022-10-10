@@ -1,9 +1,9 @@
   ADDR B1 B2 B3 B4 thrass11.tmp                                     PAGE       1
 
                     org $8000
-  8000 CE 00 64     ldx #100
-  8003 18 CE 00 64  ldy #100
-  8007 CC 00 64     ldd #100
+  8000 CE 00 0A     ldx #10
+  8003 18 CE 00 0A  ldy #10
+  8007 CC 00 0A     ldd #10
   800A 3C           pshx
   800B CE 00 00     ldx #0
   800E 3A           abx
@@ -18,6 +18,19 @@
   8018 3A           abx
   8019 16           tab
   801A 3A           abx
+  801B 3C           pshx
+  801C 32           pula
+  801D 33           pulb
+  801E DD 10        std $10
+  8020 86 B9        ldaa #$B9
+  8022 19           daa
+  8023 97 10        staa $10
+  8025 96 11        ldaa $11
+  8027 19           daa
+  8028 97 11        staa $11
+  802A DC 10        ldd $10
+
+
 
 
 

@@ -30,22 +30,35 @@ class Program
             }
             list_of_products.Add(new Product(name, id, isOverdue));
         }
+        object obj = new object();
+
+        Progress<string> progress = new();
+
+        progress.ProgressChanged += Progress_ProgressChanged;
+        
 
         StreamService<Product> streamService = new StreamService<Product>();
         MemoryStream memoryStream = new MemoryStream();
 
-        object obj = new object();
-
-
-
         var m1 = streamService.WriteToStreamAsync(memoryStream, list_of_products);
-        Thread.Sleep(100);
+        Thread.Sleep(200);
         var m2 = streamService.CopyFromStreamAsync(memoryStream, "products.txt");
 
         Task.WaitAll(m1, m2);
 
+        /*var count = await streamService.GetStatisticsAsync("products.txt", x => x.IsOverdue);*/
+
 
         var count = await streamService.GetStatisticsAsync("products.txt", x => x.IsOverdue);
-        Console.WriteLine($"Count of ovedued products: {((uint)count)}");
+        lock (obj)
+        {
+            Console.WriteLine("Count of overdue products: " + Convert.ToInt32(count));
+        }
+
+    }
+
+    private static void Progress_ProgressChanged(object? sender, string e)
+    {
+        throw new NotImplementedException();
     }
 }

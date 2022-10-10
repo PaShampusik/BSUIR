@@ -1,4 +1,5 @@
 import numpy
+import math
 
 numpy.random.seed(42)
 
@@ -15,9 +16,7 @@ def input():
 
     expr = numpy.poly1d([1.0, 20.2374, -131.210, -843.923])
 
-    # expr = numpy.poly1d([0.0, 1.0, 1.0, 0.0])
-
-    # expr = numpy.poly1d([1.0, -6.4951, -31.2543, 23.1782])
+    expr = numpy.poly1d([1.0, -7.0, 13.0, -9.0])  # root 4.5987
 
     return expr
 
@@ -128,6 +127,8 @@ def SecantSecond(L, R):
         iters += 1
         oldx = x
         x = L - f(L) * (R - L) / (f(R) - f(L))
+        a = math.log(abs(x - 4.5987), math.e) / math.log(abs(oldx - 4.5987), math.e)
+        print(a)
         if not (numpy.isfinite(x)):
             raise RuntimeError("Something went wrong, and x is not a number")
         if f(L) * f(x) <= 0:
@@ -156,6 +157,8 @@ def Newton(L, R):
         iters += 1
         oldx = x
         x = x - f(x) / fder(x)
+        a = math.log(abs(x - 4.5987)) / math.log(abs(oldx - 4.5987))
+        print(a)
         if not (numpy.isfinite(x)):
             raise RuntimeError("Something went wrong, and x is not a number")
     if (x < L) or (R < x):
@@ -187,15 +190,16 @@ def test(method):
             )
 
 
-print()
-test(BinarySearch)
-print()
-test(SecantFirst)
-print()
+# print()
+# test(BinarySearch)
+# print()
+# test(SecantFirst)
+# print()
 test(SecantSecond)
 print()
-test(Newton)
-print()
+# test(Newton)
+# print()
+
 
 print("Check:")
 print(f.r)
