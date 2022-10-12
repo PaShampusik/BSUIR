@@ -27,8 +27,14 @@ def input():
             [-0.53, 0.92, 0.92, -0.53, 2.33],
         ]
     )
-    A = 15 * C + D
 
+    A = 15 * C + D
+    # A = numpy.array(
+    #     [
+    #         [1.0, 0.0],
+    #         [0.0, 2.0],
+    #     ]
+    # )
     return A
 
 
@@ -42,7 +48,7 @@ if abs((A - A.T) ** 2).sum() > EPS:
     raise ValueError("Matrix A is non-symmetric")
 
 iters = 0
-
+# метод вращения Якоби
 ansV = numpy.eye(n)
 while True:
     iters += 1
