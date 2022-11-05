@@ -1,0 +1,20 @@
+  ADDR B1 B2 B3 B4 thrass11.tmp                                     PAGE       1
+
+                    org $8000
+  8000 C6 02        ldab #$02
+                   p0
+  8002 1A EE 00     ldy 0,x
+  8005 8D 01        bsr p2
+                   p1
+  8007 01           nop
+                   p2
+  8008 1A EE 00     ldy 0,x
+  800B 7E 80 07     jmp $8007
+
+
+
+  Symbol Table 
+
+  P0                 8002
+  P1                 8007
+  P2                 8008

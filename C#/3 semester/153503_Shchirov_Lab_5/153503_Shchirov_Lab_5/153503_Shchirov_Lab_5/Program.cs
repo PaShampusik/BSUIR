@@ -22,7 +22,7 @@ class Progam
 
         serializer.SerializeByLINQ(lib, "test_with_linq.xml");
 
-        //serializer.SerializeByXML(lib, "test.xml");
+        serializer.SerializeByXML(lib, "test.xml");
 
         Console.WriteLine("------------------------------------------------------------------------");
 

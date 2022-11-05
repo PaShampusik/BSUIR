@@ -1,7 +1,7 @@
  org $8000
- ldx #10
- ldy #10
- ldd #10
+ ldx #%00010000
+ ldy #%00010000
+ ldd #%00010000
  pshx
  ldx #0
  abx
@@ -20,7 +20,6 @@
  pula
  pulb
  std $10
- ldaa #$B9
  daa
  staa $10
  ldaa $11

@@ -1,0 +1,52 @@
+  ADDR B1 B2 B3 B4 D:\BSUIR\Assembler\Lab_3\sa.asm                  PAGE       1
+
+                    org $8000
+  8000 CE 01 00     ldx #generate
+  8003 FF FF F6     stx $fff6
+  8006 C6 20        ldab #$20
+  8008 CE 82 00     ldx #$8200
+  800B 18 CE 80 00  ldy #$8000
+  800F 3F           swi
+  8010 CE 01 19     ldx #solution
+  8013 FF FF F6     stx $fff6
+  8016 CE 82 00     ldx #$8200
+  8019 C6 20        ldab #$20
+  801B 18 CE 00 00  ldy #0
+  801F 3F           swi
+                    org $100
+                   generate:
+  0100 18 A6 00     ldaa $0,y
+  0103 A7 00        staa $0,x
+  0105 08           inx
+  0106 18 08        iny
+  0108 5A           decb
+  0109 26 F5        bne generate
+  010B CE 00 00     ldx #0
+  010E C6 20        ldab #$20
+                   zero:
+  0110 86 00        ldaa #0
+  0112 A7 00        staa $0,x
+  0114 08           inx
+  0115 5A           decb
+  0116 26 F8        bne zero
+  0118 3B           rti
+                   solution:
+  0119 1F 00 10 03  brclr $0,x,#%00010000,copy
+  011D 7E 01 25     jmp continue
+                   copy:
+  0120 A6 00        ldaa $0,x
+  0122 18 A7 00     staa $0,y
+                   continue:
+  0125 08           inx
+  0126 18 08        iny
+  0128 5A           decb
+  0129 26 EE        bne solution
+  012B 3B           rti
+
+  Symbol Table 
+
+  SOLUTION           0119
+  ZERO               0110
+  CONTINUE           0125
+  GENERATE           0100
+  COPY               0120

@@ -1,0 +1,2 @@
+ŒÈŽØº´	Í!Í ÃëðHello World!
+Lab made by Pavel Shchirov, group 153503$

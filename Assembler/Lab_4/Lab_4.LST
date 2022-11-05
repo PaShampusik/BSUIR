@@ -1,0 +1,53 @@
+  ADDR B1 B2 B3 B4 D:\BSUIR\Assembler\Lab_4\Lab_4.asm               PAGE       1
+
+                    org $8000
+  8000 CE 80 00     ldx #$8000
+  8003 18 CE 83 01  ldy #$8301
+  8007 C6 09        ldab #9 ;<------
+                   ;count of bites -1|
+
+                   fill:
+  8009 A6 00        ldaa $0,x
+  800B 18 A7 00     staa $0,y
+  800E 08           inx
+  800F 18 08        iny
+  8011 5A           decb
+  8012 26 F5        bne fill
+
+
+  8014 CE 83 01     ldx #$8301
+  8017 C6 05        ldab #5
+
+
+                   loop:
+  8019 37           pshb
+  801A A6 00        ldaa $0,x
+  801C 18 E6 00     ldab $0,y
+  801F B7 83 11     staa $8311
+  8022 F7 83 12     stab $8312
+  8025 C6 08        ldab #8
+                   loop2:
+  8027 79 83 11     rol $8311
+  802A 76 83 12     ror $8312
+  802D 5A           decb
+  802E 26 F7        bne loop2
+  8030 79 83 11     rol $8311
+  8033 B6 83 11     ldaa $8311
+  8036 F6 83 12     ldab $8312
+  8039 A7 00        staa $0,x
+  803B 18 E7 00     stab $0,y
+  803E 08           inx
+  803F 18 09        dey
+  8041 33           pulb
+  8042 5A           decb
+  8043 26 D4        bne loop
+
+
+
+
+
+  Symbol Table 
+
+  LOOP2              8027
+  FILL               8009
+  LOOP               8019
