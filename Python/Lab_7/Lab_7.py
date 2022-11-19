@@ -19,7 +19,7 @@ def input():
     def f(x):
         return np.cosh(x)
 
-    LEFT, DOTS_COUNT, RIGHT = 0, 120, 2
+    LEFT, DOTS_COUNT, RIGHT = 0, 12, 2
 
     dots = []
     for i in range(DOTS_COUNT):
