@@ -1,0 +1,389 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+Lab_6.exe -- emu8086 assembler version: 4.05  
+ 
+[ 27.11.2022  --  22:59:55 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       ; multi-segment executable file template.
+[   2]        :                                       
+[   3]        :                                       data segment
+[   4]        :                                       ; add your data here!
+[   5]    0000: 0A 0D 45 6E 74 65 72 20 73 74 72 69   enter_input_string db 10, 13, "Enter string to manipulate: $"
+                6E 67 20 74 6F 20 6D 61 6E 69 70 75 
+                6C 61 74 65 3A 20 24                
+[   6]    001F: 00 00 00 00 00 00 00 00 00 00 00 00   input_str db 255 DUP(?)
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00                            
+[   7]    011E: 0A 0D 45 6E 74 65 72 20 73 75 62 73   request_for_input_substring db 10, 13, "Enter substring you want to replace: $"
+                74 72 69 6E 67 20 79 6F 75 20 77 61 
+                6E 74 20 74 6F 20 72 65 70 6C 61 63 
+                65 3A 20 24                         
+[   8]    0146: 00 00 00 00 00 00 00 00 00 00 00 00   substring db 255 DUP(?)
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00                            
+[   9]    0245: 00 00 00 00 00 00 00 00 00 00 00 00   substr_to_insert db 255 DUP(?)
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00                            
+[  10]    0344: 0A 0D 57 65 20 66 6F 75 6E 64 20 73   found_msg db 10, 13, "We found such substring", 13, 10, "Now enter a string, we need to put instead of it: $", 13, 10
+                75 63 68 20 73 75 62 73 74 72 69 6E 
+                67 0D 0A 4E 6F 77 20 65 6E 74 65 72 
+                20 61 20 73 74 72 69 6E 67 2C 20 77 
+                65 20 6E 65 65 64 20 74 6F 20 70 75 
+                74 20 69 6E 73 74 65 61 64 20 6F 66 
+                20 69 74 3A 20 24 0D 0A             
+[  11]    0394: 0A 0D 53 75 63 68 20 73 75 62 73 74   not_found_msg db 10, 13, "Such substring doesnt exist, let's try from the begining :( $"
+                72 69 6E 67 20 64 6F 65 73 6E 74 20 
+                65 78 69 73 74 2C 20 6C 65 74 27 73 
+                20 74 72 79 20 66 72 6F 6D 20 74 68 
+                65 20 62 65 67 69 6E 69 6E 67 3A 28 
+                20 24                               
+[  12]    03D2: 00 00 00 00 00 00 00 00 00 00 00 00   answer_str db 255 DUP(0)
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00                            
+[  13]    04D1: 0A 0D 48 65 72 65 20 69 73 20 61 6E   answer_msg db 10, 13, "Here is answer: $"
+                73 77 65 72 3A 20 24                
+[  14]    04E4: 0A 0D 59 6F 75 72 20 69 6E 70 75 74   empty_str db 10, 13, "Your input is empty, try again from the begining :($"
+                20 69 73 20 65 6D 70 74 79 2C 20 74 
+                72 79 20 61 67 61 69 6E 20 66 72 6F 
+                6D 20 74 68 65 20 62 65 67 69 6E 69 
+                6E 67 3A 28 24                      
+[  15]        :                                       ends
+[  16]        :                                       
+[  17]        :                                       stack segment
+[  18]    0520: 00 00 00 00 00 00 00 00 00 00 00 00   dw   128  dup(0)
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00 00 00 00 00 00 00 00 00 
+                00 00 00 00                         
+[  19]        :                                       ends
+[  20]        :                                       
+[  21]        :                                       code segment
+[  22]        :                                       
+[  23]        :                                       output_string macro str
+[  24]        :                                       mov ah, 9
+[  25]        :                                       lea dx, str
+[  26]        :                                       int 33
+[  27]        :                                       endm
+[  28]        :                                       input_string macro str, count
+[  29]        :                                       mov ah, 10
+[  30]        :                                       lea dx, str
+[  31]        :                                       mov bx, dx
+[  32]        :                                       mov [bx],count
+[  33]        :                                       int 33
+[  34]        :                                       lea di, str
+[  35]        :                                       mov bl, str[1]
+[  36]        :                                       mov [di + bx  + 2], '$'
+[  37]        :                                       endm
+[  38]    0620:                                       start:
+[  39]    0620: B8 00 00                              mov ax, @DATA
+[  40]    0623: 8E D8                                 mov ds, ax
+[  41]    0625: 8E C0                                 mov es, ax
+[  42]    0627: B4 09 BA 00 00 CD 21                  output_string enter_input_string
+[  43]    062E: B4 0A BA 1F 00 8B DA C6 07 C8 CD 21   input_string input_str, 200
+                BF 1F 00 8A 1E 20 00 C6 41 02 24    
+[  44]    0645: BB 00 00                              mov bx, 0
+[  45]    0648: 8A 1E 20 00                           mov bl, input_str[1]
+[  46]    064C: B9 00 00                              mov cx, 0
+[  47]    064F: 3B D9                                 cmp bx, cx
+[  48]    0651: 74 02                                 jz empty_string
+[  49]    0653: EB 09                                 jmp safe_1
+[  50]    0655:                                       empty_string:
+[  51]    0655: B4 09 BA E4 04 CD 21                  output_string empty_str
+[  52]    065C: EB C2                                 jmp start
+[  53]    065E:                                       safe_1:
+[  54]    065E: B4 09 BA 1E 01 CD 21                  output_string request_for_input_substring
+[  55]    0665: BB 1F 00                              lea bx, input_str
+[  56]    0668: B9 00 00                              mov cx, 0
+[  57]    066B: 8A 4F 01                              mov cl,[bx + 1]
+[  58]    066E: 41                                    inc cx
+[  59]    066F: B4 0A BA 46 01 8B DA 89 0F CD 21 BF   input_string substring,cx
+                46 01 8A 1E 47 01 C6 41 02 24       
+[  60]    0685: BB 00 00                              mov bx, 0
+[  61]    0688: 8A 1E 47 01                           mov bl, substring[1]
+[  62]    068C: B9 00 00                              mov cx, 0
+[  63]    068F: 3B D9                                 cmp bx, cx
+[  64]    0691: 74 C2                                 jz empty_string
+[  65]    0693: BB 46 01                              lea bx, substring
+[  66]    0696: B0 00                                 mov al, 0
+[  67]    0698: 8A 47 01                              mov al,[bx + 1]
+[  68]    069B: 8A C8                                 mov cl, al
+[  69]    069D: 51                                    push cx
+[  70]    069E: BE 21 00                              lea si, input_str + 2
+[  71]    06A1:                                       searching:
+[  72]    06A1: 59                                    pop cx
+[  73]    06A2: 51                                    push cx
+[  74]    06A3: 56                                    push si
+[  75]    06A4: BF 48 01                              lea di, substring + 2
+[  76]    06A7: F3 A6                                 repe cmpsb
+[  77]    06A9: 75 02                                 jne next:
+[  78]    06AB: 74 10                                 jz found
+[  79]    06AD:                                       next:
+[  80]    06AD: 5E                                    pop si
+[  81]    06AE: 46                                    inc si
+[  82]    06AF: BB 21 00                              lea bx, input_str + 2
+[  83]    06B2: 8B C6                                 mov ax, si
+[  84]    06B4: 2B C3                                 sub ax, bx
+[  85]    06B6: 3A 47 FF                              cmp al, [bx - 1]
+[  86]    06B9: 74 0B                                 je not_found
+[  87]    06BB: EB E4                                 jmp searching
+[  88]    06BD:                                       found:
+[  89]    06BD: B4 09 BA 44 03 CD 21                  output_string found_msg
+[  90]    06C4: EB 0A                                 jmp call_for_new_substr
+[  91]    06C6:                                       not_found:
+[  92]    06C6: B4 09 BA 94 03 CD 21                  output_string not_found_msg
+[  93]    06CD: E9 50 FF                              jmp start
+[  94]    06D0:                                       call_for_new_substr:
+[  95]    06D0: B4 0A BA 45 02 8B DA C6 07 37 CD 21   input_string substr_to_insert, 55
+                BF 45 02 8A 1E 46 02 C6 41 02 24    
+[  96]    06E7: BB 00 00                              mov bx, 0
+[  97]    06EA: 8A 1E 46 02                           mov bl, substr_to_insert[1]
+[  98]    06EE: B9 00 00                              mov cx, 0
+[  99]    06F1: 3B D9                                 cmp bx, cx
+[ 100]    06F3: 75 03 E9 5D FF                        jz empty_string
+[ 101]    06F8: 5E                                    pop si
+[ 102]    06F9: BF 45 02                              lea di, substr_to_insert
+[ 103]    06FC: BB 00 00                              mov bx, 0
+[ 104]    06FF: 8A 1E 46 02                           mov bl, substr_to_insert[1]  ;Length of SubstringTOINSERT
+[ 105]    0703: 53                                    push bx   ;pushing L_Insert_Substring
+[ 106]    0704: BF 46 01                              lea di, substring
+[ 107]    0707: B8 00 00                              mov ax, 0
+[ 108]    070A: A0 47 01                              mov al, substring[1]   ;Length of SUBSTRING
+[ 109]    070D: 50                                    push ax   ;pushing L_SUBSTRING
+[ 110]    070E: BF 1F 00                              lea di, input_str
+[ 111]    0711: BA 00 00                              mov dx, 0
+[ 112]    0714: 8A 16 20 00                           mov dl, input_str[1]   ;Length of STRING
+[ 113]    0718: 52                                    push dx ;pushing L_STRING
+[ 114]    0719: 56                                    push si
+[ 115]    071A: 2B D0                                 sub dx, ax
+[ 116]    071C: 03 D3                                 add dx, bx  ;Length of ANSWER String
+[ 117]    071E: BF D2 03                              lea di, answer_str
+[ 118]    0721: BB 00 00                              mov bx, 0
+[ 119]    0724: 8B DA                                 mov bx, dx
+[ 120]    0726: C6 41 02 24                           mov [di + 2 + bx], '$'
+[ 121]    072A: 5E                                    pop si
+[ 122]    072B: 56                                    push si     ;pushing address of first symbol of substring in string
+[ 123]    072C: BF 21 00                              lea di, input_str  + 2
+[ 124]    072F: 2B F7                                 sub si, di
+[ 125]    0731: 8B CE                                 mov cx, si
+[ 126]        :                                       
+[ 127]    0733: 51                                    push cx
+[ 128]        :                                       
+[ 129]    0734: BF D2 03                              lea di, answer_str
+[ 130]    0737: BE 1F 00                              lea si, input_str
+[ 131]        :                                       
+[ 132]    073A: B8 00 00                              mov ax, 0
+[ 133]    073D: 3B C1                                 cmp ax, cx
+[ 134]    073F: 74 10                                 jz continue_1
+[ 135]        :                                       
+[ 136]    0741:                                       part_1:
+[ 137]    0741: B8 00 00                              mov ax, 0
+[ 138]    0744: BB 00 00                              mov bx, 0
+[ 139]    0747: 8B D9                                 mov bx, cx
+[ 140]    0749: 8A 40 01                              mov al, [si + bx + 1]
+[ 141]    074C: 88 41 01                              mov [di + 1 + bx], al
+[ 142]    074F: E0 F0                                 loopne part_1
+[ 143]        :                                       
+[ 144]    0751:                                       continue_1:
+[ 145]    0751: 59                                    pop cx
+[ 146]        :                                       
+[ 147]    0752: 5E                                    pop si  ;***address of first symbol of substring in string
+[ 148]    0753: 5A                                    pop dx  ;L_STRING
+[ 149]    0754: 58                                    pop ax  ;L_SUB_String
+[ 150]    0755: 5B                                    pop bx  ;L_INSERT_String
+[ 151]    0756: 50                                    push ax
+[ 152]    0757: 52                                    push dx
+[ 153]        :                                       
+[ 154]        :                                       
+[ 155]    0758: 03 F9                                 add di, cx
+[ 156]        :                                       
+[ 157]        :                                       ;add si, cx
+[ 158]    075A: 03 F0                                 add si, ax
+[ 159]        :                                       
+[ 160]    075C: 56                                    push si  ;there address of first symbol of Part_3
+[ 161]        :                                       
+[ 162]    075D: BE 45 02                              lea si, substr_to_insert
+[ 163]    0760: 8B CB                                 mov cx, bx
+[ 164]        :                                       
+[ 165]    0762: 51                                    push cx
+[ 166]        :                                       
+[ 167]    0763:                                       part_2:
+[ 168]    0763: B8 00 00                              mov ax, 0
+[ 169]    0766: BB 00 00                              mov bx, 0
+[ 170]    0769: 8B D9                                 mov bx, cx
+[ 171]    076B: 8A 40 01                              mov al, [si + bx + 1]
+[ 172]    076E: 88 41 01                              mov [di + 1 + bx], al
+[ 173]    0771: E0 F0                                 loopne part_2
+[ 174]        :                                       
+[ 175]    0773: 59                                    pop cx
+[ 176]        :                                       
+[ 177]    0774: 03 F9                                 add di, cx
+[ 178]        :                                       
+[ 179]    0776: 5E                                    pop si
+[ 180]    0777: BD 21 00                              lea bp, input_str + 2
+[ 181]    077A: 03 EA                                 add bp, dx
+[ 182]    077C: 2B EE                                 sub bp, si
+[ 183]    077E: 8B CD                                 mov cx, bp
+[ 184]        :                                       
+[ 185]    0780: BB 00 00                              mov bx, 0
+[ 186]    0783: 3B D9                                 cmp bx, cx
+[ 187]    0785: 74 10                                 jz continue_2
+[ 188]    0787:                                       part_3:
+[ 189]    0787: B8 00 00                              mov ax, 0
+[ 190]    078A: BB 00 00                              mov bx, 0
+[ 191]    078D: 8B D9                                 mov bx, cx
+[ 192]    078F: 8A 40 FF                              mov al, [si + bx - 1]
+[ 193]    0792: 88 41 01                              mov [di + 1 + bx], al
+[ 194]    0795: E0 F0                                 loopne part_3
+[ 195]        :                                       
+[ 196]    0797:                                       continue_2:
+[ 197]    0797: B4 09 BA D1 04 CD 21                  output_string answer_msg
+[ 198]    079E: B4 09 BA D4 03 CD 21                  output_string answer_str[2]
+[ 199]        :                                       
+[ 200]        :                                       
+[ 201]        :                                       ends
+[ 202]        :                                       
+[ 203]        :                                       end start ; set entry point and stop the assembler.
+[ 204]        :                                       
+[ 205]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: A5      -   bytes on last page (l.byte)
+0003: 01      -   bytes on last page (h.byte)
+0004: 05      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 52      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 00      -   SP - stack pointer (l.byte)
+0011: 01      -   SP - stack pointer (h.byte)
+0012: 62      -   check sum (l.byte)
+0013: F9      -   check sum (h.byte)
+0014: 00      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 62      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: 01      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 62      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

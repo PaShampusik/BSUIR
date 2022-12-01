@@ -1,0 +1,208 @@
+; multi-segment executable file template.
+
+data segment
+; add your data here!
+enter_input_string db 10, 13, "Enter string to manipulate: $"
+input_str db 255 DUP(?)
+request_for_input_substring db 10, 13, "Enter substring you want to replace: $"
+substring db 255 DUP(?)
+substr_to_insert db 255 DUP(?)
+found_msg db 10, 13, "We found such substring", 13, 10, "Now enter a string, we need to put instead of it: $", 13, 10
+not_found_msg db 10, 13, "Such substring doesnt exist, let's try from the begining :( $"
+answer_str db 255 DUP(0)
+answer_msg db 10, 13, "Here is answer: $"
+empty_str db 10, 13, "Your input is empty, try again from the begining :($"
+ends
+
+stack segment
+dw   128  dup(0)
+ends
+
+code segment
+
+output_string macro str
+mov ah, 9
+lea dx, str
+int 33
+endm
+input_string macro str, count
+mov ah, 10
+lea dx, str
+mov bx, dx
+mov [bx],count
+int 33
+lea di, str
+mov bl, str[1]
+mov [di + bx  + 2], '$'
+endm
+start:
+mov ax, @DATA
+mov ds, ax
+mov es, ax
+output_string enter_input_string
+input_string input_str, 200
+mov bx, 0
+mov bl, input_str[1]
+mov cx, 0
+cmp bx, cx
+jz empty_string
+jmp safe_1
+empty_string:
+output_string empty_str
+jmp start
+safe_1:
+output_string request_for_input_substring
+lea bx, input_str
+mov cx, 0
+mov cl,[bx + 1]
+inc cx
+input_string substring,cx
+mov bx, 0
+mov bl, substring[1]
+mov cx, 0
+cmp bx, cx
+jz empty_string
+lea bx, substring
+mov al, 0
+mov al,[bx + 1]
+mov cl, al
+push cx
+lea si, input_str + 2
+searching:
+pop cx
+push cx
+push si
+lea di, substring + 2
+repe cmpsb
+jne next:
+jz found
+next:
+pop si
+inc si
+lea bx, input_str + 2
+mov ax, si
+sub ax, bx
+cmp al, [bx - 1]
+je not_found
+jmp searching
+found:
+output_string found_msg
+jmp call_for_new_substr
+not_found:
+output_string not_found_msg
+jmp start
+call_for_new_substr:
+input_string substr_to_insert, 55
+mov bx, 0
+mov bl, substr_to_insert[1]
+mov cx, 0
+cmp bx, cx
+jz empty_string
+pop si
+lea di, substr_to_insert
+mov bx, 0
+mov bl, substr_to_insert[1]  ;Length of SubstringTOINSERT
+push bx   ;pushing L_Insert_Substring
+lea di, substring
+mov ax, 0
+mov al, substring[1]   ;Length of SUBSTRING
+push ax   ;pushing L_SUBSTRING
+lea di, input_str
+mov dx, 0
+mov dl, input_str[1]   ;Length of STRING
+push dx ;pushing L_STRING
+push si
+sub dx, ax
+add dx, bx  ;Length of ANSWER String
+lea di, answer_str
+mov bx, 0
+mov bx, dx
+mov [di + 2 + bx], '$'
+pop si
+push si     ;pushing address of first symbol of substring in string
+lea di, input_str  + 2
+sub si, di
+mov cx, si
+
+push cx
+
+lea di, answer_str
+lea si, input_str
+
+mov ax, 0
+cmp ax, cx
+jz continue_1
+
+part_1:
+mov ax, 0
+mov bx, 0
+mov bx, cx
+mov al, [si + bx + 1]
+mov [di + 1 + bx], al
+loopne part_1
+
+continue_1:
+pop cx
+
+pop si  ;***address of first symbol of substring in string
+pop dx  ;L_STRING
+pop ax  ;L_SUB_String
+pop bx  ;L_INSERT_String
+push ax
+push dx
+
+
+add di, cx
+
+;add si, cx
+add si, ax
+
+push si  ;there address of first symbol of Part_3
+
+lea si, substr_to_insert
+mov cx, bx
+
+push cx
+
+part_2:
+mov ax, 0
+mov bx, 0
+mov bx, cx
+mov al, [si + bx + 1]
+mov [di + 1 + bx], al
+loopne part_2
+
+pop cx
+
+add di, cx
+
+pop si
+lea bp, input_str + 2
+add bp, dx
+sub bp, si
+mov cx, bp
+
+mov bx, 0
+cmp bx, cx
+jz continue_2
+part_3:
+mov ax, 0
+mov bx, 0
+mov bx, cx
+mov al, [si + bx - 1]
+mov [di + 1 + bx], al
+loopne part_3
+
+continue_2:
+output_string answer_msg
+output_string answer_str[2]
+
+
+ends
+
+end start ; set entry point and stop the assembler.
+
+
+
+
+; [SOURCE]: D:\BSUIR\Assembler\Lab_6\Lab_6.asm

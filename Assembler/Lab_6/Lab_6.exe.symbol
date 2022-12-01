@@ -1,0 +1,34 @@
+< THE SYMBOL TABLE >  Lab_6.exe  --  emu8086 assembler version: 4.05 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+DATA                     	00000     	-5        	SEGMENT   	(ITSELF)  
+ENTER_INPUT_STRING       	00000     	1         	VAR       	data      
+INPUT_STR                	0001F     	1         	VAR       	data      
+REQUEST_FOR_INPUT_SUBSTRING	0011E     	1         	VAR       	data      
+SUBSTRING                	00146     	1         	VAR       	data      
+SUBSTR_TO_INSERT         	00245     	1         	VAR       	data      
+FOUND_MSG                	00344     	1         	VAR       	data      
+NOT_FOUND_MSG            	00394     	1         	VAR       	data      
+ANSWER_STR               	003D2     	1         	VAR       	data      
+ANSWER_MSG               	004D1     	1         	VAR       	data      
+EMPTY_STR                	004E4     	1         	VAR       	data      
+STACK                    	00052     	-5        	SEGMENT   	(ITSELF)  
+CODE                     	00062     	-5        	SEGMENT   	(ITSELF)  
+START                    	00000     	-1        	LABEL     	code      
+EMPTY_STRING             	00035     	-1        	LABEL     	code      
+SAFE_1                   	0003E     	-1        	LABEL     	code      
+SEARCHING                	00081     	-1        	LABEL     	code      
+NEXT                     	0008D     	-1        	LABEL     	code      
+FOUND                    	0009D     	-1        	LABEL     	code      
+NOT_FOUND                	000A6     	-1        	LABEL     	code      
+CALL_FOR_NEW_SUBSTR      	000B0     	-1        	LABEL     	code      
+PART_1                   	00121     	-1        	LABEL     	code      
+CONTINUE_1               	00131     	-1        	LABEL     	code      
+PART_2                   	00143     	-1        	LABEL     	code      
+PART_3                   	00167     	-1        	LABEL     	code      
+CONTINUE_2               	00177     	-1        	LABEL     	code      
+===================================================================================================
+[ 27.11.2022  --  22:59:55 ] 
+< END >
+ 
