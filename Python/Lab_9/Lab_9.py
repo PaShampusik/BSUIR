@@ -5,12 +5,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-plotdots = 10**3
+plotdots = 20  # 10**3
 eps = 10**-3
 
 
+def yder(x, y):
+    return -y
+
+
+y0 = 1
+LEFT, RIGHT = -1, 1
+
+
+def ans(x):
+    return np.exp(-x)
+
+
+xplot = np.linspace(LEFT, RIGHT, plotdots)
+yplot = [ans(xdot) for xdot in xplot]
+plt.plot(xplot, yplot, "black")
+
+
 # def yder(x, y):
-#     return y
+#     return x**2 - y
 
 
 # y0 = 1
@@ -18,24 +35,7 @@ eps = 10**-3
 
 
 # def ans(x):
-#     return np.exp(x)
-
-
-# xplot = np.linspace(LEFT, RIGHT, plotdots)
-# yplot = [ans(xdot) for xdot in xplot]
-# plt.plot(xplot, yplot, 'black')
-
-
-# def yder(x, y):
-#     return x**2 - y
-
-
-# y0 = 0
-# LEFT, RIGHT = -1, 1
-
-
-# def ans(x):
-#     return math.exp(-x) + x**2 - 2 * x + 2
+#     return x**2 - 2 * x + 2 - math.exp(-x)
 
 
 # xplot = np.linspace(LEFT, RIGHT, plotdots)
@@ -43,16 +43,16 @@ eps = 10**-3
 # plt.plot(xplot, yplot, "black")
 
 
-def yder(x, y):
-    return np.exp(-x)
+# def yder(x, y):
+#     return np.exp(-x)
 
 
-y0 = 0
-LEFT, RIGHT = -1, 1
+# y0 = -1
+# LEFT, RIGHT = -1, 1
 
 
-def ans(x):
-    return -np.exp(-x)
+# def ans(x):
+#     return -np.exp(-x)
 
 
 # xplot = np.linspace(LEFT, RIGHT, plotdots)
@@ -131,38 +131,36 @@ def CreateYdots(method, xdots):
     return ydots, midn, maxn
 
 
-def Adams(xdot, N):
-    ydots = [y0]
-    h = xdot / N
-    xprev = -h
-    yprev = GetValueAtPoint(RungeKutta, xprev)[0]
-    fprev = yder(xprev, yprev)
-    for i in range(N):
-        x = i * h
-        y = ydots[-1]
-        flast = yder(x, y)
-        ydots += [y + h * (3 / 2 * flast - 1 / 2 * fprev)]
-        fprev = flast
-    return ydots
-
-
 print("Dots for calculating = ", plotdots)
 print("Epsilon = ", eps)
 
 xdots = [LEFT + (RIGHT - LEFT) / plotdots * i for i in range(plotdots + 1)]
-print(len(xdots))
+
 ydots, midn, maxn = CreateYdots(Euler, xdots)
 print("\n MidN / MaxN per dot in " + "Euler" + " method       = ", midn, " / ", maxn)
-print(ydots)
 plt.plot(xdots, ydots, "y")
+
+miss = sum(abs(ydots[i] - ans(xdots[i])) for i in range(len(xdots)))
+miss = miss / len(xdots)
+print("Miss = ", miss)
 
 ydots, midn, maxn = CreateYdots(BetterEuler, xdots)
 print("\n MidN / MaxN per dot in " + "BetterEuler" + " method = ", midn, " / ", maxn)
 plt.plot(xdots, ydots, "b--")
 
+miss = sum(abs(ydots[i] - ans(xdots[i])) for i in range(len(xdots)))
+miss = miss / len(xdots)
+print("Miss = ", miss)
+
 ydots, midn, maxn = CreateYdots(RungeKutta, xdots)
 print("\n MidN / MaxN per dot in " + "RungeKutta" + " method  = ", midn, " / ", maxn)
 plt.plot(xdots, ydots, "r:")
+
+
+miss = sum(abs(ydots[i] - ans(xdots[i])) for i in range(len(xdots)))
+miss = miss / len(xdots)
+print("Miss = ", miss)
+
 
 # ydots, midn, maxn = CreateYdots(Adams, xdots)
 # print("\n MidN / MaxN per dot in " + "Adams" + " method       = ", midn, " / ", maxn)

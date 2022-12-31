@@ -5,7 +5,9 @@ data segment
     enter_input_string db 10, 13, "Enter string to manipulate: $"
     input_str db 255 DUP(?)  
     request_for_input_substring db 10, 13, "Enter substring you want to replace: $"
+    space_str_msg_ db 13,10, "Your input is just spaces, try again: ", 13, 10, '$'
     substring db 255 DUP(?) 
+    dollar_error_msg_ db 10,13, "Your input contains a dollar symbol, try to input string again: ", 10, 13, "$"
     substr_to_insert db 255 DUP(?) 
     found_msg db 10, 13, "We found such substring", 13, 10, "Now enter a string, we need to put instead of it: $", 13, 10
     not_found_msg db 10, 13, "Such substring doesnt exist, let's try from the begining :( $"
@@ -24,7 +26,9 @@ output_string macro str
     mov ah, 9
     lea dx, str
     int 33
-endm                          
+endm
+
+    
 input_string macro str, count
     mov ah, 10
     lea dx, str
@@ -46,7 +50,48 @@ start:
     mov cx, 0
     cmp bx, cx
     jz empty_string
-    jmp safe_1
+    mov bx, 0
+    mov bl, " "
+    lea di, input_str[2]
+    mov dx, 0 
+    mov dl, [di-1]
+    mov cx, dx
+    mov dx, 0
+space_str:
+    cmp bl, [di]
+    jz space_
+    mov dx, 1
+space_:
+    inc di
+    loopne space_str
+    cmp dx, 1    
+    jnz space_str_msg   
+    mov bx, 0
+    mov bl, "$"
+    lea di, input_str[2]
+    mov dx, 0 
+    mov dl, [di-1]
+    mov cx, dx
+    mov dx, 0
+dollar_str:
+    cmp bl, [di]
+    jnz dollar_
+    mov dx, 1
+dollar_:
+    inc di
+    loopne dollar_str
+    cmp dx, 1
+    jnz safe_1
+    jmp dollar_error_msg
+            
+dollar_error_msg:
+    output_string dollar_error_msg_
+    jmp start
+space_str_msg:
+    output_string space_str_msg_    
+    jmp start
+    
+    
 empty_string:
     output_string empty_str
     jmp start
