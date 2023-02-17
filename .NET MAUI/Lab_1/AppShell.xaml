@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Lab_1.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Lab_1"
+    BackgroundColor = "White"
+>
+
+    <FlyoutItem Title="Currence Converter"
+                >
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:Currency_Converter}" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Calculator"
+                >
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Integral Calculation"
+                >
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:IntegralCalculation}" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Database Page"
+                >
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:DatabasePage}" />
+        </Tab>
+    </FlyoutItem>
+
+</Shell>

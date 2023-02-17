@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Lab_1.Currency_Converter"
+             Title="Currency_Converter"
+             BackgroundColor="#f7f2ee">
+    <Grid
+        RowDefinitions="2*,*,*,*,*,*,*,*"
+        ColumnDefinitions="50, 2*, *"
+        BackgroundColor="Transparent"
+        Padding="20, 0, 20, 0">
+
+        <DatePicker
+            TextColor="Black"
+            FontSize="50"
+            HorizontalOptions="Center"
+            Grid.Row="0"
+            Grid.ColumnSpan="3"
+            MinimumDate="01/01/2022"
+            MaximumDate="{Binding MaxDate}"
+            Date="{Binding SelectedDate}" />
+        <Image 
+            HorizontalOptions="Start"
+            Grid.Row="1"
+            Grid.Column="0"
+            WidthRequest="40"
+            HeightRequest="40"
+            Source="byn.png" />
+
+        <Image 
+            HorizontalOptions="Start"
+            Grid.Row="2"
+            Grid.Column="0"
+            WidthRequest="40"
+            HeightRequest="40"
+            Source="euro.png" />
+        <Image 
+            HorizontalOptions="Start"
+            Grid.Row="3"
+            Grid.Column="0"
+            WidthRequest="40"
+            HeightRequest="40"
+            Source="usd.png" />
+        <Image 
+            HorizontalOptions="Start"
+            Grid.Row="4"
+            Grid.Column="0"
+            WidthRequest="30"
+            HeightRequest="30"
+            Source="chn.png" />
+        <Image 
+            HorizontalOptions="Start"
+            Grid.Row="5"
+            Grid.Column="0"
+            WidthRequest="40"
+            HeightRequest="40"
+            Source="cny.png" />
+        <Image 
+            HorizontalOptions="Start"
+            Grid.Row="6"
+            Grid.Column="0"
+            WidthRequest="40"
+            HeightRequest="40"
+            Source="gbp.png" />
+        <Image 
+            HorizontalOptions="Start"
+            Grid.Row="7"
+            Grid.Column="0"
+            WidthRequest="40"
+            HeightRequest="40"
+            Source="rub.png" />
+        
+        
+        <Label
+            Grid.ColumnSpan="1"
+            VerticalOptions="Center"
+            FontSize="Medium"
+            TextColor="Black"
+            Grid.Row="1"
+            Grid.Column="1"
+            x:Name="BYN"
+            Text="Белорусский рубль(1 BYN)"
+            />
+
+        <Label
+            Grid.ColumnSpan="1"
+            VerticalOptions="Center"
+            FontSize="Medium"
+            TextColor="Black"
+            Grid.Row="2"
+            Grid.Column="1"
+            x:Name="EUR"
+            Text="Евро(1 EUR)"
+            />
+
+
+        <Label
+            Grid.ColumnSpan="1"
+            VerticalOptions="Center"
+            FontSize="Medium"
+            TextColor="Black"
+            Grid.Column="1"
+            Grid.Row="3"
+            x:Name="USD"
+            Text="Доллар США(1 USD)"
+            />
+
+        <Label
+            Grid.ColumnSpan="1"
+            VerticalOptions="Center"
+            FontSize="Medium"
+            TextColor="Black"
+            Grid.Column="1"
+            Grid.Row="4"
+            x:Name="CHF"
+            Text="Швейцарский франк(1 CHF)"
+            />
+
+        <Label
+            Grid.ColumnSpan="1"
+            VerticalOptions="Center"
+            FontSize="Medium"
+            TextColor="Black"
+            Grid.Column="1"
+            Grid.Row="5"
+            x:Name="CNY"
+            Text="Китайский юань(10 CNY)"
+            />
+
+        <Label
+            Grid.ColumnSpan="1"
+            VerticalOptions="Center"
+            FontSize="Medium"
+            TextColor="Black"
+            Grid.Column="1"
+            Grid.Row="6"
+            x:Name="GBP"
+            Text="Фунт стерлингов(1 GBP)"
+            />
+
+        <Label
+            Grid.ColumnSpan="1"
+            VerticalOptions="Center"
+            FontSize="Medium"
+            TextColor="Black"
+            Grid.Column="1"
+            Grid.Row="7"
+            x:Name="RUB"
+            Text="Росийский рубль(100 RUB)"
+            />
+
+        <Entry
+            TextColor="Black"
+            FontSize="Medium"
+            BackgroundColor="#e4e4e4"
+            x:Name="BYN_input"
+            Grid.Row="1"
+            Grid.Column="3"
+            HeightRequest="40"
+            ></Entry>
+
+        <Entry
+            TextColor="Black"
+            FontSize="Medium"
+                    HeightRequest="40"
+
+         BackgroundColor="#e4e4e4"
+         x:Name="EU_intput"
+         Grid.Row="2"
+         Grid.Column="3"
+         ></Entry>
+
+        <Entry
+            TextColor="Black"
+            FontSize="Medium"
+                        HeightRequest="40"
+
+            BackgroundColor="#e4e4e4"
+         x:Name="USD_input"
+         Grid.Row="3"
+         Grid.Column="3"
+         ></Entry>
+
+        <Entry
+            TextColor="Black"
+            FontSize="Medium"
+                        HeightRequest="40"
+
+                        BackgroundColor="#e4e4e4"
+         x:Name="CHN_input"
+         Grid.Row="4"
+         Grid.Column="3"
+         ></Entry>
+        
+        <Entry
+            TextColor="Black"
+            FontSize="Medium"
+                        HeightRequest="40"
+
+        BackgroundColor="#e4e4e4" 
+         x:Name="CNY_input"
+         Grid.Row="5"
+         Grid.Column="3"
+         ></Entry>
+
+        <Entry
+            TextColor="Black"
+            FontSize="Medium"
+                        HeightRequest="40"
+
+                        BackgroundColor="#e4e4e4"
+         x:Name="GBP_input"
+         Grid.Row="6"
+         Grid.Column="3"
+         ></Entry>
+
+        <Entry
+            TextColor="Black"
+            FontSize="Medium"
+            
+                        HeightRequest="40"
+
+                        BackgroundColor="#e4e4e4"
+         x:Name="RUS_input"
+         Grid.Row="7"
+         Grid.Column="3"
+         ></Entry>
+
+    </Grid>
+</ContentPage>

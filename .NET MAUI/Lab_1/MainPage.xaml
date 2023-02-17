@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Lab_1.MainPage"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    ios:Page.UseSafeArea="True"
+    Title="Lab_1"
+             x:DataType="local:MainPage"
+             xmlns:local="clr-namespace:Lab_1"
+             BackgroundColor="#f7f2ee"
+             WidthRequest="380"
+             HeightRequest="775">
+
+    <Grid >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="445" />
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <StackLayout
+            BackgroundColor="#f7f2ee"
+            Grid.Column ="0"
+            Grid.Row="0"
+            VerticalOptions="Start"
+            HeightRequest="400">
+
+
+            <Label
+                x:Name="Calculation"
+                Text="{Binding Calc}"
+                VerticalTextAlignment="End"
+                FontSize="30"              
+                FontAttributes="Bold"
+                HorizontalTextAlignment="End"
+                TextColor="{StaticResource Gray300}"
+                BackgroundColor="#f7f2ee"
+                Margin="10, 73, 10, 0" 
+                MaxLines="1"
+                LineBreakMode="WordWrap"/>
+
+
+            <Label
+                x:Name="Result"
+                Text="{Binding Res}"
+                VerticalTextAlignment="Center"
+                FontSize="50"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="End"
+                TextColor="{StaticResource Black}"
+                BackgroundColor="#f7f2ee"
+                Margin="10, 10, 10, 0" 
+                MaxLines="1"
+                LineBreakMode="WordWrap"/>
+
+        </StackLayout>
+
+        <Grid
+            VerticalOptions="End"
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0, 0, 0, 0">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+
+            <!--  MC button -->
+            <Button
+            x:Name="MCbutton"
+                VerticalOptions="End"
+            Grid.Column="0"
+            Grid.Row="0"
+            Text="MC"
+            FontSize="20"
+            WidthRequest="60"
+            BackgroundColor="Transparent"
+            BorderWidth="0"
+            Clicked= "OnMCclicked"
+            IsEnabled="{Binding MemoryNotEmpty}"
+            />
+
+            <!--  MR button -->
+            <Button
+                x:Name="MRbutton"
+                                VerticalOptions="End"
+
+            Grid.Column="1"
+            Grid.Row="0"
+            Text="MR"
+            FontSize="20"
+            WidthRequest="60"
+            BackgroundColor="Transparent"
+            BorderWidth="0"
+            Clicked= "OnMRclicked"
+                IsEnabled="{Binding MemoryNotEmpty}"
+            />
+
+            <!--  M+ button -->
+            <Button
+                x:Name="MPlusbutton"
+                                VerticalOptions="End"
+
+            Grid.Column="2"
+            Grid.Row="0"
+            Text="M+"
+            FontSize="20"
+            WidthRequest="60"
+            BackgroundColor="Transparent"
+            BorderWidth="0"
+            Clicked= "OnMPlusClicked" />
+
+
+            <!--  M- button -->
+            <Button
+                x:Name="MMinusbutton"
+                                VerticalOptions="End"
+
+            Grid.Column="3"
+            Grid.Row="0"
+            Text="M-"
+            FontSize="20"
+            WidthRequest="60"
+            BackgroundColor="Transparent"
+            BorderWidth="0"
+            Clicked= "OnMMinusClicked" />
+
+
+            <!--  MS button -->
+            <Button
+                x:Name="MSbutton"
+                                VerticalOptions="End"
+
+            Grid.Column="4"
+            Grid.Row="0"
+            Text="MS"
+            FontSize="20"
+            WidthRequest="60"
+            BackgroundColor="Transparent"
+            BorderWidth="0"
+            Clicked= "OnMSclicked" />
+
+
+            <!--  M > button -->
+            <Button
+                x:Name="MemoryValue"
+            Grid.Column="5"
+                                VerticalOptions="End"
+            Grid.Row="0"
+            Text="M⌄"
+            FontSize="20"
+            WidthRequest="60"
+            BackgroundColor="Transparent"
+            BorderWidth="0"
+            Clicked= "OnMMenuClicked" 
+                IsEnabled="{Binding MemoryNotEmpty}"/>
+
+        </Grid>
+
+        <Grid
+            VerticalOptions="End"
+            Grid.Row="2"
+            Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75" />
+                <RowDefinition Height="75" />
+                <RowDefinition Height="75" />
+                <RowDefinition Height="75" />
+                <RowDefinition Height="75" />
+                <RowDefinition Height="75" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+
+
+
+
+            <!-- % button-->
+            <Button
+            Grid.Column="0"
+            Grid.Row="0"
+            Text="%"
+            Clicked= "OnPercentClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+            <!-- CE button -->
+            <Button
+            Grid.Column="1"
+            Grid.Row="0"
+            Text="CE"
+            Clicked= "OnCEclicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+            <!-- C button -->
+            <Button
+            Grid.Column="2"
+            Grid.Row="0"
+            Text="C"
+            Clicked= "OnCclicked" 
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- <x button -->
+            <Button
+            Grid.Column="3"
+            Grid.Row="0"
+            Text="del"
+            Clicked= "OnDelClicked" 
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- CircleSquare button -->
+            <Button
+            Grid.Column="0"
+            FontSize="50"
+            Grid.Row="1"
+            Text="◍"
+            Clicked= "OnCircleSquareClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- x**2  button -->
+            <Button
+            Grid.Column="1"
+            Grid.Row="1"
+            Text="x²"
+            Clicked= "OnSquareClicked" 
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- sqrt button -->
+            <Button
+            Grid.Column="2"
+            Grid.Row="1"
+            Text="√x"
+            Clicked= "OnSqrtClicked" 
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- / button -->
+            <Button
+            Grid.Column="3"
+            Grid.Row="1"
+            Text="÷"
+            Clicked= "OnOperationClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- 7 button -->
+            <Button
+            Grid.Column="0"
+            Grid.Row="2"
+            Text="7"
+            Clicked= "OnButtonClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- 8 button -->
+            <Button
+            Grid.Column="1"
+            Grid.Row="2"
+            Text="8"
+            Clicked= "OnButtonClicked" 
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- 9 button -->
+            <Button
+            Grid.Column="2"
+            Grid.Row="2"
+            Text="9"
+            Clicked= "OnButtonClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- x button -->
+            <Button
+            Grid.Column="3"            
+            Grid.Row="2"
+            Text="×"
+            Clicked= "OnOperationClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- 4 button -->
+            <Button
+            Grid.Column="0"
+            Grid.Row="3"
+            Text="4"
+            Clicked= "OnButtonClicked" 
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- 5 button -->
+            <Button
+            Grid.Column="1"
+            Grid.Row="3"
+            Text="5"
+            Clicked= "OnButtonClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- 6 button -->
+            <Button
+            Grid.Column="2"
+            Grid.Row="3"
+            Text="6"
+            Clicked= "OnButtonClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+
+            <!-- - button -->
+            <Button
+            Grid.Column="3"
+            Grid.Row="3"
+            Text="-"
+            Clicked= "OnOperationClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+
+            <!-- 1 button -->
+            <Button
+            Grid.Column="0"
+            Grid.Row="4"
+            Text="1"
+            Clicked= "OnButtonClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- 2 button -->
+            <Button
+            Grid.Column="1"
+            Grid.Row="4"
+            Text="2"
+            Clicked= "OnButtonClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- 3 button -->
+            <Button
+            Grid.Column="2"
+            Grid.Row="4"
+            Text="3"
+            Clicked= "OnButtonClicked" 
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- + button -->
+            <Button
+            Grid.Column="3"
+            Grid.Row="4"
+            Text="+"
+            Clicked= "OnOperationClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- Change Sign button -->
+            <Button
+            Grid.Column="0"
+            Grid.Row="5"
+            Text=")"
+            Clicked= "OnChangeSignClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- 0 button -->
+            <Button
+            Grid.Column="1"
+            Grid.Row="5"
+            Text="0"
+            Clicked= "OnButtonClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- , button -->
+            <Button
+            Grid.Column="2"
+            Grid.Row="5"
+            Text=","
+            Clicked= "OnButtonClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+
+            <!-- = button -->
+            <Button
+                x:Name="EqualButton"
+            Grid.Column="3"
+            Grid.Row="5"
+            BackgroundColor="#4c5f6b"
+            TextColor="White"
+            FontSize="38"
+            Text="="
+            Clicked= "OnEqualClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+        </Grid>
+    </Grid>
+
+
+</ContentPage>

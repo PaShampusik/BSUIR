@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Lab_1.IntegralCalculation"
+             Title="IntegralCalculation"
+             xmlns:local="clr-namespace:Lab_1"
+             x:DataType="local:IntegralCalculation"
+             BackgroundColor="White"
+             MinimumWidthRequest="500">
+    <Grid
+        
+        RowDefinitions="*, Auto, *"
+        ColumnDefinitions="Auto, *">
+
+        <Label
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Text="{Binding State}"
+            TextColor="Black"
+            FontSize= "Large"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center">
+        </Label>
+
+        <ProgressBar 
+            x:Name="ProgressBar"
+            Grid.Row="1"
+            Grid.ColumnSpan="1"
+            Grid.Column="0"
+            Progress="0"
+            MinimumWidthRequest="300"
+            ProgressColor="#512bd4"
+            Margin="50, 0, 50, 0"
+            HorizontalOptions="FillAndExpand"/>
+
+        <Label
+            x:Name="Percent"
+            HorizontalOptions="Start"
+            Grid.Row="1"
+            Grid.ColumnSpan="1"
+            Grid.Column="1"
+            Text="0%"
+            MaximumWidthRequest="70"
+            TextColor="Black"
+            FontSize="Small"
+            HorizontalTextAlignment="Center"
+            VerticalTextAlignment="Center">    
+            
+        </Label>
+
+        <Grid RowDefinitions="*"
+        ColumnDefinitions="*, *"
+              Grid.Row="2"
+              Grid.ColumnSpan ="2">
+
+            <Button
+                Style="{StaticResource IntegralButtonStyle}"
+                x:Name="Start"
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Start"
+                HorizontalOptions="CenterAndExpand"
+                Clicked = "OnStartClicked"
+                Released="OnButtonReleased"            >
+            </Button>
+
+            <Button
+                Style="{StaticResource IntegralButtonStyle}"
+                x:Name="Cancel"
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="Cancel"
+                HorizontalOptions="CenterAndExpand"
+                Clicked="OnCancelClicked"
+                Margin="0, 0, 0, 0"
+                Released="OnButtonReleased">               
+            </Button>
+        </Grid>
+
+    </Grid>
+</ContentPage>
