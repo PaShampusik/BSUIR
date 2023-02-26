@@ -17,11 +17,10 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-        builder.Services.AddSingleton<IDbService, SQLiteService>();
+        builder.Services.AddTransient<IDbService, SQLiteService>();
 		builder.Services.AddSingleton<DatabasePage>();
-		builder.Services.AddSingleton<Currency_Converter>();
-		builder.Services.AddSingleton<RateService>();
+        builder.Services.AddSingleton<Currency_Converter>();
 		builder.Services.AddHttpClient<IRateService, RateService>(opt => opt.BaseAddress = new Uri("https://www.nbrb.by/api/exrates/rates"));
-		return builder.Build();
+        return builder.Build();
     }
 }

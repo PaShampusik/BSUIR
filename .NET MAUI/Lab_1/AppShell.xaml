@@ -13,6 +13,12 @@
             <ShellContent ContentTemplate="{DataTemplate local:Currency_Converter}" />
         </Tab>
     </FlyoutItem>
+    <FlyoutItem Title="Database Page"
+                >
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:DatabasePage}" />
+        </Tab>
+    </FlyoutItem>
     <FlyoutItem Title="Calculator"
                 >
         <Tab>
@@ -23,12 +29,6 @@
                 >
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate local:IntegralCalculation}" />
-        </Tab>
-    </FlyoutItem>
-    <FlyoutItem Title="Database Page"
-                >
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate local:DatabasePage}" />
         </Tab>
     </FlyoutItem>
 

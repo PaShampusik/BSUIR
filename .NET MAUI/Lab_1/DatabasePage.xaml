@@ -7,7 +7,6 @@
              x:DataType="local:DatabasePage"
              x:Class="Lab_1.DatabasePage"
              BackgroundColor="White">
-    <!-- Loaded doesnt work -->
     <Grid
         ColumnDefinitions="*"
         RowDefinitions="*, 3*">

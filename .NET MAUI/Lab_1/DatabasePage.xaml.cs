@@ -13,7 +13,7 @@ public partial class DatabasePage : ContentPage, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    SQLiteService service;
+    IDbService service;
 
     List<Author> authors;
     List<Book> books;
@@ -38,11 +38,11 @@ public partial class DatabasePage : ContentPage, INotifyPropertyChanged
         }
     }
      
-    public DatabasePage()
+    public DatabasePage(IDbService service)
     {
         InitializeComponent();
         BindingContext = this;
-        service = new SQLiteService();
+        this.service = service;
         Authors = service.GetAllAuthors();
     }
 
@@ -52,7 +52,7 @@ public partial class DatabasePage : ContentPage, INotifyPropertyChanged
         but = (Picker)sender;
         if (but.SelectedIndex != -1)
         {
-            Books = service.GetAuthorBooks(but.SelectedIndex);
+            Books = service.GetAuthorBooks((but.SelectedItem as Author).Id);
         }
     }
 }
