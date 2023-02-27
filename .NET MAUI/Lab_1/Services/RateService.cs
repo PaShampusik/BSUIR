@@ -25,6 +25,9 @@ namespace Lab_1.Services
             msg = task.Result;
 
             msg.EnsureSuccessStatusCode();
+
+            
+
             if(msg.Content == null)
             {
                 return null;
