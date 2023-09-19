@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class ProductListModel<T>
+    public class ListModel<T>
     {
         // запрошенный список объектов
         public List<T> Items { get; set; } = new();

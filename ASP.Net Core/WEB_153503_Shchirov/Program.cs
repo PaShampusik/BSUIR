@@ -1,9 +1,15 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using WEB_153503_Shchirov.Services.TelescopeCategoryService;
+using WEB_153503_Shchirov.Services.TelescopeService;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ITelescopeCategoryService, MemoryTelescopeCategoryService>();
+builder.Services.AddScoped<ITelescopeService, MemoryTelescopeService>();
+
 
 builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
    .AddNegotiate();
