@@ -29,7 +29,7 @@ namespace API.Controllers
           {
               return NotFound();
           }
-            return await _context.Telescopes.ToListAsync();
+          return await _context.Telescopes.ToListAsync();
         }
 
         // GET: api/Telescopes/5

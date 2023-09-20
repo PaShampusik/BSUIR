@@ -9,16 +9,6 @@ RegisterDbContext(builder);
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-	var services = scope.ServiceProvider;
-	var dbContext = services.GetRequiredService<AppDbContext>();
-
-	// Выполнение миграции
-
-	await DbInitializer.SeedData(app);
-}
-
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
@@ -27,6 +17,17 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+	var services = scope.ServiceProvider;
+	var dbContext = services.GetRequiredService<AppDbContext>();
+
+	// Выполнение миграции
+	dbContext.Database.Migrate();
+
+	await DbInitializer.SeedData(app);
+}
 
 app.Run();
 

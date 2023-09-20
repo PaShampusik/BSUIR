@@ -18,7 +18,7 @@ namespace Domain.Entities
         public int CategoryId {  get; set; }
         public int FocusLength {  get; set; }       
         public string? Img {  get; set; }
-        public string Mime { get; set; } 
+        public string Mime { get; set; } = string.Empty;
 
         public decimal Price {  get; set; }
     }
