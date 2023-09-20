@@ -9,7 +9,7 @@ namespace WEB_153503_Shchirov.Services.TelescopeService
 {
     public class MemoryTelescopeService : ITelescopeService
     {
-        List<Telescope> _telescopes;
+        List<Telescope>? _telescopes;
         List<Category>? _categories;
         private readonly IConfiguration _configuration;
 
@@ -93,8 +93,8 @@ namespace WEB_153503_Shchirov.Services.TelescopeService
 
         public Task<ResponseData<ListModel<Telescope>>> GetTelescopeListAsync(string? categoryNormalizedName, int pageNo = 1)
         {
-            var itemsPerPage = 10;
-            var itemsTemp = _telescopes.
+			var itemsPerPage = _configuration.GetValue<int>("ItemsPerPage");
+			var itemsTemp = _telescopes.
                 Where(c => categoryNormalizedName == null || c.Category?.NormalizedName == categoryNormalizedName);
             int totalPages = (int)Math.Ceiling((double)itemsTemp.Count() / itemsPerPage);
             var items = itemsTemp

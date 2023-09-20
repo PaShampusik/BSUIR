@@ -22,6 +22,7 @@ namespace WEB_153503_Shchirov.Controllers
         public async Task<IActionResult> Index(string? category, string? currentCategory, int pageNo = 1)
         {
             ViewData["currentcategory"] = currentCategory;
+            ViewData["page"] = pageNo;
             var productResponse = await _telescopeService.GetTelescopeListAsync(category, pageNo);
             if (!productResponse.Success)
             {

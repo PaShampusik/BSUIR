@@ -4,15 +4,22 @@
 	var request = ViewContext.HttpContext.Request;
 	var returnUrl = request.Path + request.QueryString.ToUriComponent();
 	string? category = request.Query["category"];
+	string? currentPage = request.Query["page"];
 	string currentCategory = ViewData["currentCategory"] as string ?? "Все";
+	int prev = Model.currentPage == 1
+		? 1
+		: Model.currentPage - 1;
+	int next = Model.currentPage == Model.totalPages
+	? Model.totalPages
+	: Model.currentPage + 1;
 
 	bool previousAvailable = Model.currentPage != 1;
 	bool nextAvailable = Model.currentPage != Model.totalPages;
 }
 
 <div class="container">
+	<!-- categories dropdown -->
 	<div class="dropdown col-sm-1 mt-4">
-		<!-- categories dropdown -->
 		<button class="btn btn-secondary dropdown-toggle" style="min-width: 200px" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 			@currentCategory
 		</button>
@@ -28,7 +35,11 @@
 				<li style="min-width: 200px"><a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-category=@item.NormalizedName asp-route-currentCategory=@item.Name>@item.Name</a></li>
 			}
 		</ul>
-	</div> <!-- /categories dropdown -->
+	</div> 
+	<!-- /categories dropdown -->
+
+
+
 	@{
 		await Html.RenderPartialAsync("_ProductCardsAndPagerPartial", new
 		{
@@ -41,4 +52,32 @@
 			InAdminArea = false,
 		});
 	}
+	<div aria-label="Page navigation example">
+		<ul class="pagination">
+			<li class="page-item @(Model.currentPage == 1 ? "disabled" : "")">
+				<a class="page-link"  asp-controller="Product"
+				   asp-action="Index"
+				   asp-route-category=@category
+				   asp-route-currentcategory=@currentCategory
+				   asp-route-pageNo=@prev>Предыдущая страница</a>
+			</li>
+			@for (int i = 1; i <= Model.totalPages; i++)
+			{
+				<li class="page-item @(Model.currentPage == i ? "active" : "")">
+					<a class="page-link"  asp-controller="Product"
+					   asp-action="Index"
+					   asp-route-category=@category
+					   asp-route-currentcategory=@currentCategory
+					   asp-route-pageNo=@i>@i</a>
+				</li>
+			}
+			<li class="page-item @(Model.currentPage == Model.totalPages ? "disabled" : "")">
+				<a class="page-link" asp-controller="Product"
+				   asp-action="Index"
+				   asp-route-category=@category
+				   asp-route-currentcategory=@currentCategory
+				   asp-route-pageNo=@next>Следующая страница</a>
+			</li>
+		</ul>
+	</div>
 </div>
