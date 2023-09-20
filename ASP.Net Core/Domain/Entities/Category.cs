@@ -11,5 +11,7 @@ namespace Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string NormalizedName { get; set; } = string.Empty;
-    }
+
+		public List<Telescope> Telescopes { get; set; } = new();
+	}
 }
