@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 from io import StringIO
 import os
 import requests
-from Task2 import download_file
+from ..Task2 import download_file
 
 class ProgramTestCase(unittest.TestCase):
     def setUp(self):

@@ -1,7 +1,7 @@
 import unittest
-from Task2 import generate_html
+from ..Task2 import generate_html
 
-class ProgramTestCase(unittest.TestCase):
+class ProgramTestCaseGenerate(unittest.TestCase):
     def test_generate_html_with_n_3(self):
         n = 3
         result = generate_html(n)

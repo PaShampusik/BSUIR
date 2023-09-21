@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 from io import StringIO
 import os
-from Task1 import find_files_with_extension
+from ..Task1 import find_files_with_extension
 
 class ProgramTestCase(unittest.TestCase):
     def setUp(self):

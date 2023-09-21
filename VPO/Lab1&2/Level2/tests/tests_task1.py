@@ -1,9 +1,9 @@
 import unittest
-from Task1 import get_valid_input, is_positive_number, calculate_rectangle_area
+from ..Task1 import get_valid_input, is_positive_number, calculate_rectangle_area
 import builtins
 from unittest import mock
 
-class ProgramTestCase(unittest.TestCase):
+class ProgramTestCaseValid(unittest.TestCase):
     def test_get_valid_input_valid(self):
         user_input = "5"
         with mock.patch.object(builtins, 'input', return_value=user_input):
@@ -16,6 +16,7 @@ class ProgramTestCase(unittest.TestCase):
             result = get_valid_input("Введите число: ", int, is_positive_number)
         self.assertEqual(result, 10)
 
+class ProgramTestCaseisPositive(unittest.TestCase):
     def test_is_positive_number_positive(self):
         result = is_positive_number(5)
         self.assertTrue(result)
@@ -28,6 +29,7 @@ class ProgramTestCase(unittest.TestCase):
         result = is_positive_number(-5)
         self.assertFalse(result)
 
+class ProgramTestCaseMain(unittest.TestCase):
     def test_calculate_rectangle_area(self):
         length = 5
         width = 10
