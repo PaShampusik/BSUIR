@@ -25,11 +25,14 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Telescope>>> GetTelescopes()
         {
-          if (_context.Telescopes == null)
+          if (!_context.Telescopes.Any())
           {
               return NotFound();
           }
-          return await _context.Telescopes.ToListAsync();
+
+
+          var result = await _context.Telescopes.ToListAsync();
+            return result;
         }
 
         // GET: api/Telescopes/5

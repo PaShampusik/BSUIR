@@ -12,7 +12,7 @@ namespace API.Data
 		public AppDbContext(DbContextOptions<AppDbContext> options) 
 			: base(options)
 		{
-			//Database.MigrateAsync();
+			Database.MigrateAsync();
 		}
 	}
 }
