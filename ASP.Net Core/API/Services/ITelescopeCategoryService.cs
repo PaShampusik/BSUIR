@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Models;
 
-namespace API.Services.TelescopeCategoryService
+namespace API.Services
 {
     public interface ITelescopeCategoryService
     {
@@ -10,6 +10,6 @@ namespace API.Services.TelescopeCategoryService
         /// Получение списка всех категорий
         /// </summary>
         /// <returns></returns>
-        public Task<ResponseData<List<Category>>> GetCategoryListAsync();
+        public Task<ResponseData<List<Category>>> GetTelescopeCategoryListAsync();
     }
 }

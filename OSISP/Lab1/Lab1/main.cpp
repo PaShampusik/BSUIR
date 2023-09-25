@@ -37,8 +37,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		GetClientRect(hwnd, &rect);
 
 		// Генерируем случайные координаты для перемещения текста
-		int newX = rand() % (rect.right - rect.left - 200);  // Учитываем размер кнопки
-		int newY = rand() % (rect.bottom - rect.top - 100);  // Учитываем размер кнопки
+		int newX = rand() % (rect.right - rect.left);  // Учитываем размер кнопки
+		int newY = rand() % (rect.bottom - rect.top);  // Учитываем размер кнопки
 
 		// Перемещаем окно текста в новые координаты
 		HWND hButton = (HWND)lParam;  // Получаем дескриптор кнопки

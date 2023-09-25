@@ -1,11 +1,13 @@
 using API.Data;
 using Microsoft.EntityFrameworkCore;
+using API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.Add add
+builder.Services.AddScoped<ITelescopeCategoryService, TelescopeCategoryService>();
+builder.Services.AddScoped<ITelescopeService, TelescopeService>();
 RegisterDbContext(builder);
 
 var app = builder.Build();
