@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using WEB_153503_Shchirov.Models;
+using WEB_153503_Shchirov.Services.ClothesCategoryService;
 using WEB_153503_Shchirov.Services.TelescopeCategoryService;
 using WEB_153503_Shchirov.Services.TelescopeService;
 
@@ -7,12 +9,21 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ITelescopeCategoryService, MemoryTelescopeCategoryService>();
-builder.Services.AddScoped<ITelescopeService, MemoryTelescopeService>();
 
+UriData uriData = builder.Configuration.GetSection("UriData").Get<UriData>()!;
+builder.Services.AddHttpClient<ITelescopeService, ApiTelescopeService>(client =>
+{
+    client.BaseAddress = new Uri(uriData.ApiUri);
+});
 
+builder.Services.AddHttpClient<ITelescopeCategoryService, ApiTelescopeCategoryService>(client =>
+{
+    client.BaseAddress = new Uri(uriData.ApiUri);
+});
 builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
    .AddNegotiate();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthorization(options =>
 {

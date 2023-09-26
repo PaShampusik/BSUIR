@@ -10,6 +10,6 @@ namespace API.Services
         /// Получение списка всех категорий
         /// </summary>
         /// <returns></returns>
-        public Task<ResponseData<List<Category>>> GetTelescopeCategoryListAsync();
+        public Task<ResponseData<List<Category>>> GetTelescopesCategoryListAsync();
     }
 }

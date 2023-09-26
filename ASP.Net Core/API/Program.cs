@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ITelescopeCategoryService, TelescopeCategoryService>();
 builder.Services.AddScoped<ITelescopeService, TelescopeService>();
+builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
+
 RegisterDbContext(builder);
 
 var app = builder.Build();

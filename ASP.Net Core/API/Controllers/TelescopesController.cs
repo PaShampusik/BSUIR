@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Data;
 using Domain.Entities;
+using Domain.Models;
+using API.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -14,114 +17,110 @@ namespace API.Controllers
     [ApiController]
     public class TelescopesController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ITelescopeService _service;
 
-        public TelescopesController(AppDbContext context)
+        public TelescopesController(ITelescopeService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        // GET: api/Telescopes
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Telescope>>> GetTelescopes()
+        /* [HttpGet]
+         public async Task<ActionResult<ResponseData<List<Telescope>>>> GetTelescopes(string? category, int pageNo = 1, int pageSize = 3)
+         {
+             return Ok(await _service.GetTelescopesListAsync(category, pageNo, pageSize));
+         }*/
+
+        [HttpGet("{category?}/{pageNo:int?}/{pagesize:int?}")]
+        public async Task<ActionResult<ResponseData<List<Telescope>>>> GetTelescopes(string? category,
+            int pageNo = 1, int pageSize = 3)
         {
-          if (!_context.Telescopes.Any())
-          {
-              return NotFound();
-          }
-
-
-          var result = await _context.Telescopes.ToListAsync();
-            return result;
+            return Ok(await _service.GetTelescopesListAsync(category, pageNo, pageSize));
         }
 
         // GET: api/Telescopes/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Telescope>> GetTelescope(int id)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<ResponseData<Telescope>>> GetTelescopes(int id)
         {
-          if (_context.Telescopes == null)
-          {
-              return NotFound();
-          }
-            var telescope = await _context.Telescopes.FindAsync(id);
-
-            if (telescope == null)
-            {
-                return NotFound();
-            }
-
-            return telescope;
+            return Ok(await _service.GetTelescopesByIdAsync(id));
         }
 
         // PUT: api/Telescopes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTelescope(int id, Telescope telescope)
+        [HttpPut("{id:int}")]
+        [Authorize]
+        public async Task<ActionResult<ResponseData<Telescope>>> PutTelescopes(int id, Telescope telescopes)
         {
-            if (id != telescope.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(telescope).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _service.UpdateTelescopesAsync(id, telescopes);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!TelescopeExists(id))
+                return NotFound(new ResponseData<Telescope>()
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                    Data = null,
+                    Success = false,
+                    ErrorMessage = e.Message
+                });
             }
 
-            return NoContent();
+            return Ok(new ResponseData<Telescope>()
+            {
+                Data = telescopes,
+            });
         }
 
-        // POST: api/Telescopes
+        // POST: api/Clothes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Telescope>> PostTelescope(Telescope telescope)
+        public async Task<ActionResult<ResponseData<Telescope>>> PostTelescopes(Telescope telescopes)
         {
-          if (_context.Telescopes == null)
-          {
-              return Problem("Entity set 'AppDbContext.Telescopes'  is null.");
-          }
-            _context.Telescopes.Add(telescope);
-            await _context.SaveChangesAsync();
+            if (telescopes is null)
+            {
+                return BadRequest(new ResponseData<Telescope>()
+                {
+                    Data = null,
+                    Success = false,
+                    ErrorMessage = "Telescopes is null"
+                });
+            }
+            var response = await _service.CreateTelescopesAsync(telescopes);
 
-            return CreatedAtAction("GetTelescope", new { id = telescope.Id }, telescope);
+            if (!response.Success)
+            {
+                return BadRequest(response.ErrorMessage);
+            }
+
+            return CreatedAtAction("GetTelescopes", new { id = telescopes.Id }, new ResponseData<Telescope>()
+            {
+                Data = telescopes
+            });
         }
 
-        // DELETE: api/Telescopes/5
+        // DELETE: api/Clothes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTelescope(int id)
+        public async Task<IActionResult> DeleteClothes(int id)
         {
-            if (_context.Telescopes == null)
+            try
             {
-                return NotFound();
+                await _service.DeleteTelescopesAsync(id);
             }
-            var telescope = await _context.Telescopes.FindAsync(id);
-            if (telescope == null)
+            catch (Exception e)
             {
-                return NotFound();
+                return NotFound(new ResponseData<Telescope>()
+                {
+                    Data = null,
+                    Success = false,
+                    ErrorMessage = e.Message
+                });
             }
-
-            _context.Telescopes.Remove(telescope);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool TelescopeExists(int id)
         {
-            return (_context.Telescopes?.Any(e => e.Id == id)).GetValueOrDefault();
+            return _service.GetTelescopesByIdAsync(id).Result.Success;
         }
     }
 }

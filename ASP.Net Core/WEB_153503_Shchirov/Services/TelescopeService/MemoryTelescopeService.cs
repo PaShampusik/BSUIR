@@ -91,7 +91,7 @@ namespace WEB_153503_Shchirov.Services.TelescopeService
             };           
         }
 
-        public Task<ResponseData<ListModel<Telescope>>> GetTelescopeListAsync(string? categoryNormalizedName, int pageNo = 1)
+        public Task<ResponseData<ListModel<Telescope>>> GetTelescopesListAsync(string? categoryNormalizedName, int pageNo = 1)
         {
 			var itemsPerPage = _configuration.GetValue<int>("ItemsPerPage");
 			var itemsTemp = _telescopes.
@@ -114,19 +114,19 @@ namespace WEB_153503_Shchirov.Services.TelescopeService
                 ErrorMessage = !(items.Count() == 0) ? "" : "Ошибка :("
             });
         }
-        public Task<ResponseData<Telescope>> CreateTelescopeAsync(Telescope product, IFormFile? formFile)
+        public Task<ResponseData<Telescope>> CreateTelescopesAsync(Telescope product, IFormFile? formFile)
         {
             throw new NotImplementedException();
         }
-        public Task DeleteTelescopeAsync(int id)
+        public Task DeleteTelescopesAsync(int id)
         {
             throw new NotImplementedException();
         }
-        public Task<ResponseData<Telescope>> GetTelescopeByIdAsync(int id)
+        public Task<ResponseData<Telescope>> GetTelescopesByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
-        public Task UpdateTelescopeAsync(int id, Telescope product, IFormFile? formFile)
+        public Task UpdateTelescopesAsync(int id, Telescope product, IFormFile? formFile)
         {
             throw new NotImplementedException();
         }

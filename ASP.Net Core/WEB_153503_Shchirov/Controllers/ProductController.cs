@@ -23,7 +23,7 @@ namespace WEB_153503_Shchirov.Controllers
         {
             ViewData["currentcategory"] = currentCategory;
             ViewData["page"] = pageNo;
-            var productResponse = await _telescopeService.GetTelescopeListAsync(category, pageNo);
+            var productResponse = await _telescopeService.GetTelescopesListAsync(category, pageNo);
             if (!productResponse.Success)
             {
                 return NotFound(productResponse.ErrorMessage);

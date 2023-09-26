@@ -14,7 +14,7 @@ public class TelescopeCategoryService : ITelescopeCategoryService
         _dbContext = dbContext;
     }
 
-    public async Task<ResponseData<List<Category>>> GetTelescopeCategoryListAsync()
+    public async Task<ResponseData<List<Category>>> GetTelescopesCategoryListAsync()
     {
         var categories = _dbContext.Categories.ToListAsync();
         return new ResponseData<List<Category>>()
