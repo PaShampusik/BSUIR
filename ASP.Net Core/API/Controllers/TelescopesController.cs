@@ -24,12 +24,6 @@ namespace API.Controllers
             _service = service;
         }
 
-        /* [HttpGet]
-         public async Task<ActionResult<ResponseData<List<Telescope>>>> GetTelescopes(string? category, int pageNo = 1, int pageSize = 3)
-         {
-             return Ok(await _service.GetTelescopesListAsync(category, pageNo, pageSize));
-         }*/
-
         [HttpGet("{category?}/{pageNo:int?}/{pagesize:int?}")]
         public async Task<ActionResult<ResponseData<List<Telescope>>>> GetTelescopes(string? category,
             int pageNo = 1, int pageSize = 3)
