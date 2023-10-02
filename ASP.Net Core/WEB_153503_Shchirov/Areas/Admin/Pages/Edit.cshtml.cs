@@ -12,6 +12,9 @@ namespace WEB_153503_Shchirov.Areas.Admin.Pages
         private readonly ITelescopeService _telescopeService;
         private readonly ITelescopeCategoryService _telescopeCategoryService;
 
+        [BindProperty]
+        public string? CurrentImage { get; set; }
+
         public EditModel(ITelescopeService telescopeService, ITelescopeCategoryService telescopeCategoryService)
         {
             _telescopeService = telescopeService;
@@ -46,6 +49,8 @@ namespace WEB_153503_Shchirov.Areas.Admin.Pages
             ViewData["CategoryId"] = new SelectList(responseCtg.Data, "Id", "Name");
 
             Telescope = response.Data!;
+
+            CurrentImage = Telescope.Img;
 
             return Page();
         }

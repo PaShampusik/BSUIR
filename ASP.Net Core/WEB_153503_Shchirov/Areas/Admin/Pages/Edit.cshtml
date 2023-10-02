@@ -40,9 +40,12 @@
                 <input asp-for="Image" name="Image" type="file" class="form-control-file" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+            @if (!string.IsNullOrEmpty(Model.CurrentImage))
+            {
+                <div class="form-group">
+                    <img src="@Model.CurrentImage" alt="Current Image" style="max-width: 200px;" />
+                </div>
+            }
         </form>
     </div>
 </div>
