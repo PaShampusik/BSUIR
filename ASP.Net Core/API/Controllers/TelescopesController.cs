@@ -93,7 +93,7 @@ namespace API.Controllers
 
         // DELETE: api/Clothes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClothes(int id)
+        public async Task<IActionResult> DeleteTelescopes(int id)
         {
             try
             {
@@ -112,6 +112,18 @@ namespace API.Controllers
             return NoContent();
         }
 
+        // POST: api/Dishes/5
+        [HttpPost("{id}")]
+        [Authorize]
+        public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
+        {
+            var response = await _service.SaveImageAsync(id, formFile);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            return NotFound(response);
+        }
         private bool TelescopeExists(int id)
         {
             return _service.GetTelescopesByIdAsync(id).Result.Success;

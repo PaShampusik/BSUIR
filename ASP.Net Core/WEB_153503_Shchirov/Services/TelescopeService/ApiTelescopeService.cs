@@ -38,7 +38,11 @@ public class ApiTelescopeService : ITelescopeService
         if (categoryNormalizedName != null)
         {
             urlString.Append($"{categoryNormalizedName}/");
-        };
+        }
+        else
+        {
+			urlString.Append($"Все/");
+		}
         if (pageNo > 1)
         {
             urlString.Append($"{pageNo}");
@@ -176,8 +180,6 @@ public class ApiTelescopeService : ITelescopeService
         var streamContent = new StreamContent(image.OpenReadStream());
         content.Add(streamContent, "formFile", image.FileName);
         request.Content = content;
-        var token = await _httpContext.GetTokenAsync("access_token");
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
         await _httpClient.SendAsync(request);
     }
 }

@@ -60,32 +60,4 @@
 			InAdminArea = false,
 		});
 	}
-	<div aria-label="Page navigation example">
-		<ul class="pagination">
-			<li class="page-item @(Model.currentPage == 1 ? "disabled" : "")">
-				<a class="page-link"  asp-controller="Product"
-				   asp-action="Index"
-				   asp-route-category=@category
-				   asp-route-currentcategory=@currentCategory
-				   asp-route-pageNo=@prev>Предыдущая страница</a>
-			</li>
-			@for (int i = 1; i <= Model.totalPages; i++)
-			{
-				<li class="page-item @(Model.currentPage == i ? "active" : "")">
-					<a class="page-link"  asp-controller="Product"
-					   asp-action="Index"
-					   asp-route-category=@category
-					   asp-route-currentcategory=@currentCategory
-					   asp-route-pageNo=@i>@i</a>
-				</li>
-			}
-			<li class="page-item @(Model.currentPage == Model.totalPages ? "disabled" : "")">
-				<a class="page-link" asp-controller="Product"
-				   asp-action="Index"
-				   asp-route-category=@category
-				   asp-route-currentcategory=@currentCategory
-				   asp-route-pageNo=@next>Следующая страница</a>
-			</li>
-		</ul>
-	</div>
 </div>
