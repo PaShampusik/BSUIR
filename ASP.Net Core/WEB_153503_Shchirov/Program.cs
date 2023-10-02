@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using WEB_153503_Shchirov.Models;
-using WEB_153503_Shchirov.Services.ClothesCategoryService;
 using WEB_153503_Shchirov.Services.TelescopeCategoryService;
 using WEB_153503_Shchirov.Services.TelescopeService;
 
@@ -9,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 UriData uriData = builder.Configuration.GetSection("UriData").Get<UriData>()!;
 builder.Services.AddHttpClient<ITelescopeService, ApiTelescopeService>(client =>
@@ -30,7 +30,6 @@ builder.Services.AddAuthorization(options =>
     // By default, all incoming requests will be authorized according to the default policy.
     options.FallbackPolicy = options.DefaultPolicy;
 });
-builder.Services.AddRazorPages();
 
 var app = builder.Build();
 

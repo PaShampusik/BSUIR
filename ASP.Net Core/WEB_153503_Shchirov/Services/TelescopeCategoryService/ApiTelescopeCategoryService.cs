@@ -4,7 +4,7 @@ using Domain.Entities;
 using Domain.Models;
 using WEB_153503_Shchirov.Services.TelescopeCategoryService;
 
-namespace WEB_153503_Shchirov.Services.ClothesCategoryService;
+namespace WEB_153503_Shchirov.Services.TelescopeCategoryService;
 
 public class ApiTelescopeCategoryService : ITelescopeCategoryService
 {

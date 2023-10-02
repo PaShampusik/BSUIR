@@ -1,0 +1,52 @@
+﻿@page
+@using WEB_153503_Shchirov.Areas.Admin.Pages;
+@model EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Telescope</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Telescope.Id" />
+            <div class="form-group">
+                <label asp-for="Telescope.CategoryId" class="control-label"></label>
+                <select asp-for="Telescope.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="Telescope.CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telescope.Name" class="control-label"></label>
+                <input asp-for="Telescope.Name" class="form-control" />
+                <span asp-validation-for="Telescope.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telescope.Description" class="control-label"></label>
+                <input asp-for="Telescope.Description" class="form-control" />
+                <span asp-validation-for="Telescope.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telescope.Price" class="control-label"></label>
+                <input asp-for="Telescope.Price" class="form-control" />
+                <span asp-validation-for="Telescope.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" name="Image" type="file" class="form-control-file" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
