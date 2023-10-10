@@ -83,7 +83,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 	wndClass.hInstance = hInstance;
 	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wndClass.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH);
 	wndClass.lpszMenuName = NULL;
 	wndClass.lpszClassName = TEXT("GettingStarted");
 

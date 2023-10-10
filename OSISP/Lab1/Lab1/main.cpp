@@ -72,6 +72,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	wc.lpfnWndProc = WindowProc;
 	wc.hInstance = hInstance;
 	wc.lpszClassName = CLASS_NAME;
+	wc.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH);
 
 	RegisterClass(&wc);
 
@@ -80,15 +81,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		0,
 		CLASS_NAME,
 		L"Hello World",
-		WS_OVERLAPPEDWINDOW,
+		WS_OVERLAPPED | WS_MINIMIZEBOX | WS_SYSMENU | COLOR_WINDOW,
 		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 		NULL,
 		NULL,
 		hInstance,
 		NULL
 	);
-
-
 
 	if (hwnd == NULL)
 	{
