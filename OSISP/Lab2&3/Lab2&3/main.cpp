@@ -16,6 +16,7 @@
 using namespace Gdiplus;
 #pragma comment (lib,"Gdiplus.lib")
 
+
 struct CountryData
 {
 	std::string name;
@@ -252,8 +253,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 		TEXT("GettingStarted"),   // window class name
 		TEXT("Getting Started"),  // window caption
 		WS_OVERLAPPED | WS_MINIMIZEBOX | WS_SYSMENU,// window style
-		CW_USEDEFAULT,            // initial x position
-		CW_USEDEFAULT,            // initial y position
+		0,            // initial x position
+		0,            // initial y position
 		CW_USEDEFAULT,            // initial x size
 		CW_USEDEFAULT,            // initial y size
 		NULL,                     // parent window handle
