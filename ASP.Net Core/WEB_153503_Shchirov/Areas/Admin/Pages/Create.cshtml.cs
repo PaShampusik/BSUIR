@@ -33,7 +33,7 @@ namespace WEB_153503_Shchirov.Areas.Admin.Pages
 		public Telescope Telescope { get; set; } = default!;
 
 		[BindProperty]
-		public IFormFile? Image { get; set; }
+		public IFormFile Image { get; set; }
 
 		// To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
 		public async Task<IActionResult> OnPostAsync()

@@ -113,7 +113,7 @@ namespace API.Controllers
         }
 
         // POST: api/Dishes/5
-        [HttpPost("{id}")]
+        [HttpPost("{id:int}")]
         [Authorize]
         public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
         {

@@ -148,8 +148,6 @@ public class ApiTelescopeService : ITelescopeService
     public async Task<ResponseData<Telescope>> CreateTelescopesAsync(Telescope product, IFormFile? formFile)
     {
         var uri = new Uri(_httpClient.BaseAddress!.AbsoluteUri + "Telescopes");
-        var token = await _httpContext.GetTokenAsync("access_token");
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
         var response = await _httpClient.PostAsJsonAsync(uri, product, _jsonSerializerOptions);
 
         if (response.IsSuccessStatusCode)
@@ -180,6 +178,7 @@ public class ApiTelescopeService : ITelescopeService
         var streamContent = new StreamContent(image.OpenReadStream());
         content.Add(streamContent, "formFile", image.FileName);
         request.Content = content;
-        await _httpClient.SendAsync(request);
+        var result = await _httpClient.SendAsync(request);
+        return;
     }
 }
