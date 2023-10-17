@@ -17,7 +17,7 @@ using namespace Gdiplus;
 #pragma comment (lib,"Gdiplus.lib")
 
 constexpr int NUM_THREADS = 4;
-constexpr int NUM_ITERATIONS = 200000000;
+constexpr int NUM_ITERATIONS = 100000000;
 
 
 struct CountryData
@@ -67,7 +67,6 @@ void RunThreadsWithDifferentPriorities()
 	for (int i = 0; i < NUM_THREADS; ++i)
 	{
 		WaitForSingleObject(threads[i], INFINITE);
-		GetExitCodeThread(threads[i], &durations[i]);
 		CloseHandle(threads[i]);
 	}
 
