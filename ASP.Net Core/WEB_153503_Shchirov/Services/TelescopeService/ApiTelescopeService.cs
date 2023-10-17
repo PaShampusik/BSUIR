@@ -136,7 +136,6 @@ public class ApiTelescopeService : ITelescopeService
     {
         var uriString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}Telescopes/{id}");
         var token = await _httpContext.GetTokenAsync("access_token");
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
         var response = await _httpClient.DeleteAsync(new Uri(uriString.ToString()));
 
         if (!response.IsSuccessStatusCode)

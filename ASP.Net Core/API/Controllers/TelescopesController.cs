@@ -10,6 +10,7 @@ using Domain.Entities;
 using Domain.Models;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
+using System.Data.Entity;
 
 namespace API.Controllers
 {
@@ -41,7 +42,6 @@ namespace API.Controllers
         // PUT: api/Telescopes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id:int}")]
-        [Authorize]
         public async Task<ActionResult<ResponseData<Telescope>>> PutTelescopes(int id, Telescope telescopes)
         {
             try
@@ -64,8 +64,7 @@ namespace API.Controllers
             });
         }
 
-        // POST: api/Clothes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/Telescopes
         [HttpPost]
         public async Task<ActionResult<ResponseData<Telescope>>> PostTelescopes(Telescope telescopes)
         {
@@ -91,7 +90,19 @@ namespace API.Controllers
             });
         }
 
-        // DELETE: api/Clothes/5
+        // POST: api/Telescopes/31
+        [HttpPost("{id}")]
+        public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
+        {
+            var response = await _service.SaveImageAsync(id, formFile);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            return NotFound(response);
+        }
+
+        // DELETE: api/Telescopes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTelescopes(int id)
         {
@@ -110,23 +121,6 @@ namespace API.Controllers
             }
 
             return NoContent();
-        }
-
-        // POST: api/Dishes/5
-        [HttpPost("{id:int}")]
-        [Authorize]
-        public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
-        {
-            var response = await _service.SaveImageAsync(id, formFile);
-            if (response.Success)
-            {
-                return Ok(response);
-            }
-            return NotFound(response);
-        }
-        private bool TelescopeExists(int id)
-        {
-            return _service.GetTelescopesByIdAsync(id).Result.Success;
         }
     }
 }
