@@ -25,10 +25,28 @@ builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddAuthorization(options =>
+builder.Services.AddAuthentication(opt =>
 {
-    // By default, all incoming requests will be authorized according to the default policy.
-    options.FallbackPolicy = options.DefaultPolicy;
+    
+    opt.DefaultScheme = "cookie";
+    opt.DefaultChallengeScheme = "oidc";
+})
+.AddCookie("cookie", options =>
+{
+    options.Cookie.SameSite = SameSiteMode.None;  // I ADDED THIS LINE!!!
+})
+.AddOpenIdConnect("oidc", options =>
+{
+    options.Authority =
+    builder.Configuration["InteractiveServiceSettings:AuthorityUrl"];
+    options.ClientId =
+    builder.Configuration["InteractiveServiceSettings:ClientId"];
+    options.ClientSecret =
+    builder.Configuration["InteractiveServiceSettings:ClientSecret"];
+    options.GetClaimsFromUserInfoEndpoint = true;
+    options.ResponseType = "code";
+    options.ResponseMode = "query";
+    options.SaveTokens = true;
 });
 
 var app = builder.Build();
@@ -46,11 +64,18 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.None,
+    Secure = CookieSecurePolicy.Always
+});
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-
+app.MapRazorPages().RequireAuthorization();
 app.Run();

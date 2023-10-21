@@ -33,8 +33,10 @@ public class ApiTelescopeService : ITelescopeService
     public async Task<ResponseData<ListModel<Telescope>>> GetTelescopesListAsync(string? categoryNormalizedName, int pageNo = 1)
     {
         var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}Telescopes/");
+
         var token = await _httpContext.GetTokenAsync("access_token");
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+
         if (categoryNormalizedName != null)
         {
             urlString.Append($"{categoryNormalizedName}/");
@@ -81,8 +83,10 @@ public class ApiTelescopeService : ITelescopeService
     {
 
         var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}Telescopes/{id}");
+
         var token = await _httpContext.GetTokenAsync("access_token");
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+
         var response = await _httpClient.GetAsync(new Uri(urlString.ToString()));
 
         if (response.IsSuccessStatusCode)
@@ -112,6 +116,7 @@ public class ApiTelescopeService : ITelescopeService
     public async Task UpdateTelescopesAsync(int id, Telescope product, IFormFile? formFile)
     {
         var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}Telescopes/{id}");
+
         var token = await _httpContext.GetTokenAsync("access_token");
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
 
@@ -135,7 +140,10 @@ public class ApiTelescopeService : ITelescopeService
     public async Task DeleteTelescopesAsync(int id)
     {
         var uriString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}Telescopes/{id}");
+
         var token = await _httpContext.GetTokenAsync("access_token");
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer",token);
+
         var response = await _httpClient.DeleteAsync(new Uri(uriString.ToString()));
 
         if (!response.IsSuccessStatusCode)
@@ -147,6 +155,10 @@ public class ApiTelescopeService : ITelescopeService
     public async Task<ResponseData<Telescope>> CreateTelescopesAsync(Telescope product, IFormFile? formFile)
     {
         var uri = new Uri(_httpClient.BaseAddress!.AbsoluteUri + "Telescopes");
+
+        var token = await _httpContext.GetTokenAsync("access_token");
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+
         var response = await _httpClient.PostAsJsonAsync(uri, product, _jsonSerializerOptions);
 
         if (response.IsSuccessStatusCode)
@@ -177,7 +189,10 @@ public class ApiTelescopeService : ITelescopeService
         var streamContent = new StreamContent(image.OpenReadStream());
         content.Add(streamContent, "formFile", image.FileName);
         request.Content = content;
-        var result = await _httpClient.SendAsync(request);
-        return;
+
+        var token = await _httpContext.GetTokenAsync("access_token");
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+
+        await _httpClient.SendAsync(request);
     }
 }

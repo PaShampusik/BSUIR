@@ -1,6 +1,7 @@
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,11 +14,29 @@ builder.Services.AddHttpContextAccessor();
 
 RegisterDbContext(builder);
 
+builder.Services
+.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(opt =>
+{
+    opt.Authority = builder
+    .Configuration
+    .GetSection("isUri").Value;
+    opt.TokenValidationParameters.ValidateAudience = false;
+    opt.TokenValidationParameters.ValidTypes =
+    new[] { "at+jwt" };
+});
+
+
 var app = builder.Build();
 
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
+
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    Secure = CookieSecurePolicy.Always
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -34,6 +53,7 @@ using (var scope = app.Services.CreateScope())
 
 	await DbInitializer.SeedData(app);
 }
+
 
 app.Run();
 

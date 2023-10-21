@@ -42,6 +42,7 @@ namespace API.Controllers
         // PUT: api/Telescopes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id:int}")]
+        [Authorize]
         public async Task<ActionResult<ResponseData<Telescope>>> PutTelescopes(int id, Telescope telescopes)
         {
             try
@@ -66,6 +67,7 @@ namespace API.Controllers
 
         // POST: api/Telescopes
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<ResponseData<Telescope>>> PostTelescopes(Telescope telescopes)
         {
             if (telescopes is null)
@@ -92,6 +94,7 @@ namespace API.Controllers
 
         // POST: api/Telescopes/31
         [HttpPost("{id}")]
+        [Authorize]
         public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
         {
             var response = await _service.SaveImageAsync(id, formFile);
@@ -104,6 +107,7 @@ namespace API.Controllers
 
         // DELETE: api/Telescopes/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteTelescopes(int id)
         {
             try

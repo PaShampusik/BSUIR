@@ -69,7 +69,7 @@ namespace WEB_153503_Shchirov.Areas.Admin.Pages
             }
             catch (Exception)
             {
-                if (!await ClothesExists(Telescope.Id))
+                if (!await TelescopesExists(Telescope.Id))
                 {
                     return NotFound();
                 }
@@ -82,7 +82,7 @@ namespace WEB_153503_Shchirov.Areas.Admin.Pages
             return RedirectToPage("./Index");
         }
 
-        private async Task<bool> ClothesExists(int id)
+        private async Task<bool> TelescopesExists(int id)
         {
             var response = await _telescopeService.GetTelescopesByIdAsync(id);
             return response.Success;

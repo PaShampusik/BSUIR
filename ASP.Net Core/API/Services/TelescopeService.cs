@@ -92,30 +92,30 @@ public class TelescopeService : ITelescopeService
 
 	public async Task UpdateTelescopesAsync(int id, Telescope product)
 	{
-		var clothes = await _dbContext.Telescopes.FindAsync(id);
-		if (clothes is null)
+		var telescopes = await _dbContext.Telescopes.FindAsync(id);
+		if (telescopes is null)
 		{
 			throw new ArgumentException("Нет телескопа с таким id");
 		}
 
-		clothes.Name = product.Name;
-		clothes.Description = product.Description;
-		clothes.Price = product.Price;
-		clothes.CategoryId = product.CategoryId;
-		clothes.Category = product.Category;
-		_dbContext.Entry(clothes).State = EntityState.Modified;
+		telescopes.Name = product.Name;
+		telescopes.Description = product.Description;
+		telescopes.Price = product.Price;
+		telescopes.CategoryId = product.CategoryId;
+		telescopes.Category = product.Category;
+		_dbContext.Entry(telescopes).State = EntityState.Modified;
 		await _dbContext.SaveChangesAsync();
 	}
 
 	public async Task DeleteTelescopesAsync(int id)
 	{
-		var clothes = await _dbContext.Telescopes.FindAsync(id);
-		if (clothes is null)
+		var telescopes = await _dbContext.Telescopes.FindAsync(id);
+		if (telescopes is null)
 		{
 			throw new ArgumentException("Нет телескопа с таким id");
 		}
 
-		_dbContext.Telescopes.Remove(clothes);
+		_dbContext.Telescopes.Remove(telescopes);
 		await _dbContext.SaveChangesAsync();
 	}
 
