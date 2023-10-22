@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using WEB_153503_Shchirov.Services.TelescopeService;
 using WEB_153503_Shchirov.Services.TelescopeCategoryService;
-
-
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using WEB_153503_Shchirov.Extensions;
 
 namespace WEB_153503_Shchirov.Controllers
 {
@@ -28,9 +29,27 @@ namespace WEB_153503_Shchirov.Controllers
             {
                 return NotFound(productResponse.ErrorMessage);
             }
+
             var allCategories = await _telescopeCategoryService.GetCategoryListAsync();
+
+            if (Request.IsAjaxRequest())
+            {
+                // Render the partial view for synchronous Ajax request
+                return PartialView("_ProductCardsAndPagerPartial", new
+                {
+                    CurrentCategory = currentCategory,
+                    Category = category,
+                    ReturnUrl = "", // Provide the appropriate value for returnUrl
+                    CurrentPage = productResponse.Data!.CurrentPage,
+                    TotalPages = productResponse.Data!.TotalPages,
+                    Telescopes = productResponse.Data!.Items,
+                    InAdminArea = false
+                });
+            }
+
             return View((productResponse.Data!.Items, allCategories.Data,
                 productResponse.Data.CurrentPage, productResponse.Data.TotalPages));
         }
     }
 }
+

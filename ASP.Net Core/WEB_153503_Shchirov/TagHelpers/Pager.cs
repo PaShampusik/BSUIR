@@ -59,77 +59,83 @@ public class PagerTagHelper : TagHelper
         return _linkGenerator.GetPathByPage(_httpContext, values: GetRouteValues(pageNo));
     }
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-        output.TagName = "nav";
-        output.Attributes.SetAttribute("class", "col-sm-4 offset-2");
+	public override void Process(TagHelperContext context, TagHelperOutput output)
+	{
+		output.TagName = "nav";
+		output.Attributes.SetAttribute("class", "col-sm-4 offset-2");
 
-        var ulTag = new TagBuilder("ul");
-        ulTag.AddCssClass("pagination");
+		var ulTag = new TagBuilder("ul");
+		ulTag.AddCssClass("pagination");
 
-        var previousAvailable = CurrentPage > 1;
-        var nextAvailable = CurrentPage < TotalPages;
+		var previousAvailable = CurrentPage > 1;
+		var nextAvailable = CurrentPage < TotalPages;
 
-        var previousLiTag = new TagBuilder("li");
-        previousLiTag.AddCssClass(previousAvailable ? "page-item" : "page-item disabled");
+		var previousLiTag = new TagBuilder("li");
+		previousLiTag.AddCssClass(previousAvailable ? "page-item" : "page-item disabled");
 
-        var previousLink = new TagBuilder("a");
-        previousLink.AddCssClass("page-link");
-        previousLink.Attributes["aria-label"] = "Previous";
+		var previousLink = new TagBuilder("a");
+		previousLink.AddCssClass("page-link");
+		previousLink.Attributes["aria-label"] = "Previous";
 
-        if (previousAvailable)
-        {
-            var previousUrl = GetUrl(CurrentPage - 1);
-            previousLink.Attributes["href"] = previousUrl;
-        }
+		if (previousAvailable)
+		{
+			var previousUrl = GetUrl(CurrentPage - 1);
+			previousLink.Attributes["href"] = previousUrl;
+			previousLink.Attributes["data-ajax-url"] = previousUrl;
+			previousLink.Attributes["data-ajax-method"] = "GET";
+		}
 
-        var previousSpan = new TagBuilder("span");
-        previousSpan.InnerHtml.Append("\u00AB");
+		var previousSpan = new TagBuilder("span");
+		previousSpan.InnerHtml.Append("\u00AB");
 
-        previousLink.InnerHtml.AppendHtml(previousSpan);
-        previousLiTag.InnerHtml.AppendHtml(previousLink);
-        ulTag.InnerHtml.AppendHtml(previousLiTag);
+		previousLink.InnerHtml.AppendHtml(previousSpan);
+		previousLiTag.InnerHtml.AppendHtml(previousLink);
+		ulTag.InnerHtml.AppendHtml(previousLiTag);
 
-        for (int i = 1; i <= TotalPages; i++)
-        {
-            var liTag = new TagBuilder("li");
-            liTag.AddCssClass("page-item");
-            if (CurrentPage == i)
-            {
-                liTag.AddCssClass("active");
-            }
+		for (int i = 1; i <= TotalPages; i++)
+		{
+			var liTag = new TagBuilder("li");
+			liTag.AddCssClass("page-item");
+			if (CurrentPage == i)
+			{
+				liTag.AddCssClass("active");
+			}
 
-            var link = new TagBuilder("a");
-            link.AddCssClass("page-link");
+			var link = new TagBuilder("a");
+			link.AddCssClass("page-link");
 
-            var url = GetUrl(i);
-            link.Attributes["href"] = url;
-            link.InnerHtml.Append(i.ToString());
+			var url = GetUrl(i);
+			link.Attributes["href"] = url;
+			link.Attributes["data-ajax-url"] = url;
+			link.Attributes["data-ajax-method"] = "GET";
+			link.InnerHtml.Append(i.ToString());
 
-            liTag.InnerHtml.AppendHtml(link);
-            ulTag.InnerHtml.AppendHtml(liTag);
-        }
+			liTag.InnerHtml.AppendHtml(link);
+			ulTag.InnerHtml.AppendHtml(liTag);
+		}
 
-        var nextLiTag = new TagBuilder("li");
-        nextLiTag.AddCssClass(nextAvailable ? "page-item" : "page-item disabled");
+		var nextLiTag = new TagBuilder("li");
+		nextLiTag.AddCssClass(nextAvailable ? "page-item" : "page-item disabled");
 
-        var nextLink = new TagBuilder("a");
-        nextLink.AddCssClass("page-link");
-        nextLink.Attributes["aria-label"] = "Next";
+		var nextLink = new TagBuilder("a");
+		nextLink.AddCssClass("page-link");
+		nextLink.Attributes["aria-label"] = "Next";
 
-        if (nextAvailable)
-        {
-            var nextUrl = GetUrl(CurrentPage + 1);
-            nextLink.Attributes["href"] = nextUrl;
-        }
+		if (nextAvailable)
+		{
+			var nextUrl = GetUrl(CurrentPage + 1);
+			nextLink.Attributes["href"] = nextUrl;
+			nextLink.Attributes["data-ajax-url"] = nextUrl;
+			nextLink.Attributes["data-ajax-method"] = "GET";
+		}
 
-        var nextSpan = new TagBuilder("span");
-        nextSpan.InnerHtml.Append("\u00BB");
+		var nextSpan = new TagBuilder("span");
+		nextSpan.InnerHtml.Append("\u00BB");
 
-        nextLink.InnerHtml.AppendHtml(nextSpan);
-        nextLiTag.InnerHtml.AppendHtml(nextLink);
-        ulTag.InnerHtml.AppendHtml(nextLiTag);
+		nextLink.InnerHtml.AppendHtml(nextSpan);
+		nextLiTag.InnerHtml.AppendHtml(nextLink);
+		ulTag.InnerHtml.AppendHtml(nextLiTag);
 
-        output.Content.AppendHtml(ulTag);
-    }
+		output.Content.AppendHtml(ulTag);
+	}
 }

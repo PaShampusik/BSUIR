@@ -1,4 +1,7 @@
-﻿﻿<div class="row offset-2">
+﻿<script src="~/js/site.js"></script>
+
+<div id="catalog">
+﻿<div class="row offset-2" id="telescopes-container">
     @foreach (var item in Model.Telescopes)
     {
         <div class="col-md-4 mb-5">
@@ -26,6 +29,7 @@
     }
 </div>
 
+<div id="pager-container">
 @if (Model.InAdminArea)
 {
     <pager current-page="@Model.CurrentPage"
@@ -38,3 +42,5 @@ else
            category="@Model.Category"
            current-category="@Model.CurrentCategory"></pager>
 }
+</div>
+</div>
