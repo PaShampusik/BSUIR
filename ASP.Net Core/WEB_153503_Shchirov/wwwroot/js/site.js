@@ -9,19 +9,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         var url = $(this).data('ajax-url');
-        var method = $(this).data('ajax-method');
 
-        $.ajax({
-            url: url,
-            type: method,
-            success: function (result) {
-                /*$('#telescopes-container').html(result.telescopes);
-                $('#pager-container').html(result.pager);*/
-                $('#catalog').html(result);
-            },
-            error: function () {
-                // Error handling for AJAX request
-            }
-        });
+        $('#catalog').load(url);
     });
 });
