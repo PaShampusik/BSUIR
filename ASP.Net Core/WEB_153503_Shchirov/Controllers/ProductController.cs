@@ -19,8 +19,9 @@ namespace WEB_153503_Shchirov.Controllers
             _telescopeCategoryService = clothesCategoryService;
         }
 
-
-        public async Task<IActionResult> Index(string? category, string? currentCategory, int pageNo = 1)
+		[Route("Telescopes")]
+		[Route("Telescopes/{category?}")]
+		public async Task<IActionResult> Index(string? category, string? currentCategory, int pageNo = 1)
         {
             ViewData["currentcategory"] = currentCategory;
             ViewData["page"] = pageNo;

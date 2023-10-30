@@ -4,8 +4,15 @@ namespace WEB_153503_Shchirov.ViewComponents;
 
 public class Cart : ViewComponent
 {
-	public IViewComponentResult Invoke()
-	{
-		return View();
-	}
+    private readonly Domain.Models.Cart _sessionCart;
+
+    public Cart(Domain.Models.Cart sessionCart)
+    {
+        _sessionCart = sessionCart;
+    }
+
+    public Task<IViewComponentResult> InvokeAsync()
+    {
+        return Task.FromResult<IViewComponentResult>(View(_sessionCart));
+    }
 }
