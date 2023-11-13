@@ -30,7 +30,7 @@ public class TelescopeService : ITelescopeService
 
 		var query = _dbContext.Telescopes.AsQueryable();
 		var dataList = new ListModel<Telescope>();
-		if (categoryNormalizedName != "Все" || categoryNormalizedName != null)
+		if (categoryNormalizedName != "Все")
 		{
 			query = query.Where(d => categoryNormalizedName == null
 			|| d.Category.NormalizedName.Equals(categoryNormalizedName));

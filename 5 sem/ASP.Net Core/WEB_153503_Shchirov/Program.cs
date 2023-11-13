@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using WEB_153503_Shchirov.Models;
 using WEB_153503_Shchirov.Services.TelescopeCategoryService;
-using Domain.Models;
+using Serilog;
+using WEB_153503_Shchirov.Middleware;
 using WEB_153503_Shchirov.Services.TelescopeService;
 using WEB_153503_Shchirov.Services.CartService;
 
@@ -55,6 +56,10 @@ builder.Services.AddAuthentication(opt =>
     options.SaveTokens = true;
 });
 
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -84,5 +89,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages().RequireAuthorization();
+
+app.UseMiddleware<LoggingMiddleware>(logger);
 
 app.Run();
