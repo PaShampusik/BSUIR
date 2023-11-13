@@ -12,27 +12,25 @@ public class TelescopeService : ITelescopeService
 	private readonly IConfiguration _configuration;
 	private readonly IWebHostEnvironment _webHostEnvironment;
 	private readonly IHttpContextAccessor _httpContextAccessor;
-	private readonly int _maxPageSize = 20;
+    public int MaxPageSize { get; private set; } = 5;
 
-	public TelescopeService(AppDbContext dbContext, [FromServices] IConfiguration configuration,
-		IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor)
+    public TelescopeService(AppDbContext dbContext, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor)
 	{
 		_dbContext = dbContext;
-		_configuration = configuration;
 		_webHostEnvironment = webHostEnvironment;
 		_httpContextAccessor = httpContextAccessor;
 	}
 
-	public async Task<ResponseData<ListModel<Telescope>>> GetTelescopesListAsync(string? categoryNormalizedName, int pageNo = 1, int pageSize = 3)
+	public async Task<ResponseData<ListModel<Telescope>>> GetTelescopesListAsync(string? categoryNormalizedName, int pageNo = 1, int pageSize = 5)
 	{
-		if (pageSize > _maxPageSize)
+		if (pageSize > MaxPageSize)
 		{
-			pageSize = _maxPageSize;
+			pageSize = MaxPageSize;
 		}
 
 		var query = _dbContext.Telescopes.AsQueryable();
 		var dataList = new ListModel<Telescope>();
-		if (categoryNormalizedName != "Все")
+		if (categoryNormalizedName != "Все" || categoryNormalizedName != null)
 		{
 			query = query.Where(d => categoryNormalizedName == null
 			|| d.Category.NormalizedName.Equals(categoryNormalizedName));

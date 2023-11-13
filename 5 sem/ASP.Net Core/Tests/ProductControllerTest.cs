@@ -48,7 +48,7 @@ public class ProductControllerTest
         return new List<Telescope>()
                 {
                     new Telescope() { Id = 1, Price=10.2M, Name="Jesus", FocusLength = 300, CategoryId=2},
-                    new Telescope() { Id = 1, Price=10.2M, Name="Jesus2", FocusLength = 400, CategoryId=1},
+                    new Telescope() { Id = 2, Price=10.2M, Name="Jesus2", FocusLength = 400, CategoryId=1},
                 };
     }
 
@@ -111,7 +111,7 @@ public class ProductControllerTest
                 Items = new List<Telescope>()
                 {
                     new Telescope() { Id = 1, Price=10.2M, Name="Jesus", FocusLength = 300, CategoryId=2},
-                    new Telescope() { Id = 1, Price=10.2M, Name="Jesus2", FocusLength = 400, CategoryId=1},
+                    new Telescope() { Id = 2, Price=10.2M, Name="Jesus2", FocusLength = 400, CategoryId=1},
                 }
             }
         });
@@ -266,7 +266,8 @@ public class ProductControllerTest
         Assert.NotNull(result);
         var viewResult = Assert.IsType<ViewResult>(result);
         Assert.True(viewResult.ViewData.ContainsKey("currentCategory"));
-        Assert.Equal("reflection", viewResult.ViewData["currentCategory"] as string);
+        var buf = viewResult.ViewData["currentCategory"] as string;
+        Assert.Equal("Отражательные", buf);
     }
 
     [Fact]
@@ -280,7 +281,7 @@ public class ProductControllerTest
         });
 
         Mock<ITelescopeService> telescope_moq = new();
-        telescope_moq.Setup(m => m.GetTelescopesListAsync("reflection", 1)).ReturnsAsync(new ResponseData<ListModel<Telescope>>()
+        telescope_moq.Setup(m => m.GetTelescopesListAsync(null, 1)).ReturnsAsync(new ResponseData<ListModel<Telescope>>()
         {
             Data = new ListModel<Telescope>()
             {
@@ -301,6 +302,7 @@ public class ProductControllerTest
         Assert.NotNull(result);
         var viewResult = Assert.IsType<ViewResult>(result);
         Assert.True(viewResult.ViewData.ContainsKey("currentCategory"));
-        Assert.Equal("Все", viewResult.ViewData["currentCategory"] as string);
+        var buf = viewResult.ViewData["currentCategory"] as string;
+        Assert.Equal("Все", buf);
     }
 }
