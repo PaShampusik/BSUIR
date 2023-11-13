@@ -47,7 +47,6 @@ public class PagerTagHelper : TagHelper
             values = new RouteValueDictionary
                 {
                     { "category", Category },
-                    { "currentCategory", CurrentCategory },
                     { "pageNo", pageNo }
                 };
         }

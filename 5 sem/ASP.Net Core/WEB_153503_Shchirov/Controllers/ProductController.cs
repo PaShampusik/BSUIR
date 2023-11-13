@@ -21,19 +21,26 @@ namespace WEB_153503_Shchirov.Controllers
 
 		[Route("Telescopes")]
 		[Route("Telescopes/{category?}")]
-		public async Task<IActionResult> Index(string? category, string? currentCategory, int pageNo = 1)
+		public async Task<IActionResult> Index(string? category, int pageNo = 1)
         {
-            ViewData["currentcategory"] = currentCategory;
-            ViewData["page"] = pageNo;
-            var productResponse = await _telescopeService.GetTelescopesListAsync(category, pageNo);
-            if (!productResponse.Success)
-            {
-                return NotFound(productResponse.ErrorMessage);
-            }
+			var productResponse = await _telescopeService.GetTelescopesListAsync(category, pageNo);
+			if (!productResponse.Success)
+			{
+				return NotFound(productResponse.ErrorMessage);
+			}
+			var allCategories = await _telescopeCategoryService.GetCategoryListAsync();
+			if (!allCategories.Success)
+			{
+				return NotFound(allCategories.ErrorMessage);
+			}
 
-            var allCategories = await _telescopeCategoryService.GetCategoryListAsync();
+			ViewData["allCategories"] = allCategories.Data;
+			var currentCategory = category == null ? "Все" : allCategories.Data!.FirstOrDefault(c => c.NormalizedName == category)?.Name;
+			ViewData["currentCategory"] = currentCategory;
+			ViewData["currentPage"] = productResponse.Data!.CurrentPage;
+			ViewData["totalPages"] = productResponse.Data.TotalPages;
 
-            if (Request.IsAjaxRequest())
+			if (Request.IsAjaxRequest())
             {
                 // Render the partial view for synchronous Ajax request
                 return PartialView("_ProductCardsAndPagerPartial", new
@@ -48,8 +55,7 @@ namespace WEB_153503_Shchirov.Controllers
                 });
             }
 
-            return View((productResponse.Data!.Items, allCategories.Data,
-                productResponse.Data.CurrentPage, productResponse.Data.TotalPages));
+            return View((productResponse.Data!.Items));
         }
     }
 }

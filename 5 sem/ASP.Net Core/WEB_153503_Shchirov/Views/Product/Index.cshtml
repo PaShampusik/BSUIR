@@ -1,4 +1,4 @@
-﻿@model (List<Telescope> TelescopeList, List<Category> TelescopeCategoryList, int currentPage, int totalPages)
+﻿@model List<Telescope>
 @{
 	ViewData["Title"] = "Список позиций";
 	var request = ViewContext.HttpContext.Request;
@@ -11,17 +11,14 @@
 	{
 		category = request.Query["category"];
 	}
-	string? currentPage = request.Query["page"]; 
+	int currentPage = ViewData["currentPage"] as int? ?? 1;
 	string currentCategory = ViewData["currentCategory"] as string ?? "Все";
-	int prev = Model.currentPage == 1
-		? 1
-		: Model.currentPage - 1;
-	int next = Model.currentPage == Model.totalPages
-	? Model.totalPages
-	: Model.currentPage + 1;
+	
+	int totalPages = ViewData["totalPages"] as int? ?? 1;
+	bool previousAvailable = currentPage != 1;
+	bool nextAvailable = currentPage != totalPages;
 
-	bool previousAvailable = Model.currentPage != 1;
-	bool nextAvailable = Model.currentPage != Model.totalPages;
+	var TelescopeCategoryList = ViewData["allCategories"] as List<Category> ?? new List<Category>();
 }
 
 <div class="container">
@@ -38,7 +35,7 @@
 				   asp-route-category="Все"
 				   asp-route-currentCategory="Все">Все</a>
 			</li>
-			@foreach (var item in Model.TelescopeCategoryList)
+			@foreach (var item in TelescopeCategoryList)
 			{
 				<li style="min-width: 200px"><a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-category=@item.NormalizedName asp-route-currentCategory=@item.Name>@item.Name</a></li>
 			}
@@ -54,9 +51,9 @@
 			CurrentCategory = currentCategory,
 			Category = category,
 			ReturnUrl = returnUrl,
-			CurrentPage = Model.currentPage,
-			TotalPages = Model.totalPages,
-			Telescopes = Model.TelescopeList,
+			CurrentPage = currentPage,
+			TotalPages = totalPages,
+			Telescopes = Model,
 			InAdminArea = false,
 		});
 	}
