@@ -1,57 +1,15 @@
 ﻿@page "/list"
+@using BlazorWasm.Components
 
-@using Domain.Entities;
-@using Domain.Models;
-@using System.Text.Json;
-@inject IDataService dataService
+<PageTitle>Telescopes</PageTitle>
 
-@inject HttpClient Http
+<TelescopeList />
 
 @code {
-	private List<Telescope>? telescopes;
-
+	[Inject]
+	public IDataService DataService { get; set; }
 	protected override async Task OnInitializedAsync()
 	{
-		await dataService.GetTelescopesListAsync(null);
-		if (dataService.Success)
-		{
-			telescopes = dataService.TelescopeList;
-		}
+		await DataService.GetTelescopesListAsync(null);
 	}
 }
-
-<AuthorizeView>
-	<Authorized>
-		<h1>Telescope list</h1>
-
-		@if (telescopes == null)
-		{
-			<p><em>Loading...</em></p>
-		}
-		else
-		{
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Description</th>
-						<th>Price</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var cl in telescopes!)
-					{
-						<tr>
-							<td>@cl.Name</td>
-							<td>@cl.Description</td>
-							<td>@cl.Price</td>
-						</tr>
-					}
-				</tbody>
-			</table>
-		}
-	</Authorized>
-	<NotAuthorized>
-		<a href="authentication/login">Log in</a>
-	</NotAuthorized>
-</AuthorizeView>

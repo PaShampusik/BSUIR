@@ -4,6 +4,7 @@ namespace BlazorWasm.Services;
 
 public interface IDataService
 {
+	event Action DataChanged;
 	List<Category>? Categories { get; set; }
 	List<Telescope>? TelescopeList { get; set; }
 	bool Success { get; set; }
