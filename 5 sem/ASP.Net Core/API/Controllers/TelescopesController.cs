@@ -29,6 +29,7 @@ namespace API.Controllers
         //[HttpGet("{category?}/{pageNo:int?}/{pagesize:int?}")]
         [HttpGet]
 		[Route("category={category}pageNo={pageNo:int}pageSize={pageSize:int}")]
+		[Authorize]
 		public async Task<ActionResult<ResponseData<List<Telescope>>>> GetTelescopes(string? category,
 		int pageNo = 1, int pageSize = 3)
 		{
@@ -37,7 +38,8 @@ namespace API.Controllers
 
 		// GET: api/Telescopes/5
 		[HttpGet("{id:int}")]
-        public async Task<ActionResult<ResponseData<Telescope>>> GetTelescopes(int id)
+		[Authorize]
+		public async Task<ActionResult<ResponseData<Telescope>>> GetTelescopes(int id)
         {
             return Ok(await _service.GetTelescopesByIdAsync(id));
         }
