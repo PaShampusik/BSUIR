@@ -25,7 +25,15 @@ builder.Services
     opt.TokenValidationParameters.ValidTypes =
     new[] { "at+jwt" };
 });
-
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("BlazorWasmPolicy", builder =>
+	{
+		builder.WithOrigins("https://localhost:7258")
+			   .AllowAnyMethod()
+			   .AllowAnyHeader();
+	});
+});
 
 var app = builder.Build();
 
@@ -40,7 +48,7 @@ app.UseCookiePolicy(new CookiePolicyOptions
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseCors("BlazorWasmPolicy");
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())

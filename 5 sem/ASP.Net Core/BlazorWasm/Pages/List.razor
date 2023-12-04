@@ -1,0 +1,55 @@
+﻿@page "/list"
+
+@using Domain.Entities;
+@using Domain.Models;
+@using System.Text.Json;
+@inject IDataService dataService
+
+@inject HttpClient Http
+
+@code {
+	private List<Telescope>? telescopes;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await dataService.GetTelescopesListAsync(null);
+		if (dataService.Success)
+		{
+			telescopes = dataService.TelescopeList;
+		}
+	}
+}
+
+<PageTitle>Telescopes</PageTitle>
+
+<h1>Telescopes list</h1>
+
+@if (telescopes == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>FocusLength</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var tl in telescopes!)
+			{
+				<tr>
+					<td>@tl.Name</td>
+					<td>@tl.Description</td>
+					<td>@tl.FocusLength</td>
+					<td>@tl.Price</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+

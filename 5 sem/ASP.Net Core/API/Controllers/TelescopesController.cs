@@ -11,10 +11,11 @@ using Domain.Models;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using System.Data.Entity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class TelescopesController : ControllerBase
     {
@@ -25,15 +26,17 @@ namespace API.Controllers
             _service = service;
         }
 
-        [HttpGet("{category?}/{pageNo:int?}/{pagesize:int?}")]
-        public async Task<ActionResult<ResponseData<List<Telescope>>>> GetTelescopes(string? category,
-            int pageNo = 1, int pageSize = 3)
-        {
-            return Ok(await _service.GetTelescopesListAsync(category, pageNo, pageSize));
-        }
+        //[HttpGet("{category?}/{pageNo:int?}/{pagesize:int?}")]
+        [HttpGet]
+		[Route("category={category}pageNo={pageNo:int}pageSize={pageSize:int}")]
+		public async Task<ActionResult<ResponseData<List<Telescope>>>> GetTelescopes(string? category,
+		int pageNo = 1, int pageSize = 3)
+		{
+			return Ok(await _service.GetTelescopesListAsync(category, pageNo, pageSize));
+		}
 
-        // GET: api/Telescopes/5
-        [HttpGet("{id:int}")]
+		// GET: api/Telescopes/5
+		[HttpGet("{id:int}")]
         public async Task<ActionResult<ResponseData<Telescope>>> GetTelescopes(int id)
         {
             return Ok(await _service.GetTelescopesByIdAsync(id));
