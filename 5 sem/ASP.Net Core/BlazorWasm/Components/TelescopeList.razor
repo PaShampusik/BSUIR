@@ -1,51 +1,44 @@
 ﻿@inject IDataService DataService
 @implements IDisposable
 
-<AuthorizeView>
-	<Authorized>
-		<h1>Telescope list</h1>
+<h1>Telescope list</h1>
 
-		@if (DataService.TelescopeList is null || !DataService.Success)
-		{
-			<p><em>Loading...</em></p>
-		}
-		else
-		{
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Description</th>
-						<th>Focus Length</th>
-						<th>Price</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var tl in DataService.TelescopeList!)
-					{
-						<tr>
-							<td>@tl.Name</td>
-							<td>@tl.Description</td>
-							<td>@tl.FocusLength</td>
-							<td>@tl.Price</td>
-						</tr>
-					}
-				</tbody>
-			</table>
-		}
-	</Authorized>
-	<NotAuthorized>
-		<a href="authentication/login">Log in</a>
-	</NotAuthorized>
-</AuthorizeView>
+@if (DataService.TelescopeList is null || !DataService.Success)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tl in DataService.TelescopeList!)
+            {
+                <tr>
+                    <td>@tl.Name</td>
+                    <td> <button class="btn btn-primary" @onclick="() => TelescopesSelected.Invoke(tl.Id)">Подробнее</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
-	protected override void OnInitialized()
-	{
-		DataService.DataChanged += StateHasChanged;
-	}
-	public void Dispose()
-	{
-		DataService.DataChanged -= StateHasChanged;
-	}
+
+    [Parameter]
+    public Action<int> TelescopesSelected { get; set; }
+
+    protected override void OnInitialized()
+    {
+        DataService.DataChanged += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        DataService.DataChanged -= StateHasChanged;
+    }
 }

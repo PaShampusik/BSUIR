@@ -1,0 +1,39 @@
+﻿@using Domain.Entities;
+
+<style>
+	.telescope-details-container {
+		display: flex;
+		align-items: center;
+	}
+	.telescope-image {
+		flex: 0 0 auto;
+		margin-right: 20px;
+	}
+	.telescope-info {
+		flex: 1 1 auto;
+	}
+</style>
+
+
+@if (SelectedTelescopes is not null)
+{
+	<div class="telescope-details-container">
+		<div class="telescope-image">
+			@if (!string.IsNullOrEmpty(SelectedTelescopes.Img))
+			{
+				<img src="@SelectedTelescopes.Img" alt="Telescope Image" width="400" height="300" />
+			}
+		</div>
+		<div class= "telescope-info">
+			<h2>@SelectedTelescopes.Name</h2>
+			<p>@SelectedTelescopes.Description</p>
+			<p>Focus Length: @SelectedTelescopes.FocusLength</p>
+			<p>Price: @SelectedTelescopes.Price</p>
+		</div>
+	</div>
+}
+
+@code {
+	[Parameter]
+	public Telescope? SelectedTelescopes { get; set; }
+}
