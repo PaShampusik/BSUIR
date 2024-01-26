@@ -2,20 +2,20 @@
 #include <omp.h>
 #include <vector>
 
-void matrixVectorMultiplyBoosted(std::vector<std::vector<int>> matrix, std::vector<int> vector, std::vector<std::vector<int>>& result, int rows, int cols) {
-#pragma omp parallel for schedule(dynamic)
+void matrixVectorMultiplyBoosted(std::vector<std::vector<int>> matrix, std::vector<int> vector, std::vector<int>& result, int rows, int cols) {
+#pragma omp parallel for 
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			result[i][j] += matrix[i][j] * vector[j];
+			result[i] += matrix[i][j] * vector[j];
 		}
 	}
 }
 
-void matrixVectorMultiply(std::vector<std::vector<int>> matrix, std::vector<int> vector, std::vector<std::vector<int>>& result, int rows, int cols) {
+void matrixVectorMultiply(std::vector<std::vector<int>> matrix, std::vector<int> vector, std::vector<int>& result, int rows, int cols) {
 
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			result[i][j] += matrix[i][j] * vector[j];
+			result[i] += matrix[i][j] * vector[j];
 		}
 	}
 }
@@ -39,8 +39,8 @@ int main() {
 	for (int i = 0; i < rows; i++) {
 		numbers[i] = i + 1;
 	}
-	std::vector<std::vector<int>> result(rows, std::vector<int>(cols));
-	std::vector<std::vector<int>> result1(rows, std::vector<int>(cols));
+	std::vector<int> result(rows);
+	std::vector<int> result1(rows);
 
 	double start_time = omp_get_wtime(); // Засекаем время начала выполнения
 
