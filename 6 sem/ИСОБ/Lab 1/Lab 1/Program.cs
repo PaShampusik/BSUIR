@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Nodes;
+﻿using System.ComponentModel.Design;
+using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 
 class EncryptionProgram
@@ -100,7 +101,8 @@ class EncryptionProgram
             {
                 int shift = key[keyIndex] - 'a';
                 char decryptedChar = (char)(c - shift % 26);
-                if (decryptedChar < 'a'){
+                if (decryptedChar < 'a')
+                {
                     decryptedChar = (char)(decryptedChar + 26);
                 }
                 decryptedText += decryptedChar;
@@ -147,7 +149,15 @@ class EncryptionProgram
             {
                 case "1":
                     Console.Write("Введите сдвиг для шифра Цезаря: ");
-                    int caesarShift = int.Parse(Console.ReadLine());
+                    int caesarShift;
+                    try
+                    {
+                        caesarShift = int.Parse(Console.ReadLine());
+                    }catch(Exception ex)
+                    {
+                        Console.WriteLine("Неверный формат сдвига.\n");
+                        goto menu;
+                    }
 
                     string inputText = File.ReadAllText(inputFileName);
                     string encryptedText = CaesarEncrypt(inputText.ToLower(), caesarShift);
