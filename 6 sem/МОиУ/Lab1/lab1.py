@@ -25,16 +25,16 @@ def modify_matrix(A, A_inv, x, i):
 
 # Генерация случайной квадратной матрицы и вектора
 
-A = np.array([[1, -1, 0], [0, 1, 0], [0, 0, 1]])
-A_inv = np.linalg.inv(A)
-x = np.array([1, 0, 1])
+# A = np.array([[1, -1, 0], [0, 1, 0], [0, 0, 1]])
+# A_inv = np.linalg.inv(A)
+# x = np.array([1, 0, 1])
 
 
 i = 2
-# n = 3  # Размерность матрицы
-# A = np.random.rand(n, n)
-# A_inv = np.linalg.inv(A)
-# x = np.random.rand(n)
+n = 3  # Размерность матрицы
+A = np.random.rand(n, n)
+A_inv = np.linalg.inv(A)
+x = np.random.rand(n)
 
 print(A)
 print(x)
