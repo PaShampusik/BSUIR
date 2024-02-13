@@ -67,23 +67,35 @@ END;
 create or replace NONEDITIONABLE FUNCTION calculate_total_reward(
     p_monthly_salary IN NUMBER,
     p_annual_bonus_percentage IN INTEGER
-  ) RETURN NUMBER IS l_annual_bonus_percentage NUMBER;
-l_total_reward NUMBER;
-BEGIN IF p_annual_bonus_percentage < 0
-OR p_monthly_salary < 0 THEN RAISE INVALID_NUMBER;
-END IF;
--- Преобразуем процент в дробное число
-l_annual_bonus_percentage := p_annual_bonus_percentage / 100.0;
--- Вычисляем общее вознаграждение
-l_total_reward := (1 + l_annual_bonus_percentage) * 12 * p_monthly_salary;
-RETURN l_total_reward;
+) RETURN NUMBER IS
+    l_annual_bonus_percentage NUMBER;
+    l_total_reward NUMBER;
+BEGIN
+    IF p_annual_bonus_percentage < 0 OR p_monthly_salary < 0 THEN
+    RAISE INVALID_NUMBER;
+    END IF;
+    
+    IF NOT REGEXP_LIKE(p_annual_bonus_percentage, '^[[:digit:]]+$') THEN
+    RAISE VALUE_ERROR;
+    END IF;
+    -- Преобразуем процент в дробное число
+    l_annual_bonus_percentage := p_annual_bonus_percentage / 100.0;
+
+    -- Вычисляем общее вознаграждение
+    l_total_reward := (1 + l_annual_bonus_percentage) * 12 * p_monthly_salary;
+
+    RETURN l_total_reward;
 EXCEPTION
-WHEN INVALID_NUMBER THEN DBMS_OUTPUT.PUT_LINE('Неверный формат ввода' || SQLERRM);
-RETURN NULL;
-WHEN OTHERS THEN -- Обработка исключений
-DBMS_OUTPUT.PUT_LINE('Произошла ошибка: ' || SQLERRM);
-RETURN NULL;
--- Или другое значение, указывающее на ошибку
+    WHEN INVALID_NUMBER THEN
+        DBMS_OUTPUT.PUT_LINE('Неверный формат ввода' || SQLERRM);
+        RETURN NULL;
+    WHEN VALUE_ERROR THEN
+        DBMS_OUTPUT.PUT_LINE('Нельзя строки' || SQLERRM);
+        RETURN NULL;
+    WHEN OTHERS THEN
+        -- Обработка исключений
+        DBMS_OUTPUT.PUT_LINE('Произошла ошибка: ' || SQLERRM);
+        RETURN NULL; -- Или другое значение, указывающее на ошибку
 END;
 --example of usage
 DECLARE l_total_reward NUMBER;
