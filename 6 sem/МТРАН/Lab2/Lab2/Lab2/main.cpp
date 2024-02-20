@@ -7,6 +7,7 @@
 #include <string>
 #include <math.h>
 #include <vector>
+#include <stack>
 #include <unordered_set>
 #include <unordered_map>
 
@@ -35,8 +36,9 @@ enum TokenType {
 	OPERATOR,
 	OPERAND,
 	PUNCTUATOR,
-	CONSTANT
 };
+
+
 
 static void determineType(std::string currentLexeme, std::string lastLexeme);
 static std::pair<std::string, int> findConstant(const std::string& code, size_t index, char ender);
@@ -52,10 +54,24 @@ func,
 */
 
 struct Token {
+	int Id = -1;
 	TokenType type;
 	std::string lexeme;
 	std::string err = "";
+
+	bool operator==(const Token& other) const {
+		return type == other.type && lexeme == other.lexeme && err == other.err;
+	}
 };
+
+//TOKENS//////////////////
+std::vector<Token> tokens;
+//TOKENS//////////////////
+
+
+//VISIBILITY
+std::stack<int> visibility;
+
 
 bool isWhitespace(char c) {
 	return c == ' ' || c == '\t' || c == '\n';
@@ -69,9 +85,18 @@ bool isDigit(char c) {
 	return c >= '0' && c <= '9';
 }
 
-//TOKENS//////////////////
-std::vector<Token> tokens;
-//TOKENS//////////////////
+int find(Token token, int visibility) {
+	if (token.type == OPERATOR) {
+		return tokens.size();
+	}
+	for (int i = visibility; i < tokens.size(); i++) {
+		if (token == tokens[i]) {
+			return tokens[i].Id;
+		}
+	}
+	return tokens.size();
+}
+
 
 std::vector<Token> lex(const std::string& code) {
 	std::string currentLexeme, lastLexeme;
@@ -103,8 +128,14 @@ std::vector<Token> lex(const std::string& code) {
 					determineType(currentLexeme, lastLexeme);
 					constant = findConstant(code, i, '\"');
 				}
-				else if (c == '\{' || c == '\}') {
-					determineType(currentLexeme, lastLexeme);
+				else if (c == '{' || c == '}') {
+					if (c == '{') {
+						visibility.push(tokens.size());
+					}
+					else {
+						visibility.pop();
+					}
+					determineType(std::string(1, c), currentLexeme);
 				}
 				currentLexeme = "";
 				i = (constant.second == 0) ? i : (constant.second + 1);
@@ -115,7 +146,6 @@ std::vector<Token> lex(const std::string& code) {
 			}
 		}
 	}
-
 	return tokens;
 }
 
@@ -145,9 +175,14 @@ static void determineType(std::string currentLexeme, std::string lastLexeme) {
 				newtoken.type = OPERATOR;
 				token.lexeme = currentLexeme.erase(currentLexeme.length() - 2);
 				token.type = OPERAND;
+				token.Id = find(token, visibility.top());
 				tokens.push_back(token);
 				token = newtoken;
+				token.Id = find(token, visibility.top());
 				currentLexeme = token.lexeme;
+				tokens.push_back(token);
+				currentLexeme.clear();
+				return;
 			}
 			auto result = lecsicError(currentLexeme, keywords);
 			if (result.first) {
@@ -159,17 +194,21 @@ static void determineType(std::string currentLexeme, std::string lastLexeme) {
 			auto result2 = overflowError(currentLexeme, keywords);
 			if (result2.first) {
 				token.type = KEYWORD;
-				token.err = "Warning! Did you mean " + result2.second + "? You have lecsic variety, writing " + currentLexeme;
+				token.err = "Error! Did you mean " + result2.second + "? You have lecsic error, writing " + currentLexeme;
 			}
 
 			auto result3 = overflowError(currentLexeme, operators);
 			if (result3.first) {
 				token.type = KEYWORD;
-				token.err = "Warning! Did you mean " + result3.second + "? You have lecsic variety, writing " + currentLexeme;
+				token.err = "Error! Did you mean " + result3.second + "? You have lecsic error, writing " + currentLexeme;
 			}
 
 		}
-
+		int newid = find(token, visibility.top());
+		/*if (newid == tokens.size() && tokens.size() > 1 && (tokens[tokens.size() - 1].type == OPERATOR || tokens[tokens.size() - 1].type == KEYWORD) && token.type == OPERAND) {
+			token.err = "ERROR! Using non-initialized variable!";
+		}*/
+		token.Id = newid;
 		tokens.push_back(token);
 		currentLexeme.clear();
 	}
@@ -208,7 +247,6 @@ static std::pair<bool, std::string> lecsicError(std::string str, std::unordered_
 				else {
 					goto mark;
 				}
-
 			}
 			return std::pair<bool, std::string>(true, x);
 		}
@@ -247,6 +285,7 @@ void ResetConsoleColor() {
 }
 
 int main() {
+	visibility.push(0);
 
 	std::ifstream inputFile("test.txt");
 
@@ -266,9 +305,8 @@ int main() {
 
 	std::vector<Token> tokens = lex(code);
 
-	auto i = 0;
 	for (const Token& token : tokens) {
-		std::cout << i << " Type: " << tokenTypes[token.type] << ", Lexeme: " << token.lexeme << " ";
+		std::cout << token.Id << " Type: " << tokenTypes[token.type] << ", Lexeme: " << token.lexeme << " ";
 		if (token.err != "") {
 			SetConsoleRedColor(); // Покрасить текст в красный цвет
 			if (token.err[0] == 'W') {
@@ -278,7 +316,6 @@ int main() {
 			ResetConsoleColor(); // Вернуть цвет текста в стандартный
 		}
 		std::cout << std::endl;
-		i++;
 	}
 
 	return 0;
