@@ -28,9 +28,9 @@ ELSIF v_even_count < v_odd_count THEN RETURN 'FALSE';
 ELSE RETURN 'EQUAL';
 END IF;
 END;
-/ --example of usage
-SELECT "SYSTEM"."CHECK_EVEN_ODD"() "CHECK_EVEN_ODD()"
-FROM "SYS"."DUAL" "A1";
+--example of usage
+SELECT CHECK_EVEN_ODD()
+FROM dual;
 -- func for generating insert command
 CREATE OR REPLACE FUNCTION generate_insert_command(p_id NUMBER) RETURN VARCHAR2 AS v_insert_command VARCHAR2(4000);
 BEGIN v_insert_command := 'INSERT INTO MyTable (id, val) VALUES (' || p_id || ', <значение_val>);';
@@ -67,35 +67,27 @@ END;
 create or replace NONEDITIONABLE FUNCTION calculate_total_reward(
     p_monthly_salary IN NUMBER,
     p_annual_bonus_percentage IN INTEGER
-) RETURN NUMBER IS
-    l_annual_bonus_percentage NUMBER;
-    l_total_reward NUMBER;
-BEGIN
-    IF p_annual_bonus_percentage < 0 OR p_monthly_salary < 0 THEN
-    RAISE INVALID_NUMBER;
-    END IF;
-    
-    IF NOT REGEXP_LIKE(p_annual_bonus_percentage, '^[[:digit:]]+$') THEN
-    RAISE VALUE_ERROR;
-    END IF;
-    -- Преобразуем процент в дробное число
-    l_annual_bonus_percentage := p_annual_bonus_percentage / 100.0;
-
-    -- Вычисляем общее вознаграждение
-    l_total_reward := (1 + l_annual_bonus_percentage) * 12 * p_monthly_salary;
-
-    RETURN l_total_reward;
+  ) RETURN NUMBER IS l_annual_bonus_percentage NUMBER;
+l_total_reward NUMBER;
+BEGIN IF p_annual_bonus_percentage < 0
+OR p_monthly_salary < 0 THEN RAISE INVALID_NUMBER;
+END IF;
+IF NOT REGEXP_LIKE(p_annual_bonus_percentage, '^[[:digit:]]+$') THEN RAISE VALUE_ERROR;
+END IF;
+-- Преобразуем процент в дробное число
+l_annual_bonus_percentage := p_annual_bonus_percentage / 100.0;
+-- Вычисляем общее вознаграждение
+l_total_reward := (1 + l_annual_bonus_percentage) * 12 * p_monthly_salary;
+RETURN l_total_reward;
 EXCEPTION
-    WHEN INVALID_NUMBER THEN
-        DBMS_OUTPUT.PUT_LINE('Неверный формат ввода' || SQLERRM);
-        RETURN NULL;
-    WHEN VALUE_ERROR THEN
-        DBMS_OUTPUT.PUT_LINE('Нельзя строки' || SQLERRM);
-        RETURN NULL;
-    WHEN OTHERS THEN
-        -- Обработка исключений
-        DBMS_OUTPUT.PUT_LINE('Произошла ошибка: ' || SQLERRM);
-        RETURN NULL; -- Или другое значение, указывающее на ошибку
+WHEN INVALID_NUMBER THEN DBMS_OUTPUT.PUT_LINE('Неверный формат ввода' || SQLERRM);
+RETURN NULL;
+WHEN VALUE_ERROR THEN DBMS_OUTPUT.PUT_LINE('Нельзя строки' || SQLERRM);
+RETURN NULL;
+WHEN OTHERS THEN -- Обработка исключений
+DBMS_OUTPUT.PUT_LINE('Произошла ошибка: ' || SQLERRM);
+RETURN NULL;
+-- Или другое значение, указывающее на ошибку
 END;
 --example of usage
 DECLARE l_total_reward NUMBER;

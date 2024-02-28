@@ -29,7 +29,7 @@ std::unordered_set<std::string> operators = { "+", "-", "*", "/", "%", "=", "=="
 
 std::unordered_set<std::string> punctuators = { "{", "}", "(", "[", ",", "\"", ")", "]", ";" };
 
-std::vector<std::string> tokenTypes = { "Keyword", "Operator", "Operand", "Punctuator", "Constant" };
+std::vector<std::string> tokenTypes = { "Keyword", "Operator", "Operand", "Punctuator" };
 
 enum TokenType {
 	KEYWORD,
@@ -38,8 +38,12 @@ enum TokenType {
 	PUNCTUATOR,
 };
 
-
-
+void SetConsoleGreenColor();
+void SetConsoleRedColor();
+void SetConsoleYellowColor();
+void ResetConsoleColor();
+void checkBrackets(const std::string& code);
+int countLines(const std::string& code);
 static void determineType(std::string currentLexeme, std::string lastLexeme);
 static std::pair<std::string, int> findConstant(const std::string& code, size_t index, char ender);
 static std::pair<bool, std::string> lecsicError(std::string str, std::unordered_set<std::string> keywords);
@@ -270,6 +274,57 @@ static std::pair<bool, std::string> overflowError(std::string str, std::unordere
 	return std::pair<bool, std::string>(false, "");
 }
 
+void checkBrackets(const std::string& code) {
+	std::stack<std::pair<char, int>> bracketStack;
+	std::unordered_map<char, char> bracketPairs = {
+		{')', '('},
+		{']', '['},
+		{'}', '{'}
+	};
+
+	for (size_t i = 0; i < code.length(); i++) {
+		char ch = code[i];
+
+		if (ch == '(' || ch == '[' || ch == '{') {
+			bracketStack.push(std::make_pair(ch, i));
+		}
+		else if (ch == ')' || ch == ']' || ch == '}') {
+			if (bracketStack.empty() || bracketStack.top().first != bracketPairs[ch]) {
+				std::cout << "Error: Unclosed bracket in line " << countLines(code.substr(0, i)) + 1
+					<< ", position " << i + 1 << std::endl;
+				return;
+			}
+			bracketStack.pop();
+		}
+	}
+	if (!bracketStack.empty()) {
+		SetConsoleRedColor();
+		std::pair<char, int>& unmatchedBracket = bracketStack.top();
+		std::cout << "Error: Unclosed bracket in line " << countLines(code) + 1
+			<< ", position " << unmatchedBracket.second + 1 << std::endl;
+		ResetConsoleColor();
+	}
+	else {
+		SetConsoleGreenColor();
+		std::cout << "All brackets are good!" << std::endl;
+		ResetConsoleColor();
+	}
+}
+
+int countLines(const std::string& code) {
+	int count = 0;
+	size_t pos = 0;
+	while ((pos = code.find("\n", pos)) != std::string::npos) {
+		count++;
+		pos++;
+	}
+	return count;
+}
+
+void SetConsoleGreenColor() {
+	std::cout << "\033[32m";
+}
+
 void SetConsoleRedColor() {
 	std::cout << "\033[31m"; 
 }
@@ -302,6 +357,8 @@ int main() {
 	}
 
 	inputFile.close();
+
+	checkBrackets(code);
 
 	std::vector<Token> tokens = lex(code);
 
