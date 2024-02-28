@@ -1,0 +1,12 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/pavel/BSUIR/6 sem/OSaSP/Lab3",
+            "binaryPath": "/home/pavel/BSUIR/6 sem/OSaSP/Lab3/main",
+            "binaryArgs": [
+                "input.txt",
+                "output.txt"
+            ]
+        }
+    ]
+}
