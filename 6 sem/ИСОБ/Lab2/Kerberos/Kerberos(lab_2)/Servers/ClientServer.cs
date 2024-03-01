@@ -13,14 +13,14 @@ namespace Kerberos_lab_2_.Servers
         {
             UdpClient udpClient = new(Configuration.ClientPort);
 
-            //  Отправляем запрос для аутентификации  //
+            //  1)))  Отправляем запрос для аутентификации (посылает серверу аутентификации AS свой идентификатор) 
+            
             AuthServerRequest authData = new(_login, 600);
             ResponseData<AuthServerRequest> authRequest = new() { Data = authData, IsSuccess = true };
 
             byte[] data = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(authRequest));
 
             await udpClient.SendAsync(data, Configuration.AuthEP);
-            //await Task.Delay(2000);
             await Console.Out.WriteLineAsync("*********************************************************************************\n" +
                 "Клиент отправил запрос на аутентификацию с принипалом Pavel Shchirov и временем жизни 10 минут");
             var response = await udpClient.ReceiveAsync();
@@ -42,7 +42,13 @@ namespace Kerberos_lab_2_.Servers
                 return;
             }
 
-            //    Удачный ответ на аутентификацию   //
+
+
+
+            /* 2)))  Удачный ответ на аутентификацию   
+               (сервер аутентификации AS, проверив, что клиент C имеется в его базе, возвращает ему билет для доступа к 
+                серверу выдачи разрешений и ключ для взаимодействия с сервером выдачи разрешений. Вся посылка зашифрована на ключе клиента C.)*/
+           
             byte[] tgtByKDCkey = authResponse.Data!.TGSEncryptByKDCKey;
             TicketGrantingTicket tgt = JsonSerializer.Deserialize<TicketGrantingTicket>(authResponse.Data.TGSEncryptByClientKey.GetJsonString(_key))!;
             string sessionKey = tgt.SessionKey;
@@ -52,9 +58,15 @@ namespace Kerberos_lab_2_.Servers
                 "\nTGT билет, зашифрованный ключем KDC: " + tgtByKDCkey.GetJsonString() +
                 "\nСессионный ключ: " + sessionKey);
 
-            //  Отправляем запрос на получение разрешения доступа к сервису //
-            Authenticator authenticator = new(_login);
 
+
+
+
+            //  3))) Отправляем запрос на получение разрешения доступа к сервису //
+            /* Он пересылает полученный от AS билет, зашифрованный на ключе KAS_TGS, и аутентификационный блок, содержащий идентификатор c и метку 
+             * времени, показывающую, когда была сформирована посылка.*/
+
+            Authenticator authenticator = new(_login);
             //Шифруем аутентификатор сессионным ключем
             byte[] encryptAuth = JsonSerializer.Serialize(authenticator).GetDesEncryptBytes(sessionKey);
 
@@ -82,7 +94,14 @@ namespace Kerberos_lab_2_.Servers
                 await Console.Out.WriteLineAsync("Клиент. Неуспешный ответ при аутентификации: " + tgsResponse.ErrorMessage);
                 return;
             }
-            //          Удачный ответ от TGS        //
+
+
+
+
+            //     4)))     Удачный ответ от TGS        //
+            /* сервер выдачи разрешений TGS посылает клиенту C ключ шифрования и билет, необходимые для доступа к серверу SS. Структура билета такая же, 
+             * как на шаге 2): идентификатор того, кому выдали билет; идентификатор того, для кого выдали билет; отметка времени; период действия; ключ шифрования.*/
+            
             ServiceTicket st = JsonSerializer.Deserialize<ServiceTicket>(tgsResponse.Data!.STEncryptBySessionKey.GetJsonString(sessionKey))!;
             string sessinServiceKey = st.ServiceSessionKey;
             byte[] encryptST = tgsResponse.Data!.STEncryptByServiceKey;
@@ -92,14 +111,18 @@ namespace Kerberos_lab_2_.Servers
                 "\nST билет, зашифрованный ключем сервиса: " + encryptST.GetJsonString() +
                 "\nСессионный ключ сервиса: " + sessinServiceKey);
 
-            //  Отправляем запрос сервису на получение данных  //
 
+
+            // 5))))  Отправляем запрос сервису на получение данных  //
+            /* Клиент C посылает билет, полученный от сервера выдачи разрешений, и свой аутентификационный блок серверу SS, с которым хочет установить сеанс защищенного
+             * взаимодействия. Предполагается, что SS уже зарегистрировался в системе и распределил с сервером TGS ключ шифрования KTGS_SS. */
+           
             //Шифруем сессионным ключем сервиса
             encryptAuth = JsonSerializer.Serialize(new Authenticator(_login)).GetDesEncryptBytes(sessinServiceKey);
             AppServerRequest serviceRequest = new(encryptAuth, encryptST);
 
             await Console.Out.WriteLineAsync("\n*********************************************************************************\n" +
-                "Клиент отправляет запрос на разрешение доступа к сервису (TGS)." +
+                "Клиент отправляет запрос на разрешение доступа к сервису (SS)." +
                 "\nЗашифрованный аутентификатор: " + encryptAuth.GetJsonString() +
                 "\nЗашифрованный ST: " + encryptST.GetJsonString());
 
@@ -122,7 +145,12 @@ namespace Kerberos_lab_2_.Servers
                 return;
             }
 
-            //       Удачный ответ от сервиса       //
+
+
+
+            //   6)))     Удачный ответ от сервиса       //
+            /* SS берет отметку времени из аутентификационного блока C, изменяет ее заранее определенным образом (увеличивает на 1), шифрует на ключе KC_SS и возвращает C.*/
+           
             string message = JsonSerializer.Deserialize<string>(appResponse.Data!.ServiceResEncryptByServiceSessionKey.GetJsonString(sessinServiceKey))!;
             await Console.Out.WriteLineAsync("\n*********************************************************************************\n" +
                 "Клиент получил ответ от сервиса." +

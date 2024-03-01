@@ -123,12 +123,6 @@ namespace Kerberos_lab_2_
             return resEnc.ToArray();
         }
 
-        /// <summary>
-        /// Преобразует входной набор байтов в зависимости от таблицы
-        /// </summary>
-        /// <param name="input">Входной набор битов</param>
-        /// <param name="table">Таблица для преобразования</param>
-        /// <returns>Измененнную набор битов</returns>
         private static BitArray Permutate(BitArray input, byte[] table)
         {
             BitArray output = new(table.Length);
