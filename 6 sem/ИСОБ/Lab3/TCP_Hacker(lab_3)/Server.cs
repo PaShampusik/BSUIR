@@ -108,8 +108,7 @@ namespace TCP_Hacker_lab_3_
 
                 StringBuilder str = new();
 
-                for (int i = 0; i < 10; i++)
-                    str.Append(i + ", ");
+                str.Append("Message from server");
 
                 List<TCPPacket> packets = TCPPacket.GetPackets(str.ToString().GetBytes(), winSize, _port, port, seqNum, ackNum).ToList();
 
