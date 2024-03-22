@@ -9,7 +9,7 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.16.1
 # ---
-
+import random
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
@@ -119,6 +119,7 @@ plt.title("Теоретические распределения")
 plt.legend()
 plt.xticks(np.arange(-1, 14, 1))
 plt.show(block=True)
+
 
 # Экспоненциальное распределение
 expon_pdf = expon.pdf(x, scale=1 / mean)
