@@ -2,6 +2,7 @@
 using System.Net;
 using Kerberos_lab_2_.Models;
 using System.Text.Json;
+using System.Text;
 
 namespace Kerberos_lab_2_.Servers
 {
@@ -41,7 +42,7 @@ namespace Kerberos_lab_2_.Servers
                 string serviceSessionKey = tgs.ServiceSessionKey;
 
                 Authenticator userAuth = JsonSerializer.Deserialize<Authenticator>(data.AuthEncryptBySessionServiceKey.GetJsonString(serviceSessionKey))!;
-                
+
 
                 if (tgs.TimeStamp.AddSeconds(tgs.Duration) < DateTime.Now   //Если билет протух
                     || tgs.Principal != userAuth.Principal)                 //Если принципалы не совпадают
@@ -52,11 +53,11 @@ namespace Kerberos_lab_2_.Servers
 
                     await udpClient.SendAsync(notFound, endPoint);
                     continue;
-                }
+                } 
 
-                AppServerResponse response = new(JsonSerializer.Serialize(_message).GetDesEncryptBytes(serviceSessionKey));
+                
 
-                await udpClient.SendAsync(new ResponseData<AppServerResponse>() { Data = response, IsSuccess = true }.GetBytes(), endPoint);
+                await udpClient.SendAsync(new ResponseData<string>() { Data = _message, IsSuccess = true }.GetBytes(), endPoint);
             }
         }
     }
