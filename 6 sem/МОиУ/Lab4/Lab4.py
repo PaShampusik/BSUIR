@@ -61,8 +61,8 @@ def dual_simplex_method(c, A, b, B):
         sigmas = []
         for val in mu_j:
             if val[0] < 0:
-                A_aan = A[:, val[1]]
-                c_agbagn = c[val[1]]
+                # A_aan = A[:, val[1]]
+                # c_agbagn = c[val[1]]
                 sigmas.append((c[val[1]] - np.dot(A[:, val[1]], y)) / val)
 
         # Шаг 10
