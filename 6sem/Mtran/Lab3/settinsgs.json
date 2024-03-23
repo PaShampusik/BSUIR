@@ -1,0 +1,10 @@
+{
+    "cmake.cmakePath": "D:/utilities/m2sys/bin/mingw64/cmake.exe",
+    "cmake.configureSettings": {
+        "CMAKE_MAKE_PROGRAM": "D:/utilities/m2sys/bin/mingw64/make.exe"
+    },
+    "cmake.environment": {
+        "PATH": "D:/utilities/m2sys/bin/mingw64/;D:/utilities/m2sys/bin/mingw64/${env:PATH}"
+    },
+    "cmake.generator": "MSYS Makefiles"
+}
