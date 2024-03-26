@@ -6,7 +6,7 @@ if [ $# -eq 0 ]; then
 fi
 
 search_files() {
-  local dir="$1"
+  local divr="$1"
   local pattern="$2"
 
   for file in "$dir"/*; do
