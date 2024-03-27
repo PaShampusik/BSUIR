@@ -509,3 +509,5 @@ ddl_script := replace(ddl_script, dev_schema_name, prod_schema_name);
 dbms_output.put_line(ddl_script);
 RETURN v_identical;
 END are_tables_identical;
+
+-------------CALL compare_schemas('DEV', 'PROD'); EXAMPLE
