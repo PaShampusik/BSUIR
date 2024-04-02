@@ -2,117 +2,7 @@ CREATE OR REPLACE PROCEDURE compare_schemas (
         dev_schema_name IN VARCHAR2,
         prod_schema_name IN VARCHAR2
     ) AS TYPE string_list_t IS TABLE OF VARCHAR2(100);
-dev_tables string_list_t := string_list_t();
-prod_tables string_list_t := string_list_t();
-visited_tables string_list_t := string_list_t();
-sorted_tables string_list_t := string_list_t();
-dev_procs string_list_t := string_list_t();
-prod_procs string_list_t := string_list_t();
-dev_only_procs string_list_t := string_list_t();
-prod_only_procs string_list_t := string_list_t();
-different_procs string_list_t := string_list_t();
-dev_funcs string_list_t := string_list_t();
-prod_funcs string_list_t := string_list_t();
-dev_only_funcs string_list_t := string_list_t();
-prod_only_funcs string_list_t := string_list_t();
-different_funcs string_list_t := string_list_t();
-dev_indexes string_list_t := string_list_t();
-prod_indexes string_list_t := string_list_t();
-dev_only_indexes string_list_t := string_list_t();
-prod_only_indexes string_list_t := string_list_t();
-ddl_script CLOB := '';
-counter NUMBER;
-FUNCTION are_tables_identical(p_table_name IN VARCHAR2) RETURN BOOLEAN IS v_identical BOOLEAN := true;
-dev_constraints_set string_list_t;
-prod_constraints_set string_list_t;
-dev_columns_set string_list_t;
-prod_columns_set string_list_t;
-BEGIN
-SELECT constraint_name BULK COLLECT INTO dev_constraints_set
-FROM all_constraints
-WHERE owner = dev_schema_name
-    AND table_name = p_table_name
-    AND constraint_name NOT LIKE 'SYS%'
-ORDER BY constraint_name;
-SELECT constraint_name BULK COLLECT INTO prod_constraints_set
-FROM all_constraints
-WHERE owner = prod_schema_name
-    AND table_name = p_table_name
-    AND constraint_name NOT LIKE 'SYS%'
-ORDER BY constraint_name;
-SELECT column_name BULK COLLECT INTO dev_columns_set
-FROM all_tab_columns
-WHERE owner = dev_schema_name
-    AND table_name = p_table_name
-    AND column_name NOT LIKE 'SYS%'
-ORDER BY column_name;
-SELECT column_name BULK COLLECT INTO prod_columns_set
-FROM all_tab_columns
-WHERE owner = prod_schema_name
-    AND table_name = p_table_name
-    AND column_name NOT LIKE 'SYS%'
-ORDER BY column_name;
-v_identical := true;
-IF dev_constraints_set MULTISET
-EXCEPT prod_constraints_set IS NOT EMPTY
-    OR prod_constraints_set MULTISET
-EXCEPT dev_constraints_set IS NOT EMPTY THEN v_identical := false;
-END IF;
-IF dev_columns_set MULTISET
-EXCEPT prod_columns_set IS NOT EMPTY
-    OR prod_columns_set MULTISET
-EXCEPT dev_columns_set IS NOT EMPTY THEN v_identical := false;
-END IF;
-IF v_identical THEN RETURN v_identical;
-END IF;
-ddl_script := '';
-DECLARE data_type VARCHAR2(100);
-data_length NUMBER;
-data_precision NUMBER;
-BEGIN FOR i IN 1..dev_columns_set.count LOOP IF dev_columns_set(i) NOT MEMBER OF prod_columns_set THEN
-SELECT data_type,
-    data_length,
-    data_precision INTO data_type,
-    data_length,
-    data_precision
-FROM all_tab_columns
-WHERE owner = dev_schema_name
-    AND table_name = p_table_name
-    AND column_name = dev_columns_set(i);
-ddl_script := ddl_script || 'ALTER TABLE ' || p_table_name || ' ADD COLUMN ' || dev_columns_set(i) || ' ' || data_type;
-IF data_type IN ('VARCHAR2', 'NVARCHAR2', 'RAW')
-AND data_length IS NOT NULL THEN ddl_script := ddl_script || '(' || data_length || ')';
-ELSIF data_type IN ('NUMBER')
-AND data_precision IS NOT NULL THEN ddl_script := ddl_script || '(' || data_precision || ')';
-END IF;
-ddl_script := ddl_script || chr(10);
-END IF;
-END LOOP;
-END;
-FOR i IN 1..dev_constraints_set.count LOOP IF dev_constraints_set(i) NOT MEMBER OF prod_constraints_set THEN
-DECLARE ddl_script CLOB;
-constraint_type VARCHAR2(20);
-BEGIN
-SELECT constraint_type INTO constraint_type
-FROM all_constraints
-WHERE owner = dev_schema_name
-    AND table_name = p_table_name
-    AND constraint_name = dev_constraints_set(i);
-ddl_script := ddl_script || dbms_metadata.get_ddl(
-    CASE
-        WHEN constraint_type = 'R' THEN 'REF_CONSTRAINT'
-        ELSE 'CONSTRAINT'
-    END,
-    dev_constraints_set(i),
-    dev_schema_name
-);
-ddl_script := ddl_script || chr(10);
-END;
-END IF;
-CREATE OR REPLACE PROCEDURE compare_schemas (
-        dev_schema_name IN VARCHAR2,
-        prod_schema_name IN VARCHAR2
-    ) AS TYPE string_list_t IS TABLE OF VARCHAR2(100);
+loop_name VARCHAR2(100);
 dev_tables string_list_t := string_list_t();
 prod_tables string_list_t := string_list_t();
 visited_tables string_list_t := string_list_t();
@@ -302,7 +192,48 @@ FROM (
             ) a
         WHERE CONNECT_BY_ISCYCLE = 1 CONNECT BY NOCYCLE (PRIOR child_owner, PRIOR child_table) = ((parent_owner, parent_table))
     );
-IF counter > 0 THEN dbms_output.put_line('Looped connecitons detected.');
+IF counter > 0 THEN
+SELECT child_table INTO loop_name
+FROM (
+        WITH table_hierarchy AS (
+            SELECT child_owner,
+                child_table,
+                parent_owner,
+                parent_table
+            FROM (
+                    SELECT owner AS child_owner,
+                        table_name AS child_table,
+                        r_owner AS parent_owner,
+                        r_constraint_name AS constraint_name
+                    FROM all_constraints
+                    WHERE constraint_type = 'R'
+                        AND owner = 'DEV'
+                )
+                JOIN (
+                    SELECT owner AS parent_owner,
+                        constraint_name,
+                        table_name AS parent_table
+                    FROM all_constraints
+                    WHERE constraint_type = 'P'
+                        AND owner = 'DEV'
+                ) USING (parent_owner, constraint_name)
+        )
+        SELECT DISTINCT child_owner,
+            child_table
+        FROM (
+                SELECT *
+                FROM table_hierarchy
+                WHERE (child_owner, child_table) IN (
+                        SELECT parent_owner,
+                            parent_table
+                        FROM table_hierarchy
+                    )
+            ) a
+        WHERE CONNECT_BY_ISCYCLE = 1 CONNECT BY NOCYCLE (PRIOR child_owner, PRIOR child_table) = ((parent_owner, parent_table))
+    );
+dbms_output.put_line(
+    'Looped connections detected in table: ' || loop_name
+);
 END IF;
 dbms_output.put_line(
     chr(10) || 'Table in DEV but not in PROD or with different structure ========================='
@@ -509,5 +440,4 @@ ddl_script := replace(ddl_script, dev_schema_name, prod_schema_name);
 dbms_output.put_line(ddl_script);
 RETURN v_identical;
 END are_tables_identical;
-
 -------------CALL compare_schemas('DEV', 'PROD'); EXAMPLE
