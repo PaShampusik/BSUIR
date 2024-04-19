@@ -532,8 +532,7 @@ SP<StructTypeExpr> parser::parseStructType() {
 
     return std::make_shared<StructTypeExpr>(pos, std::make_shared<FieldList>(lbrace, list, rbrace));
 }
-
-SP<StarExpr> parser::parsePointerType() {
+x SP<StarExpr> parser::parsePointerType() {
     auto star = expect(token_type::MUL);
     auto base = parseType();
     return std::make_shared<StarExpr>(star, base);
