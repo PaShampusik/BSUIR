@@ -1,13 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"encoding/binary"
 	"fmt"
 	"io"
 	"os"
-	"regexp"
-	"strconv"
 )
 
 var SBox = [8][16]uint8{
@@ -85,6 +82,9 @@ func processFile(inputFilename, outputFilename string, key []uint32, encrypt boo
 	if err != nil {
 		return err
 	}
+	if encrypt {
+		fmt.Println("Input data: ", data)
+	}
 
 	paddingSize := (8 - (len(data) % 8)) % 8
 	data = append(data, make([]byte, paddingSize)...)
@@ -109,28 +109,13 @@ func processFile(inputFilename, outputFilename string, key []uint32, encrypt boo
 		copy(data[i:i+8], output)
 	}
 
+	if encrypt {
+		fmt.Println("Encrypted data: ", data)
+	} else {
+		fmt.Println("Decrypted data: ", data)
+	}
+
 	return writeFile(outputFilename, data)
-}
-
-func validateInput(message string, pattern *regexp.Regexp, converter func(string) (int, error)) int {
-	reader := bufio.NewReader(os.Stdin)
-	var input string
-
-	for {
-		fmt.Print(message)
-		input, _ = reader.ReadString('\n')
-		input = input[:len(input)-1] // Remove newline character
-
-		if pattern.MatchString(input) {
-			break
-		}
-	}
-
-	value, err := converter(input)
-	if err != nil {
-		panic(err)
-	}
-	return value
 }
 
 func main() {
@@ -143,24 +128,20 @@ func main() {
 	encryptedFilename := "encrypted.bin"
 	decryptedFilename := "decrypted.txt"
 
-	optionsPattern := regexp.MustCompile(`^[1-2]$`)
-	numConverter := func(s string) (int, error) { return strconv.Atoi(s) }
-	option := validateInput("Choose option:\n1 - encrypt file\n2 - decrypt file\n", optionsPattern, numConverter)
+	fmt.Println("Start of encrypting:", encryptedFilename)
 
-	switch option {
-	case 1:
-		err := processFile(inputFilename, encryptedFilename, key, true)
-		if err != nil {
-			fmt.Println("Error encrypting file:", err)
-		} else {
-			fmt.Println("Encrypted file:", encryptedFilename)
-		}
-	case 2:
-		err := processFile(encryptedFilename, decryptedFilename, key, false)
-		if err != nil {
-			fmt.Println("Error decrypting file:", err)
-		} else {
-			fmt.Println("Decrypted file:", decryptedFilename)
-		}
+	err := processFile(inputFilename, encryptedFilename, key, true)
+	if err != nil {
+		fmt.Println("Error encrypting file:", err)
+	} else {
+		fmt.Println("Encrypted file:", encryptedFilename)
 	}
+
+	err = processFile(encryptedFilename, decryptedFilename, key, false)
+	if err != nil {
+		fmt.Println("Error decrypting file:", err)
+	} else {
+		fmt.Println("Decrypted file:", decryptedFilename)
+	}
+
 }
