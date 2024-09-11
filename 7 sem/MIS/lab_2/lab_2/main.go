@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
+	"io/ioutil"
+	"log"
 )
 
 const (
@@ -160,12 +162,14 @@ func beltDecrypt(out, in, ks []uint8) {
 }
 
 func main() {
-	inenc := []uint8{
-		0xB1, 0x94, 0xBA, 0xC8,
-		0x0A, 0x08, 0xF5, 0x3B,
-		0x36, 0x6D, 0x00, 0x8E,
-		0x58, 0x4A, 0x5D, 0xE4,
+	// Read input from input.txt
+	data, err := ioutil.ReadFile("input.txt")
+	if err != nil {
+		log.Fatalf("Failed to read input file: %v", err)
 	}
+
+	// Convert the string to a byte slice
+	inenc := []uint8(data)
 
 	outenc := make([]uint8, blockSize)
 	keyenc := []uint8{
@@ -186,7 +190,7 @@ func main() {
 	beltEncrypt(outenc, inenc, ks)
 
 	fmt.Println("Encryption:")
-	fmt.Printf("m: %s\n", hex.EncodeToString(inenc))
+	fmt.Printf("m: %s\n", string(inenc))
 	fmt.Printf("k: %s\n", hex.EncodeToString(ks))
 	fmt.Printf("c: %s\n", hex.EncodeToString(outenc))
 
@@ -196,5 +200,5 @@ func main() {
 	fmt.Println("\nDecryption:")
 	fmt.Printf("c: %s\n", hex.EncodeToString(outenc))
 	fmt.Printf("k: %s\n", hex.EncodeToString(ks))
-	fmt.Printf("m: %s\n", hex.EncodeToString(outdec))
+	fmt.Printf("m: %s\n", string(outdec))
 }
