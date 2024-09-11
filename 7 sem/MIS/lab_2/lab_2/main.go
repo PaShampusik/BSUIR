@@ -161,6 +161,36 @@ func beltDecrypt(out, in, ks []uint8) {
 	store32(out[12:16], b)
 }
 
+func processBlocks(data []uint8, ks []uint8, encrypt bool) []uint8 {
+	var result []uint8
+	block := make([]uint8, blockSize)
+
+	for i := 0; i < len(data); i += blockSize {
+		// Handle the last block if it's less than blockSize
+		if i+blockSize > len(data) {
+			copy(block, data[i:])
+			// Pad the block if necessary
+			for j := len(data) % blockSize; j < blockSize; j++ {
+				block[j] = 0 // Padding with zeros
+			}
+		} else {
+			copy(block, data[i:i+blockSize])
+		}
+
+		if encrypt {
+			outBlock := make([]uint8, blockSize)
+			beltEncrypt(outBlock, block, ks)
+			result = append(result, outBlock...)
+		} else {
+			outBlock := make([]uint8, blockSize)
+			beltDecrypt(outBlock, block, ks)
+			result = append(result, outBlock...)
+		}
+	}
+
+	return result
+}
+
 func main() {
 	// Read input from input.txt
 	data, err := ioutil.ReadFile("input.txt")
@@ -171,7 +201,6 @@ func main() {
 	// Convert the string to a byte slice
 	inenc := []uint8(data)
 
-	outenc := make([]uint8, blockSize)
 	keyenc := []uint8{
 		0xE9, 0xDE, 0xE7, 0x2C,
 		0x8F, 0x0C, 0x0F, 0xA6,
@@ -183,19 +212,19 @@ func main() {
 		0x03, 0xA9, 0x8B, 0xF6,
 	}
 
-	outdec := make([]uint8, blockSize)
 	ks := make([]uint8, keySize)
-
 	beltInit(ks, keyenc, keySize)
-	beltEncrypt(outenc, inenc, ks)
+
+	// Encrypt the input data
+	outenc := processBlocks(inenc, ks, true)
 
 	fmt.Println("Encryption:")
 	fmt.Printf("m: %s\n", string(inenc))
 	fmt.Printf("k: %s\n", hex.EncodeToString(ks))
 	fmt.Printf("c: %s\n", hex.EncodeToString(outenc))
 
-	beltInit(ks, keyenc, keySize)
-	beltDecrypt(outdec, outenc, ks)
+	// Decrypt the encrypted data
+	outdec := processBlocks(outenc, ks, false)
 
 	fmt.Println("\nDecryption:")
 	fmt.Printf("c: %s\n", hex.EncodeToString(outenc))
