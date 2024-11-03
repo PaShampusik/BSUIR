@@ -101,7 +101,7 @@ func main() {
 	}
 
 	_ = ioutil.WriteFile("decrypted.txt", decryptedBytes, 0644)
-	fmt.Println("расшифрованные данные сохранены в 'decrypted.txt'")
+	fmt.Println("Расшифрованные данные сохранены в 'decrypted.txt'")
 
 	_ = os.Remove("encrypted.txt")
 }
