@@ -5,112 +5,103 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math/big"
+	"os"
+	"strings"
 )
 
-type Rabin struct {
-	p, q, n *big.Int
+func generatePrime() *big.Int {
+	for {
+		p, _ := rand.Prime(rand.Reader, 100)
+		if new(big.Int).Mod(new(big.Int).Sub(p, big.NewInt(3)), big.NewInt(4)).Cmp(big.NewInt(0)) == 0 {
+			return p
+		}
+	}
 }
 
-func NewRabin() (*Rabin, error) {
-	// Генерация двух больших простых чисел p и q
-	p, err := rand.Prime(rand.Reader, 512)
-	if err != nil {
-		return nil, err
-	}
-	q, err := rand.Prime(rand.Reader, 512)
-	if err != nil {
-		return nil, err
+func encrypt(message, n int64) *big.Int {
+	return new(big.Int).Exp(big.NewInt(message), big.NewInt(2), big.NewInt(n))
+}
+
+func gcdExtended(a, b *big.Int) (*big.Int, *big.Int) {
+	if a.Cmp(big.NewInt(0)) == 0 {
+		return big.NewInt(0), big.NewInt(1)
 	}
 
+	x1, y1 := gcdExtended(new(big.Int).Mod(b, a), a)
+	x := new(big.Int).Sub(y1, new(big.Int).Mul(new(big.Int).Div(b, a), x1))
+	y := x1
+	return x, y
+}
+
+func rabinDecrypt(ciphertext, p, q *big.Int) []*big.Int {
 	n := new(big.Int).Mul(p, q)
+	four := big.NewInt(4)
+	one := big.NewInt(1)
+	p1 := new(big.Int).Div(new(big.Int).Add(p, one), four)
+	q1 := new(big.Int).Div(new(big.Int).Add(q, one), four)
+	mp := new(big.Int).Exp(ciphertext, p1, p)
+	mq := new(big.Int).Exp(ciphertext, q1, q)
 
-	return &Rabin{p: p, q: q, n: n}, nil
-}
+	x, y := gcdExtended(p, q)
 
-func (r *Rabin) Encrypt(message []byte) (*big.Int, error) {
-	m := new(big.Int).SetBytes(message)
-	c := new(big.Int).Exp(m, big.NewInt(2), r.n) // c = m^2 mod n
-	return c, nil
-}
+	r := new(big.Int).Mod(new(big.Int).Add(new(big.Int).Mul(new(big.Int).Mul(x, p), mq), new(big.Int).Mul(new(big.Int).Mul(y, q), mp)), n)
+	s := new(big.Int).Mod(new(big.Int).Sub(new(big.Int).Mul(new(big.Int).Mul(x, p), mq), new(big.Int).Mul(new(big.Int).Mul(y, q), mp)), n)
 
-func (r *Rabin) Decrypt(c *big.Int) ([]byte, error) {
-	// Находим квадратные корни по модулю n
-	p1 := new(big.Int).ModSqrt(c, r.p)
-	p2 := new(big.Int).Sub(r.p, p1)
-
-	q1 := new(big.Int).ModSqrt(c, r.q)
-	q2 := new(big.Int).Sub(r.q, q1)
-
-	// Получаем 4 возможных корня
-	roots := []*big.Int{new(big.Int).Set(p1), new(big.Int).Set(p2), new(big.Int).Set(q1), new(big.Int).Set(q2)}
-
-	// Преобразуем корни в байты
-	var messages [][]byte
-	for _, root := range roots {
-		m := new(big.Int).Mod(root, r.n)
-		messages = append(messages, m.Bytes())
-	}
-
-	// Возвращаем первый корень (можно улучшить выбор)
-	return messages[0], nil
-}
-
-func (r *Rabin) PublicKey() *big.Int {
-	return r.n
-}
-
-func (r *Rabin) PrivateKey() (*big.Int, *big.Int) {
-	return r.p, r.q
+	return []*big.Int{r, new(big.Int).Sub(n, r), s, new(big.Int).Sub(n, s)}
 }
 
 func main() {
-	rabin, err := NewRabin()
+	p := generatePrime()
+	q := generatePrime()
+	for p.Cmp(q) == 0 {
+		q = generatePrime()
+	}
+
+	fmt.Println("Выбранные простые числа p и q:", p, q)
+
+	n := new(big.Int).Mul(p, q)
+	fmt.Println("Произведение простых чисел (n):", n)
+
+	plaintext, err := ioutil.ReadFile("input.txt")
 	if err != nil {
-		fmt.Println("Error generating Rabin keys:", err)
+		fmt.Println("Ошибка чтения файла:", err)
 		return
 	}
 
-	// Вывод открытого и закрытого ключей
-	fmt.Println("Public Key (n):", rabin.PublicKey())
-	p, q := rabin.PrivateKey()
-	fmt.Println("Private Key (p):", p)
-	fmt.Println("Private Key (q):", q)
-
-	// Чтение текста из файла
-	inputFile := "input.txt"
-	data, err := ioutil.ReadFile(inputFile)
-	if err != nil {
-		fmt.Println("Error reading file:", err)
-		return
+	var encryptedData []*big.Int
+	for _, c := range plaintext {
+		encryptedData = append(encryptedData, encrypt(int64(c), n.Int64()))
 	}
 
-	// Шифрование
-	ciphertext, err := rabin.Encrypt(data)
-	if err != nil {
-		fmt.Println("Error encrypting:", err)
-		return
+	_ = ioutil.WriteFile("encrypted.txt", []byte(strings.Join(func() []string {
+		var s []string
+		for _, v := range encryptedData {
+			s = append(s, v.String())
+		}
+		return s
+	}(), " ")), 0644)
+	fmt.Println("Зашифрованные данные сохранены в 'encrypted.txt'")
+
+	encryptedBytes, _ := ioutil.ReadFile("encrypted.txt")
+	var decryptedData []*big.Int
+	for _, ciphertext := range strings.Split(string(encryptedBytes), " ") {
+		c, _ := new(big.Int).SetString(ciphertext, 10)
+		possibleValues := rabinDecrypt(c, p, q)
+		for _, i := range possibleValues {
+			if i.Cmp(big.NewInt(0)) >= 0 && i.Cmp(big.NewInt(128)) <= 0 {
+				decryptedData = append(decryptedData, i)
+				break
+			}
+		}
 	}
 
-	// Сохранение зашифрованного текста в файл
-	err = ioutil.WriteFile("ciphertext.txt", ciphertext.Bytes(), 0644)
-	if err != nil {
-		fmt.Println("Error writing ciphertext to file:", err)
-		return
+	decryptedBytes := []byte{}
+	for _, i := range decryptedData {
+		decryptedBytes = append(decryptedBytes, byte(i.Int64()))
 	}
 
-	// Дешифрование
-	decrypted, err := rabin.Decrypt(ciphertext)
-	if err != nil {
-		fmt.Println("Error decrypting:", err)
-		return
-	}
+	_ = ioutil.WriteFile("decrypted.txt", decryptedBytes, 0644)
+	fmt.Println("расшифрованные данные сохранены в 'decrypted.txt'")
 
-	// Сохранение расшифрованного текста в файл
-	err = ioutil.WriteFile("decrypted.txt", decrypted, 0644)
-	if err != nil {
-		fmt.Println("Error writing decrypted text to file:", err)
-		return
-	}
-
-	fmt.Println("Encryption and decryption completed successfully.")
+	_ = os.Remove("encrypted.txt")
 }
