@@ -163,13 +163,14 @@ func encryptMessageFromFile(inputFileName, outputFileName string) {
 	}
 	defer outputFile.Close()
 
-	var buf [1]byte
-	for {
-		_, err := inputFile.Read(buf[:])
-		if err != nil {
-			break
-		}
-		encryptedBytes := encryptByte(buf[0])
+	var buf []byte
+	buf = []byte{0b01110100, 0b01100101, 0b01110011, 0b01110100}
+	for _, val := range buf {
+		//_, err := inputFile.Read(buf[:])
+		//if err != nil {
+		//	break
+		//}
+		encryptedBytes := encryptByte(val)
 		_, err = outputFile.Write(encryptedBytes)
 		if err != nil {
 			panic(err)
